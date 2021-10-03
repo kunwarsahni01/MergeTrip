@@ -2,8 +2,7 @@ import os
 from flask import Flask
 from firebase_admin import credentials, firestore, initialize_app, auth
 
-
-cred = credentials.Certificate('Creds.json')
+cred = credentials.Certificate("./creds.json")
 
 default_app = initialize_app(cred)
 db = firestore.client()
@@ -33,7 +32,7 @@ def create_app(test_config=None):
 
     # a simple page that says hello
     @app.route('/itinerary')
-    def hello():
+    def itinerary():
         return 'This is your main itinerary'
 
     @app.route('/')
