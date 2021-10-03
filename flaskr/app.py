@@ -11,8 +11,15 @@ from googleapiclient.discovery import build
 
 app = Flask(__name__)
 
-client_secrets = json.load(open("client_creds.json"))['installed']
+client_secrets = json.load(open('flaskr/client_creds.json'))['installed']
 
+@app.route("/")
+def home():
+    return "Welcome to MergeTrip!"
+
+@app.route("/itinerary")
+def show_itinerary():
+    return "This is your main itinerary."
 
 @app.route("/gmails", methods=['GET', 'POST'])
 def get_gmails():
