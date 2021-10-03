@@ -67,6 +67,19 @@ def get_gmails():
             elif (header['name'] == 'Subject'):
                 message['Subject'] = header['value']
 
+        # Decode raw abase64url encoded email body
+        raw_body_bytes = ''
+        if (response_payload['body'].get('data')):
+            raw_body_bytes += response_payload['body']['data']
+        else:
+            for part in response_payload['parts']:
+                if (part['body'].get('data')):
+                    raw_body_bytes = part['body']['data'] + raw_body_bytes
+
+        raw_body_bytes = bytes(str(raw_body_bytes), 'utf-8')
+        decoded_body = base64.urlsafe_b64decode(raw_body_bytes)
+        message['body'] = str(decoded_body)
+
         # TODO: EXTRACT TEXT FROM HTML BODY
         # TODO: Refactor is crap code ;-;
 
