@@ -1,5 +1,7 @@
 import os
 import json
+import base64
+from datetime import datetime
 from flask import Flask, jsonify, request
 from google.oauth2.reauth import refresh_grant
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -11,18 +13,18 @@ app = Flask(__name__)
 
 client_secrets = json.load(open("client_creds.json"))['installed']
 
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
-
 
 @app.route("/gmails", methods=['GET', 'POST'])
-def get_auth_token():
+def get_gmails():
     """
-      get_auth_token(): Will get auth token from a refresh token which we can get
-      from the firestore when we store it after the initial connecting of gmail
+      get_gmails(): Will get access to user's gmail using refresh token in database
+      and then return filtered gmail bodies from a specific date range
 
       Returns:
 
     """
+    SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+
     client_id = client_secrets['client_id']
     client_secret = client_secrets['client_secret']
     token_uri = client_secrets['token_uri']
@@ -38,10 +40,38 @@ def get_auth_token():
 
     service = build('gmail', 'v1', credentials=creds)
 
-    # Call the Gmail API
-    results = service.users().messages().list(userId='me').execute()
-    messages = results.get('messages', [])
-    print('length: ', len(messages))
+    # uses time since epoch
+    test_start_date = int(datetime(2021, 9, 29).timestamp())
+    test_end_date = int(datetime(2021, 10, 2).timestamp())
+    date_query = "after:{0} before:{1}".format(test_start_date, test_end_date)
+
+    # Get email Ids and ThreadIds
+    results = service.users().messages().list(
+        userId='me', q=date_query).execute()
+
+    message_ids = results.get('messages', [])
+
+    messages = []
+    for ids in message_ids:
+        message_response = service.users().messages().get(
+            userId='me', id=ids['id']).execute()
+
+        message = {}
+        # extract From, To and Subject from response
+        response_payload = message_response['payload']
+        for header in response_payload['headers']:
+            if (header['name'] == 'To'):
+                message['To'] = header['value']
+            elif (header['name'] == 'From'):
+                message['From'] = header['value']
+            elif (header['name'] == 'Subject'):
+                message['Subject'] = header['value']
+
+        # TODO: EXTRACT TEXT FROM HTML BODY
+        # TODO: Refactor is crap code ;-;
+
+        messages.append(message)
+
     return jsonify({'results': messages}), 200
 
 
