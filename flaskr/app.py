@@ -8,10 +8,17 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+from firebase_admin import credentials, firestore, initialize_app, auth
 
 app = Flask(__name__)
 
 client_secrets = json.load(open('flaskr/client_creds.json'))['installed']
+
+cred = credentials.Certificate("flaskr/creds.json")
+
+default_app = initialize_app(cred)
+db = firestore.client()
+
 
 @app.route("/")
 def home():
