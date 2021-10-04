@@ -12,9 +12,9 @@ from firebase_admin import credentials, firestore, initialize_app, auth
 
 app = Flask(__name__)
 
-client_secrets = json.load(open('flaskr/client_creds.json'))['installed']
+client_secrets = json.load(open('client_creds.json'))['installed']
 
-cred = credentials.Certificate("flaskr/creds.json")
+cred = credentials.Certificate("creds.json")
 
 default_app = initialize_app(cred)
 db = firestore.client()
