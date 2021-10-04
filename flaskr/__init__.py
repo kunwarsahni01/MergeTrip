@@ -1,6 +1,13 @@
 import os
 from flask import Flask
+from firebase_admin import credentials, firestore, initialize_app, auth
 
+cred = credentials.Certificate("./creds.json")
+
+default_app = initialize_app(cred)
+db = firestore.client()
+
+USERS = db.collection('Users')
 
 def create_app(test_config=None):
     # create and configure the app
@@ -24,8 +31,12 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    @app.route('/itinerary')
+    def itinerary():
+        return 'This is your main itinerary'
+
+    @app.route('/')
+    def home():
+        return "Welcome to MergeTrip"
 
     return app
