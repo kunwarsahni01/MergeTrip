@@ -102,5 +102,19 @@ def get_gmails():
     return jsonify({'results': messages}), 200
 
 
+def get_user(username):
+    """
+    userList = firestore.getUserList
+    for (user in userList) {
+        name = user.name
+        if (name == username) {
+            # Print an error message User already in system
+            return -1
+        }
+    }
+    """
+    return 0
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
