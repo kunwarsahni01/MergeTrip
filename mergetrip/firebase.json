@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "mergretrip/build/",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",
