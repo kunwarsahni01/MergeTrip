@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
 
 class SimpleForm extends Component {
   constructor() {
@@ -13,6 +13,7 @@ class SimpleForm extends Component {
     this.onLogin = this.onLogin.bind(this);
     this.onGoogleLogin = this.onGoogleLogin.bind(this);
     this.onAppleLogin = this.onAppleLogin.bind(this);
+    this.onResetPassword = this.onResetPassword.bind(this);
 
   }
 
@@ -20,6 +21,10 @@ class SimpleForm extends Component {
     this.setState({
       [event.target.name]: event.target.value
     });
+  }
+
+  onResetPassword() {
+    this.reset();
   }
 
   onGoogleLogin() {
@@ -36,6 +41,16 @@ class SimpleForm extends Component {
 
   onLogin() {
     this.loginToAccount();
+  }
+
+  reset() {
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, this.state.username)
+    .then((userCredential) => {
+      alert("Email sent");
+    }).catch(function (error) {
+      alert(error);
+    });
   }
 
   createGoogle() {
@@ -166,6 +181,7 @@ class SimpleForm extends Component {
           <button onClick={this.onLogin}>Log In</button>
           <button onClick={this.onGoogleLogin}>Log In With Google</button>
           <button onClick={this.onAppleLogin}>Log In With Apple</button>
+          <button onClick={this.onResetPassword}>Reset Password</button>
 
         </div>
       </div>
