@@ -1,5 +1,6 @@
 import { Switch, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
+import Account from './components/Account';
 
 function App () {
   return (
@@ -8,6 +9,7 @@ function App () {
       <Route exact path='/otherpage'>
         <p>Other page</p>
       </Route>
+      <Route exact path='/account' component={Account} />
     </Switch>
   );
 }

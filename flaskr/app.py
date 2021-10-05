@@ -8,11 +8,25 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+from firebase_admin import credentials, firestore, initialize_app, auth
 
 app = Flask(__name__)
 
-client_secrets = json.load(open("client_creds.json"))['installed']
+client_secrets = json.load(open('client_creds.json'))['installed']
 
+cred = credentials.Certificate("creds.json")
+
+default_app = initialize_app(cred)
+db = firestore.client()
+
+
+@app.route("/")
+def home():
+    return "Welcome to MergeTrip!"
+
+@app.route("/itinerary")
+def show_itinerary():
+    return "This is your main itinerary."
 
 @app.route("/gmails", methods=['GET', 'POST'])
 def get_gmails():
@@ -86,6 +100,20 @@ def get_gmails():
         messages.append(message)
 
     return jsonify({'results': messages}), 200
+
+
+def check_valid_username(username):
+    """
+    userList = firestore.getUserList
+    for (user in userList) {
+        name = user.name
+        if (name == username) {
+            # Print an error message User already in system
+            return -1
+        }
+    }
+    """
+    return 0
 
 
 if __name__ == '__main__':

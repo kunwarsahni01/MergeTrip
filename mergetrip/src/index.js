@@ -5,25 +5,25 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// const firebaseConfig = {
-//   apiKey: "",
-//   authDomain: "",
-//   projectId: "",
-//   storageBucket: "",
-//   messagingSenderId: "",
-//   appId: "",
-//   measurementId: ""
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyDsF7RMtwacYeIGbEz3X_9Z8SNLAqSB30M",
+  authDomain: "mergetrip-66b11.firebaseapp.com",
+  projectId: "mergetrip-66b11",
+  storageBucket: "mergetrip-66b11.appspot.com",
+  messagingSenderId: "14509175384",
+  appId: "1:14509175384:web:b98365cafeb4db7e56d02d",
+  measurementId: "G-1MW1Z2SLT1"
+};
 
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 ReactDOM.render(
   <React.StrictMode>
