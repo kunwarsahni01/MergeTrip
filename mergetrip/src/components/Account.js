@@ -22,7 +22,6 @@ class SimpleForm extends Component {
   }
 
   onSubmitForm() {
-    console.log(this.state)
     this.createAccount();
   }
 
@@ -32,13 +31,14 @@ class SimpleForm extends Component {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        console.log("Login Succesful")
+        console.log("Login Succesful");
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage)
+        console.log(errorMessage);
+        alert("Email already in use");
         // ..
       });
     
