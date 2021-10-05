@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
 
 class SimpleForm extends Component {
@@ -46,11 +47,11 @@ class SimpleForm extends Component {
   reset() {
     const auth = getAuth();
     sendPasswordResetEmail(auth, this.state.username)
-    .then((userCredential) => {
-      alert("Email sent");
-    }).catch(function (error) {
-      alert(error);
-    });
+      .then((userCredential) => {
+        alert("Email sent");
+      }).catch(function (error) {
+        alert(error);
+      });
   }
 
   createGoogle() {
@@ -64,6 +65,7 @@ class SimpleForm extends Component {
         // The signed-in user info.
         const user = result.user;
         console.log("Login Succesful");
+        this.props.history.push("/");
         // ...
       }).catch((error) => {
         // Handle Errors here.
@@ -94,6 +96,7 @@ class SimpleForm extends Component {
         const accessToken = credential.accessToken;
         const idToken = credential.idToken;
         console.log("Login Succesful");
+        this.props.history.push("/");
 
         // ...
       })
@@ -117,6 +120,7 @@ class SimpleForm extends Component {
         // Signed in 
         const user = userCredential.user;
         console.log("Login Succesful");
+        this.props.history.push("/");
         // ...
       })
       .catch((error) => {
@@ -189,4 +193,4 @@ class SimpleForm extends Component {
   }
 }
 
-export default SimpleForm;
+export default withRouter(SimpleForm);
