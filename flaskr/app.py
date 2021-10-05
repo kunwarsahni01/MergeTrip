@@ -102,7 +102,7 @@ def get_gmails():
     return jsonify({'results': messages}), 200
 
 
-def get_user(username):
+def check_valid_username(username):
     """
     userList = firestore.getUserList
     for (user in userList) {
