@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
 
 class SimpleForm extends Component {
   constructor() {
     super();
     this.state = {
-        username: "",
-        password: "",
+      username: "",
+      password: "",
     };
     this.onInputchange = this.onInputchange.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.onLogin = this.onLogin.bind(this);
     this.onGoogleLogin = this.onGoogleLogin.bind(this);
     this.onAppleLogin = this.onAppleLogin.bind(this);
-    
+
   }
 
   onInputchange(event) {
@@ -65,7 +65,34 @@ class SimpleForm extends Component {
   }
 
   createApple() {
+    const provider = new OAuthProvider('apple.com');
+    provider.addScope('email');
+    provider.addScope('name');
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
 
+        // Apple credential
+        const credential = OAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        const idToken = credential.idToken;
+        console.log("Login Succesful");
+
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The credential that was used.
+        const credential = OAuthProvider.credentialFromError(error);
+        alert("Incorrect Email or Password");
+        // ...
+      });
   }
 
   loginToAccount() {
@@ -85,7 +112,7 @@ class SimpleForm extends Component {
         } else {
           alert("Incorrect Email or Password");
         }
-      });    
+      });
   }
 
   createAccount() {
@@ -108,7 +135,7 @@ class SimpleForm extends Component {
         }
         // ..
       });
-    
+
   }
 
   render() {
@@ -117,28 +144,28 @@ class SimpleForm extends Component {
     return (
       <div>
         <div>
-            <input
-              name="username"
-              type="text"
-              value={this.state.username}
-              onChange={this.onInputchange}
-              placeholder="Username" 
-            />
+          <input
+            name="username"
+            type="text"
+            value={this.state.username}
+            onChange={this.onInputchange}
+            placeholder="Username"
+          />
         </div>
         <div>
-            <input
-              name="password"
-              type="text"
-              value={this.state.password}
-              onChange={this.onInputchange}
-              placeholder="Password" 
-            />
+          <input
+            name="password"
+            type="text"
+            value={this.state.password}
+            onChange={this.onInputchange}
+            placeholder="Password"
+          />
         </div>
         <div>
-            <button onClick={this.onSignUp}>Sign Up</button>
-            <button onClick={this.onLogin}>Log In</button>
-            <button onClick={this.onGoogleLogin}>Log In With Google</button>
-            <button onClick={this.onAppleLogin}>Log In With Apple</button>
+          <button onClick={this.onSignUp}>Sign Up</button>
+          <button onClick={this.onLogin}>Log In</button>
+          <button onClick={this.onGoogleLogin}>Log In With Google</button>
+          <button onClick={this.onAppleLogin}>Log In With Apple</button>
 
         </div>
       </div>
