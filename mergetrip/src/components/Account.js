@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 class SimpleForm extends Component {
   constructor() {
@@ -11,7 +9,10 @@ class SimpleForm extends Component {
         password: "",
     };
     this.onInputchange = this.onInputchange.bind(this);
-    this.onSubmitForm = this.onSubmitForm.bind(this);
+    this.onSignUp = this.onSignUp.bind(this);
+    this.onLogin = this.onLogin.bind(this);
+    this.onGoogleLogin = this.onGoogleLogin.bind(this);
+    this.onAppleLogin = this.onAppleLogin.bind(this);
     
   }
 
@@ -21,13 +22,55 @@ class SimpleForm extends Component {
     });
   }
 
-  onSubmitForm() {
+  onGoogleLogin() {
+    this.createGoogle();
+  }
+
+  onAppleLogin() {
+    this.createApple();
+  }
+
+  onSignUp() {
     this.createAccount();
   }
 
-  createAccount() {
+  onLogin() {
+    this.loginToAccount();
+  }
+
+  createGoogle() {
+    const provider = new GoogleAuthProvider();
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, this.state.username, this.state.password)
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log("Login Succesful");
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        alert("Incorrect Email or Password");
+
+        // ...
+      });
+  }
+
+  createApple() {
+
+  }
+
+  loginToAccount() {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, this.state.username, this.state.password)
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
@@ -37,8 +80,32 @@ class SimpleForm extends Component {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        if (this.state.username === "") {
+          alert("You need to input an Email!");
+        } else {
+          alert("Incorrect Email or Password");
+        }
+      });    
+  }
+
+  createAccount() {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, this.state.username, this.state.password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log("Sign Up Succesful");
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
         console.log(errorMessage);
-        alert("Email already in use");
+        if (this.state.username === "") {
+          alert("You need to input an Email!");
+        } else {
+          alert("Email is already in use");
+        }
         // ..
       });
     
@@ -50,29 +117,29 @@ class SimpleForm extends Component {
     return (
       <div>
         <div>
-          <label>
-            Username :
             <input
               name="username"
               type="text"
               value={this.state.username}
               onChange={this.onInputchange}
+              placeholder="Username" 
             />
-          </label>
         </div>
         <div>
-          <label>
-            Password :
             <input
               name="password"
               type="text"
               value={this.state.password}
               onChange={this.onInputchange}
+              placeholder="Password" 
             />
-          </label>
         </div>
         <div>
-            <button onClick={this.onSubmitForm}>Submit</button>
+            <button onClick={this.onSignUp}>Sign Up</button>
+            <button onClick={this.onLogin}>Log In</button>
+            <button onClick={this.onGoogleLogin}>Log In With Google</button>
+            <button onClick={this.onAppleLogin}>Log In With Apple</button>
+
         </div>
       </div>
     );
