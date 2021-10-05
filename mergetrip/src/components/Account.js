@@ -27,17 +27,18 @@ class SimpleForm extends Component {
   }
 
   createAccount() {
-    alert(this.state.username);
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, this.state.username, this.state.password)
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
+        console.log("Login Succesful")
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(errorMessage)
         // ..
       });
     
