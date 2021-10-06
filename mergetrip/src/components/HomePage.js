@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from './logo.svg';
 import './HomePage.css';
 import { withRouter } from 'react-router-dom';
 
@@ -21,11 +20,8 @@ class HomePage extends Component {
     return (
       <div className="HomePage">
         <header className="HomePage-header">
-          <img src={logo} className="HomePage-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <button onClick={this.onSignUp}>Sign Up</button>
+        <span className="termina-black-15-3px">MERGETRIP</span>
+          <button className= "HomePage-button" onClick={this.onSignUp}>Sign Up</button>
         </header>
       </div>
     );

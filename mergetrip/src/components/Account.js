@@ -60,21 +60,21 @@ class SimpleForm extends Component {
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
         // The signed-in user info.
-        const user = result.user;
+        // const user = result.user;
         console.log("Login Succesful");
         this.props.history.push("/");
         // ...
       }).catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
         // The email of the user's account used.
-        const email = error.email;
+        // const email = error.email;
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        // const credential = GoogleAuthProvider.credentialFromError(error);
         alert("Incorrect Email or Password");
 
         // ...
@@ -89,12 +89,12 @@ class SimpleForm extends Component {
     signInWithPopup(auth, provider)
       .then((result) => {
         // The signed-in user info.
-        const user = result.user;
+        // const user = result.user;
 
         // Apple credential
-        const credential = OAuthProvider.credentialFromResult(result);
-        const accessToken = credential.accessToken;
-        const idToken = credential.idToken;
+        // const credential = OAuthProvider.credentialFromResult(result);
+        // const accessToken = credential.accessToken;
+        // const idToken = credential.idToken;
         console.log("Login Succesful");
         this.props.history.push("/");
 
@@ -102,13 +102,13 @@ class SimpleForm extends Component {
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
         // The email of the user's account used.
-        const email = error.email;
+        // const email = error.email;
         // The credential that was used.
-        const credential = OAuthProvider.credentialFromError(error);
-        alert("Incorrect Email or Password");
+        // const credential = OAuthProvider.credentialFromError(error);
+        // alert("Incorrect Email or Password");
         // ...
       });
   }
@@ -118,14 +118,14 @@ class SimpleForm extends Component {
     signInWithEmailAndPassword(auth, this.state.username, this.state.password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
+        // const user = userCredential.user;
         console.log("Login Succesful");
         this.props.history.push("/");
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
         if (this.state.username === "") {
           alert("You need to input an Email!");
         } else {
@@ -139,12 +139,12 @@ class SimpleForm extends Component {
     createUserWithEmailAndPassword(auth, this.state.username, this.state.password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
+        // const user = userCredential.user;
         console.log("Sign Up Succesful");
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
+        // const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
         if (this.state.username === "") {
@@ -158,7 +158,6 @@ class SimpleForm extends Component {
   }
 
   render() {
-    const { items } = this.state;
 
     return (
       <div>
