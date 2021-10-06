@@ -1,3 +1,4 @@
+import './Account.css';
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
@@ -160,33 +161,35 @@ class SimpleForm extends Component {
   render() {
 
     return (
-      <div>
-        <div>
-          <input
-            name="username"
-            type="text"
-            value={this.state.username}
-            onChange={this.onInputchange}
-            placeholder="Username"
-          />
-        </div>
-        <div>
-          <input
-            name="password"
-            type="text"
-            value={this.state.password}
-            onChange={this.onInputchange}
-            placeholder="Password"
-          />
-        </div>
-        <div>
-          <button onClick={this.onSignUp}>Sign Up</button>
-          <button onClick={this.onLogin}>Log In</button>
-          <button onClick={this.onGoogleLogin}>Log In With Google</button>
-          <button onClick={this.onAppleLogin}>Log In With Apple</button>
-          <button onClick={this.onResetPassword}>Reset Password</button>
+      <div className="Account">
+        <header className="Account-header">
+          <div>
+            <input
+              name="username"
+              type="text"
+              value={this.state.username}
+              onChange={this.onInputchange}
+              placeholder="Username"
+            />
+          </div>
+          <div>
+            <input
+              name="password"
+              type="text"
+              value={this.state.password}
+              onChange={this.onInputchange}
+              placeholder="Password"
+            />
+          </div>
+          <div>
+            <button className="Account-button" onClick={this.onSignUp}>Sign Up</button>
+            <button className="Account-button" onClick={this.onLogin}>Log In</button>
+            <button className="Account-button" onClick={this.onGoogleLogin}>Log In With Google</button>
+            <button className="Account-button" onClick={this.onAppleLogin}>Log In With Apple</button>
+            <button className="Account-button" onClick={this.onResetPassword}>Reset Password</button>
 
-        </div>
+          </div>
+        </header>
       </div>
     );
   }
