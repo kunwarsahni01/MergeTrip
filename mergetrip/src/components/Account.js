@@ -164,7 +164,7 @@ class SimpleForm extends Component {
       <div className="Account">
         <header className="Account-header">
           <div>
-            <input
+            <input className="Account-input"
               name="username"
               type="text"
               value={this.state.username}
@@ -173,7 +173,7 @@ class SimpleForm extends Component {
             />
           </div>
           <div>
-            <input
+            <input className="Account-input"
               name="password"
               type="text"
               value={this.state.password}
