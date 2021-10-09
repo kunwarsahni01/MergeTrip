@@ -4,6 +4,7 @@ import google from './google.svg';
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 
 class SimpleForm extends Component {
   constructor() {
@@ -63,10 +64,15 @@ class SimpleForm extends Component {
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
         // The signed-in user info.
-        // const user = result.user;
+        const user = result.user;
+        const db = getDatabase();
+        set(ref(db, 'users/' + user.uid), {
+          googletoken: token
+        });
+
         console.log("Login Succesful");
         this.props.history.push("/");
         // ...

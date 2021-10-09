@@ -15,6 +15,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDsF7RMtwacYeIGbEz3X_9Z8SNLAqSB30M",
   authDomain: "mergetrip.io",
   projectId: "mergetrip-66b11",
+  databaseURL: "https://mergetrip-66b11-default-rtdb.firebaseio.com/",
   storageBucket: "mergetrip-66b11.appspot.com",
   messagingSenderId: "14509175384",
   appId: "1:14509175384:web:b98365cafeb4db7e56d02d",
