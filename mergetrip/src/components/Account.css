@@ -61,6 +61,8 @@
   background: #FFFFFF;
   border: none;
   border-radius: 16px;
+  font-family: Roboto;
+  font-weight: 500;
 }
 
 .Account-apple{
@@ -73,6 +75,8 @@
   background: #000000;
   border: none;
   border-radius: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
 }
 
 .Account-link {
