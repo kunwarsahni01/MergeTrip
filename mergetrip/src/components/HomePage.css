@@ -19,15 +19,15 @@
   background-color: #E13234;
   color: white;
   border: none;
-  padding: 20px 40px;
+  padding: 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 15px;
   font-family: Termina;
   margin: 4px 2px;
   cursor: pointer;
-  border-radius: 19px;
+  border-radius: 16px;
 }
 .HomePage-link {
   color: #61dafb;

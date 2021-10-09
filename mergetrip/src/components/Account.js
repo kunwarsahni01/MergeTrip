@@ -1,4 +1,6 @@
 import './Account.css';
+import apple from './apple.svg';
+import google from './google.svg';
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
@@ -163,6 +165,16 @@ class SimpleForm extends Component {
     return (
       <div className="Account">
         <header className="Account-header">
+          <div className="Account-buttons">
+            <button className="Account-google" onClick={this.onGoogleLogin}>
+              <img src={google} alt="Google" />
+              Log In With Google
+            </button>
+            <button className="Account-apple" onClick={this.onAppleLogin}>
+              <img src={apple} alt="Apple" />
+              Log In With Apple
+            </button>
+          </div>
           <div>
             <input className="Account-input"
               name="username"
@@ -175,7 +187,7 @@ class SimpleForm extends Component {
           <div>
             <input className="Account-input"
               name="password"
-              type="text"
+              type="password"
               value={this.state.password}
               onChange={this.onInputchange}
               placeholder="Password"
@@ -184,10 +196,7 @@ class SimpleForm extends Component {
           <div>
             <button className="Account-button" onClick={this.onSignUp}>Sign Up</button>
             <button className="Account-button" onClick={this.onLogin}>Log In</button>
-            <button className="Account-button" onClick={this.onGoogleLogin}>Log In With Google</button>
-            <button className="Account-button" onClick={this.onAppleLogin}>Log In With Apple</button>
             <button className="Account-button" onClick={this.onResetPassword}>Reset Password</button>
-
           </div>
         </header>
       </div>

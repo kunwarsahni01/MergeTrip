@@ -19,7 +19,7 @@
   background-color: #E13234;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -27,21 +27,52 @@
   font-family: Termina;
   margin: 4px 2px;
   cursor: pointer;
-  border-radius: 19px;
+  border-radius: 16px;
 }
 
 .Account-input {
   background-color: #37363A;
-  width: 100%;
+  width: 70%;
   height: 50px;
   border: 1px solid #E13234;
-  border-radius: 19px;
-  padding: 0 10px;
-  font-size: calc(15px + 2vmin);
+  border-radius: 16px;
+  padding: 0px 45px 0px 15px;
+  font-size: 20px;
   font-family: Termina;
   font-weight: 900;
-  color: rgb(0, 0, 0);
+  color: #FFFFFF;
   margin-bottom: .5rem;
+  
+}
+
+.Account-buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.Account-google{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #FFFFFF;
+  border: none;
+  border-radius: 16px;
+}
+
+.Account-apple{
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #000000;
+  border: none;
+  border-radius: 16px;
 }
 
 .Account-link {

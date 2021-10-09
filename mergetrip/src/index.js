@@ -13,7 +13,7 @@ import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDsF7RMtwacYeIGbEz3X_9Z8SNLAqSB30M",
-  authDomain: "mergetrip-66b11.firebaseapp.com",
+  authDomain: "mergetrip.io",
   projectId: "mergetrip-66b11",
   storageBucket: "mergetrip-66b11.appspot.com",
   messagingSenderId: "14509175384",
