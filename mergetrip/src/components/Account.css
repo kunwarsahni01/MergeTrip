@@ -11,6 +11,7 @@
   justify-content: center;
   font-size: calc(40px + 2vmin);
   font-family: Termina;
+  src: url("https://use.typekit.net/osw3soi.css");
   font-weight: 900;
   color: rgb(0, 0, 0);
   margin-bottom: .5rem;
@@ -25,6 +26,7 @@
   display: inline-block;
   font-size: 15px;
   font-family: Termina;
+  src: url("https://use.typekit.net/osw3soi.css");
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 16px;
@@ -39,6 +41,7 @@
   padding: 0px 45px 0px 15px;
   font-size: 20px;
   font-family: Termina;
+  src: url("https://use.typekit.net/osw3soi.css");
   font-weight: 900;
   color: #FFFFFF;
   margin-bottom: .5rem;
@@ -61,6 +64,8 @@
   background: #FFFFFF;
   border: none;
   border-radius: 16px;
+  font-family: Termina;
+  src: url("https://use.typekit.net/osw3soi.css");
 }
 
 .Account-apple{
@@ -73,6 +78,8 @@
   background: #000000;
   border: none;
   border-radius: 16px;
+  font-family: Termina;
+  src: url("https://use.typekit.net/osw3soi.css");
 }
 
 .Account-link {
