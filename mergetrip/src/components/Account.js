@@ -164,6 +164,9 @@ class SimpleForm extends Component {
 
     return (
       <div className="Account">
+        <style>
+          @import url("https://use.typekit.net/osw3soi.css");
+        </style>
         <header className="Account-header">
           <div className="Account-buttons">
             <button className="Account-google" onClick={this.onGoogleLogin}>

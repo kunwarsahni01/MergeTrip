@@ -19,8 +19,11 @@ class HomePage extends Component {
   render() {
     return (
       <div className="HomePage">
+        <style>
+          @import url("https://use.typekit.net/osw3soi.css");
+        </style>
         <header className="HomePage-header">
-        <span className="termina-black-15-3px">MERGETRIP</span>
+          <span className="termina-black-15-3px">MERGETRIP</span>
           <button className="HomePage-button" onClick={this.onSignUp}>Sign Up</button>
         </header>
       </div>
