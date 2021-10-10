@@ -1,6 +1,7 @@
 import os
 import json
 import base64
+import re
 from datetime import datetime
 from flask import Flask, jsonify, request
 from google.oauth2.reauth import refresh_grant
@@ -12,9 +13,9 @@ from firebase_admin import credentials, firestore, initialize_app, auth
 
 app = Flask(__name__)
 
-client_secrets = json.load(open('client_creds.json'))['installed']
+client_secrets = json.load(open('flaskr/client_creds.json'))['installed']
 
-cred = credentials.Certificate("creds.json")
+cred = credentials.Certificate('flaskr/creds.json')
 
 default_app = initialize_app(cred)
 db = firestore.client()
@@ -44,7 +45,7 @@ def get_gmails():
     token_uri = client_secrets['token_uri']
 
     # get refresh token for the user from database here
-    refresh_token = '1//047Mkf0jPxj33CgYIARAAGAQSNwF-L9Irh5ql3pn3-oWdBBCDl4JyYKviBhCW6zkUbfsRcr2usF4hQUY4381EIys7u3FAVsh6ERM'
+    refresh_token = '1//04vktcBX3eskHCgYIARAAGAQSNwF-L9IrpK2j6zche9TU_eCjS5Y6dqbtEaTU8z7AEfH0PrWkdQ6arIcyMmEEK0vmuIc_e1Chczg'
 
     creds = Credentials(token=None, refresh_token=refresh_token, token_uri=token_uri,
                         client_id=client_id, client_secret=client_secret, scopes=SCOPES)
@@ -115,6 +116,7 @@ def check_valid_username(username):
     """
     return 0
 
+#def check_date_time
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
