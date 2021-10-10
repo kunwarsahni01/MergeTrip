@@ -27,6 +27,7 @@ class HomePage extends Component {
         </button>
         <header className="HomePage-header">
           <span className="termina-black-15-3px">MERGETRIP</span>
+          <span className="HomePage-subtitle">No More Stress</span>
         </header>
       </div>
     );
