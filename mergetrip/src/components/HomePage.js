@@ -26,7 +26,7 @@ class HomePage extends Component {
           Sign Up
         </button>
         <header className="HomePage-header">
-          <span className="termina-black-15-3px">MERGETRIP</span>
+          MERGETRIP
           <span className="HomePage-subtitle">No More Stress</span>
         </header>
       </div>

@@ -79,7 +79,7 @@ class SimpleForm extends Component {
         });
 
         console.log("Login Succesful");
-        this.props.history.push("/");
+        this.props.history.push("/main");
         // ...
       }).catch((error) => {
         // Handle Errors here.
@@ -110,7 +110,7 @@ class SimpleForm extends Component {
         // const accessToken = credential.accessToken;
         // const idToken = credential.idToken;
         console.log("Login Succesful");
-        this.props.history.push("/");
+        this.props.history.push("/main");
 
         // ...
       })
@@ -134,7 +134,7 @@ class SimpleForm extends Component {
         // Signed in 
         // const user = userCredential.user;
         console.log("Login Succesful");
-        this.props.history.push("/");
+        this.props.history.push("/main");
         // ...
       })
       .catch((error) => {
