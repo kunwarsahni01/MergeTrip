@@ -12,13 +12,21 @@ class Main extends Component {
         };
         this.clickMenu = this.clickMenu.bind(this);
         const auth = getAuth();
+        console.log(auth.currentUser.displayName);
         this.state.name = auth.currentUser.displayName;
         this.state.profileURL = auth.currentUser.photoURL
+        this.onLogout = this.onLogout.bind(this);
     }
 
     clickMenu() {
         let sidebar = document.querySelector(".sidebar");
         sidebar.classList.toggle("open");
+    }
+
+    onLogout() {
+        const auth = getAuth();
+        auth.signOut();
+        this.props.history.push('/');
     }
 
     render() {
@@ -69,7 +77,7 @@ class Main extends Component {
                                     <div class="name">{this.state.name}</div>
                                 </div>
                             </div>
-                            <i class='bx bx-log-out' id="log_out" ></i>
+                            <i class='bx bx-log-out' id="log_out" onClick={this.onLogout}></i>
                         </li>
                     </ul>
                 </div>
