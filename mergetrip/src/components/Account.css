@@ -1,5 +1,19 @@
 .Account {
+  background-color: #DFD2B6;
   text-align: center;
+}
+
+.Account-home {
+  font-family: Termina;
+  font-weight: 900;
+  font-size: 1.5em;
+  color: rgb(0, 0, 0);
+  margin: 25px 00px 0px 25px;
+  position: absolute;
+  left: 0px;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .Account-header {

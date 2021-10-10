@@ -1,9 +1,9 @@
 .HomePage {
+  background-color: #DFD2B6;
   text-align: center;
 }
 
 .HomePage-header {
-  background-color: #DFD2B6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,8 +13,16 @@
   font-family: Termina;
   font-weight: 900;
   color: rgb(0, 0, 0);
+}
+
+.HomePage-subtitle{
+  font-size: calc(10px + 2vmin);
+  font-family: Termina;
+  font-weight: 900;
+  color: rgb(255, 255, 255);
   margin-bottom: .5rem;
 }
+
 .HomePage-button {
   background-color: #E13234;
   color: white;
@@ -25,10 +33,21 @@
   display: inline-block;
   font-size: 15px;
   font-family: Termina;
-  margin: 4px 2px;
+  margin: 25px 30px 0px 0px;
   cursor: pointer;
   border-radius: 16px;
+  position: absolute;
+  right: 0px;
 }
-.HomePage-link {
-  color: #61dafb;
+
+.Homepage-left {
+  position: absolute;
+  left: -225px;
+  top: -225px;
+}
+
+.Homepage-right {
+  position: absolute;
+  right: -225px;
+  bottom: -225px;
 }
