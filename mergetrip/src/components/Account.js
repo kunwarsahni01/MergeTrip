@@ -19,7 +19,12 @@ class SimpleForm extends Component {
     this.onGoogleLogin = this.onGoogleLogin.bind(this);
     this.onAppleLogin = this.onAppleLogin.bind(this);
     this.onResetPassword = this.onResetPassword.bind(this);
+    this.onHomeButton = this.onHomeButton.bind(this);
 
+  }
+
+  onHomeButton() {
+    this.props.history.push("/");
   }
 
   onInputchange(event) {
@@ -173,6 +178,7 @@ class SimpleForm extends Component {
         <style>
           @import url("https://use.typekit.net/osw3soi.css");
         </style>
+        <button className="Account-home" onClick={this.onHomeButton}>MERGETRIP</button>
         <header className="Account-header">
           <div className="Account-buttons">
             <button className="Account-google" onClick={this.onGoogleLogin}>
