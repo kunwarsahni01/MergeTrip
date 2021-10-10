@@ -39,6 +39,15 @@
   position: absolute;
   right: 0px;
 }
-.HomePage-link {
-  color: #61dafb;
+
+.Homepage-left {
+  position: absolute;
+  left: -225px;
+  top: -225px;
+}
+
+.Homepage-right {
+  position: absolute;
+  right: -225px;
+  bottom: -225px;
 }
