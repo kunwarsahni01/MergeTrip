@@ -50,4 +50,23 @@
   position: absolute;
   right: -225px;
   bottom: -225px;
+
+}
+
+.HomePage-Scroll-Button {
+  position: absolute;
+  align-items: center;
+  top: 60%;
+  left: 45%;
+  background: #E13234;
+  border-radius: 19px;
+  transform: rotate(180deg);
+  font-family: Helvetica;
+  font-size: 60px;
+  color: #FFFFFF;
+}
+div {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
