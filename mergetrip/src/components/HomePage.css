@@ -1,9 +1,9 @@
 .HomePage {
+  background-color: #DFD2B6;
   text-align: center;
 }
 
 .HomePage-header {
-  background-color: #DFD2B6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,9 +25,11 @@
   display: inline-block;
   font-size: 15px;
   font-family: Termina;
-  margin: 4px 2px;
+  margin: 10px 10px 0px 0px;
   cursor: pointer;
   border-radius: 16px;
+  position: absolute;
+  right: 0px;
 }
 .HomePage-link {
   color: #61dafb;

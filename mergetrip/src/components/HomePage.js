@@ -22,6 +22,9 @@ class HomePage extends Component {
         <style>
           @import url("https://use.typekit.net/osw3soi.css");
         </style>
+        <button className="HomePage-button" onClick={this.onSignUp}>
+          Sign Up
+        </button>
         <header className="HomePage-header">
           <span className="termina-black-15-3px">MERGETRIP</span>
         </header>
