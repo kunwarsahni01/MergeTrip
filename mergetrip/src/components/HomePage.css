@@ -60,7 +60,7 @@
   left: 45%;
   background: #E13234;
   border-radius: 19px;
-  transform: rotate(180deg);
+  /*transform: rotate(180deg);*/
   font-family: Helvetica;
   font-size: 60px;
   color: #FFFFFF;

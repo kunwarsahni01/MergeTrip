@@ -3,6 +3,7 @@ import './HomePage.css';
 import { withRouter } from 'react-router-dom';
 import leftBoarding from './BoardingLeft.svg'
 import rightBoarding from './BoardingRight.svg'
+import downArrow from './DownArrow.svg'
 import scrollButton from './ScrollButton.svg'
 
 class HomePage extends Component {
@@ -18,10 +19,7 @@ class HomePage extends Component {
   redirect() {
     this.props.history.push('/account');
   }
-  /*
-  pageScroll() {
-    window.scrollBy (500, 500);
-  }*/
+
 
   render() {
     return (
@@ -38,7 +36,7 @@ class HomePage extends Component {
           MERGETRIP
           <span className="HomePage-subtitle">No More Stress</span>
         </header>
-        <a className="HomePage-Scroll-Button" href="#pageTwo"><span></span>Button</a>
+        <a className="HomePage-Scroll-Button" href="#pageTwo"><span></span><img src={downArrow}></img></a>
 
         
       </div>
@@ -53,7 +51,5 @@ class HomePage extends Component {
   }
 
 }
-
-//<button className="HomePage-Scroll-Button" href="#secondPage">button</button>
 
 export default withRouter(HomePage);
