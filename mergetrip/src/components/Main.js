@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import './Main.css';
 import { withRouter } from 'react-router-dom';
 import { getAuth } from "firebase/auth";
+import { ThemeConsumer } from "styled-components";
 
 class Main extends Component {
     constructor() {
@@ -13,8 +14,19 @@ class Main extends Component {
         this.clickMenu = this.clickMenu.bind(this);
         const auth = getAuth();
         console.log(auth.currentUser.displayName);
+        this.defaultName = "User";
+        this.defaultProfileURL = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y?d=mp";
+
         this.state.name = auth.currentUser.displayName;
+        if (this.state.name == null) {
+            this.state.name = this.defaultName;
+        }
+
         this.state.profileURL = auth.currentUser.photoURL
+        if (this.state.profileURL == null) {
+            this.state.profileURL = this.defaultProfileURL;
+        }
+
         this.onLogout = this.onLogout.bind(this);
     }
 
