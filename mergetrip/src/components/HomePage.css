@@ -45,13 +45,13 @@
 }
 
 .Homepage-left {
-  position: fixed;
+  position: absolute;
   left: -225px;
   top: -225px;
 }
 
 .Homepage-right {
-  position: fixed;
+  position: absolute;
   right: -225px;
   bottom: -225px;
 }
@@ -99,17 +99,22 @@ div {
 }
 
 .first-description {
+  display: inline-block;
+  position: absolute;
   align-items: center;
   font-size: calc(10px + 2vmin);
   font-family: Termina;
   font-weight: 250;
   color: rgb(255, 255, 255);
   margin-bottom: .5rem;
-
   font-size: 1.5em;
-  margin: 25px 00px 0px 25px;
-  position: absolute;
-  left: 0px;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  width: 500px;
+  height: 100px;
+  margin: auto;
   border: none;
   background: none;
 
@@ -117,8 +122,23 @@ div {
 
 .secondPage-imgOne {
   position: absolute;
-  top: 75%;
-  left: 25%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 50%;
   height: 200px;
   width: 200px;
+}
+
+.test {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 500px;
+  height: 100px;
+  margin: auto;
+
 }

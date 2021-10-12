@@ -52,12 +52,14 @@ class HomePage extends Component {
             <img src={downArrow}></img>
           </button>
         </h1>
-
+      </div>
+      <div className="secondPage">
         {/*<img src={imgOne} class="secondPage-imgOne"></img>*/}
         <p className="first-description">
           MergeTrip can seemlesly create 
           travel itineraries just by linking to your email
         </p>
+        {/*<p class="test">TESTING SOME STUFF</p>*/}
         <h2>Just filling some space so I can test the scrolling</h2>
         <h2>Just filling some space so I can test the scrolling</h2>
         <h2>Just filling some space so I can test the scrolling</h2>
