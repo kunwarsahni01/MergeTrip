@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import leftBoarding from './BoardingLeft.svg'
 import rightBoarding from './BoardingRight.svg'
 import downArrow from './DownArrow.svg'
-import scrollButton from './ScrollButton.svg'
+import imgOne from './pgTwoImgOne.svg'
 
 class HomePage extends Component {
   constructor() {
@@ -25,13 +25,13 @@ class HomePage extends Component {
   }
 
   toTop() {
-    window.scrollBy(0, -100000);
+    window.scrollBy(0, -10000);
   }
 
 
   render() {
     return (
-      <><div className="HomePage" id="HomePage">
+      <><div className="HomePage">
         <img src={leftBoarding} className="Homepage-left" alt="boarding-left" />
         <img src={rightBoarding} className="Homepage-right" alt="boarding-right" />
         <style>
@@ -52,28 +52,20 @@ class HomePage extends Component {
             <img src={downArrow}></img>
           </button>
         </h1>
-        
-        {
-          //<a className="HomePage-Scroll-Button" href="#pageTwo"><span></span><img src={downArrow}></img></a>
-        }
-        
 
-        <header className="HomePage-subtitle" id="pageTwo">MergeTrip can seemlesly create 
+        {/*<img src={imgOne} class="secondPage-imgOne"></img>*/}
+        <p className="first-description">
+          MergeTrip can seemlesly create 
           travel itineraries just by linking to your email
-          <a id="secondPage">See if this works</a>
-        </header>
+        </p>
+        <h2>Just filling some space so I can test the scrolling</h2>
+        <h2>Just filling some space so I can test the scrolling</h2>
+        <h2>Just filling some space so I can test the scrolling</h2>
+        <h2>Just filling some space so I can test the scrolling</h2>
 
         
       </div>
-      {/*}
-      <div className="HomePage" id="pageTwo">
-        Second page going here later
-        <header className="HomePage-subtitle">MergeTrip can seemlesly create 
-          travel itineraries just by linking to your email
-          <a id="secondPage">See if this works</a>
-        </header>
-      </div>
-    */}
+
       </>
     );
   }

@@ -1,8 +1,10 @@
 .HomePage {
   background-color: #DFD2B6;
   text-align: center;
-  max-width: 100%;
+  /*max-width: 100%;*/
   overflow-x: hidden;
+  overflow-y: hidden;
+  
 }
 
 .HomePage-header {
@@ -43,16 +45,15 @@
 }
 
 .Homepage-left {
-  position: absolute;
+  position: fixed;
   left: -225px;
   top: -225px;
 }
 
 .Homepage-right {
-  position: absolute;
+  position: fixed;
   right: -225px;
   bottom: -225px;
-
 }
 
 .HomePage-Scroll-Button {
@@ -95,4 +96,29 @@ div {
   border-radius: 16px;
   position: fixed;
   left: 0px;
+}
+
+.first-description {
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  font-family: Termina;
+  font-weight: 250;
+  color: rgb(255, 255, 255);
+  margin-bottom: .5rem;
+
+  font-size: 1.5em;
+  margin: 25px 00px 0px 25px;
+  position: absolute;
+  left: 0px;
+  border: none;
+  background: none;
+
+}
+
+.secondPage-imgOne {
+  position: absolute;
+  top: 75%;
+  left: 25%;
+  height: 200px;
+  width: 200px;
 }
