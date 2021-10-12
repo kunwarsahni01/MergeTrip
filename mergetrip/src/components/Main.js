@@ -15,7 +15,7 @@ class Main extends Component {
         const auth = getAuth();
         console.log(auth.currentUser.displayName);
         this.defaultName = "User";
-        this.defaultProfileURL = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y?d=mp";
+        this.defaultProfileURL = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp";
 
         this.state.name = auth.currentUser.displayName;
         if (this.state.name == null) {
