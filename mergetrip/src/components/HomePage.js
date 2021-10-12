@@ -62,7 +62,7 @@ class HomePage extends Component {
           Log In / Sign Up
         </button>
         <body className="body">
-          {/*<img src={imgOne} class="secondPage-imgOne"></img>*/}
+          <img src={imgOne}></img>
           <p className="first-description">
             MergeTrip can seemlesly create 
             travel itineraries just by linking to your email
