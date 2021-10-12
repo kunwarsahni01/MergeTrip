@@ -5,6 +5,7 @@ import leftBoarding from './BoardingLeft.svg'
 import rightBoarding from './BoardingRight.svg'
 import downArrow from './DownArrow.svg'
 import imgOne from './pgTwoImgOne.svg'
+import globe from './Heavy-L.svg'
 
 class HomePage extends Component {
   constructor() {
@@ -39,17 +40,17 @@ class HomePage extends Component {
         </style>
        
         <button className="home-button" onClick={this.toTop}>
-          MergeTrip
+         <img src={globe} className="header-globe"></img> MergeTrip
         </button>
         <button className="HomePage-button" onClick={this.onSignUp}>
           Log In / Sign Up
         </button>
         
         <h1 className="HomePage-header">
-          MERGETRIP
+          <img src={globe} className="globe"></img>MERGETRIP
           <span className="HomePage-subtitle">No More Stress</span>
           <button className="HomePage-Scroll-Button" onClick={this.scroll}>
-            <img src={downArrow}></img>
+            <img src={downArrow} className="scroll-img"></img>
           </button>
         </h1>
       </div>

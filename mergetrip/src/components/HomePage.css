@@ -4,7 +4,6 @@
   /*max-width: 100%;*/
   overflow-x: hidden;
   overflow-y: hidden;
-  
 }
 
 .HomePage-header {
@@ -17,6 +16,14 @@
   font-family: Termina;
   font-weight: 900;
   color: rgb(0, 0, 0);
+}
+
+.globe {
+  height: calc(40px + 2vmin);
+}
+
+.header-globe {
+  height: 25px;
 }
 
 .HomePage-subtitle{
@@ -42,6 +49,7 @@
   border-radius: 16px;
   position: fixed;
   right: 0px;
+
 }
 
 .Homepage-left {
@@ -59,7 +67,7 @@
 .HomePage-Scroll-Button {
   position: absolute;
   align-items: center;
-  top: 60%;
+  top: 65%;
   left: 45%;
   background: #E13234;
   border-radius: 19px;
@@ -83,19 +91,29 @@ div {
 
 .home-button {
   background-color: transparent;
-  color: black;
   border: none;
   padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 50px;
+  font-size: 200px;
   font-family: Termina;
   margin: 25px 30px 0px 0px;
   cursor: pointer;
   border-radius: 16px;
   position: fixed;
-  left: 0px;
+  left: 20px;
+  font-weight: 900;
+  font-size: 1.5em;
+  color: rgb(0, 0, 0);
+  height: 50px;
+}
+
+.scroll-img {
+  position: absolute;
+  border-radius: 19px;
+  border: black;
+  background-color: transparent;
 }
 
 .first-description {
