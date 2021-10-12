@@ -1,7 +1,6 @@
 .HomePage {
   background-color: #DFD2B6;
   text-align: center;
-  /*max-width: 100%;*/
   overflow-x: hidden;
   overflow-y: hidden;
 }
@@ -18,75 +17,12 @@
   color: rgb(0, 0, 0);
 }
 
-.globe {
+.main-globe {
   height: calc(40px + 2vmin);
 }
 
 .header-globe {
   height: 25px;
-}
-
-.HomePage-subtitle{
-  font-size: calc(10px + 2vmin);
-  font-family: Termina;
-  font-weight: 900;
-  color: rgb(255, 255, 255);
-  margin-bottom: .5rem;
-}
-
-.HomePage-button {
-  background-color: #E13234;
-  color: white;
-  border: none;
-  padding: 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 15px;
-  font-family: Termina;
-  margin: 25px 30px 0px 0px;
-  cursor: pointer;
-  border-radius: 16px;
-  position: fixed;
-  right: 0px;
-
-}
-
-.Homepage-left {
-  position: absolute;
-  left: -225px;
-  top: -225px;
-}
-
-.Homepage-right {
-  position: absolute;
-  right: -225px;
-  bottom: -225px;
-}
-
-.HomePage-Scroll-Button {
-  position: absolute;
-  align-items: center;
-  top: 65%;
-  left: 45%;
-  background: #E13234;
-  border-radius: 19px;
-  /*transform: rotate(180deg);*/
-  font-family: Helvetica;
-  font-size: 60px;
-  color: #FFFFFF;
-}
-div {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.secondPage {
-  background-color: #DFD2B6;
-  text-align: center;
-  max-width: 100%;
-  overflow-x: hidden;
 }
 
 .home-button {
@@ -109,11 +45,72 @@ div {
   height: 50px;
 }
 
+.HomePage-subtitle{
+  font-size: calc(10px + 2vmin);
+  font-family: Termina;
+  font-weight: 900;
+  color: rgb(255, 255, 255);
+  margin-bottom: .5rem;
+}
+
+.Login-button {
+  background-color: #E13234;
+  color: white;
+  border: none;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 25px 30px 0px 0px;
+  cursor: pointer;
+  border-radius: 16px;
+  position: fixed;
+  right: 0px;
+}
+
+.Homepage-left {
+  position: absolute;
+  left: -225px;
+  top: -225px;
+}
+.Homepage-right {
+  position: absolute;
+  right: -225px;
+  bottom: -225px;
+}
+
+.HomePage-Scroll-Button {
+  position: absolute;
+  align-items: center;
+  top: 65%;
+  left: 45%;
+  background: #E13234;
+  border-radius: 19px;
+  font-family: Helvetica;
+  font-size: 60px;
+  color: #FFFFFF;
+}
+
 .scroll-img {
   position: absolute;
   border-radius: 19px;
   border: black;
   background-color: transparent;
+}
+
+div {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.secondPage {
+  background-color: #DFD2B6;
+  text-align: center;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .first-description {
@@ -135,7 +132,6 @@ div {
   margin: auto;
   border: none;
   background: none;
-
 }
 
 .secondPage-imgOne {
@@ -148,15 +144,30 @@ div {
   width: 200px;
 }
 
-.test {
+.second-description {
   display: inline-block;
   position: absolute;
-  top: 0;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  font-weight: 250;
+  font-family: Termina;
+  margin-bottom: 1.5em;
+  top: 50%;
   bottom: 0;
   left: 0;
-  right: 0;
+  right: 50%;
   width: 500px;
   height: 100px;
   margin: auto;
+  border: none;
+  background: none;
+}
+
+.body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
 }

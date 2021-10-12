@@ -42,12 +42,12 @@ class HomePage extends Component {
         <button className="home-button" onClick={this.toTop}>
          <img src={globe} className="header-globe"></img> MergeTrip
         </button>
-        <button className="HomePage-button" onClick={this.onSignUp}>
+        <button className="Login-button" onClick={this.onSignUp}>
           Log In / Sign Up
         </button>
         
         <h1 className="HomePage-header">
-          <img src={globe} className="globe"></img>MERGETRIP
+          <img src={globe} className="main-globe"></img>MERGETRIP
           <span className="HomePage-subtitle">No More Stress</span>
           <button className="HomePage-Scroll-Button" onClick={this.scroll}>
             <img src={downArrow} className="scroll-img"></img>
@@ -55,18 +55,29 @@ class HomePage extends Component {
         </h1>
       </div>
       <div className="secondPage">
-        {/*<img src={imgOne} class="secondPage-imgOne"></img>*/}
-        <p className="first-description">
-          MergeTrip can seemlesly create 
-          travel itineraries just by linking to your email
-        </p>
-        {/*<p class="test">TESTING SOME STUFF</p>*/}
-        <h2>Just filling some space so I can test the scrolling</h2>
-        <h2>Just filling some space so I can test the scrolling</h2>
-        <h2>Just filling some space so I can test the scrolling</h2>
-        <h2>Just filling some space so I can test the scrolling</h2>
+        <button className="home-button" onClick={this.toTop}>
+          <img src={globe} className="header-globe"></img> MergeTrip
+        </button>
+        <button className="Login-button" onClick={this.onSignUp}>
+          Log In / Sign Up
+        </button>
+        <body className="body">
+          {/*<img src={imgOne} class="secondPage-imgOne"></img>*/}
+          <p className="first-description">
+            MergeTrip can seemlesly create 
+            travel itineraries just by linking to your email
+          </p>
+          <p className="second-description">
+            See all of you travel details in one place. Hotels, Flights, Rental Cars, Parks, and much more
+          </p>
+          {/*
+          <h2>Just filling some space so I can test the scrolling</h2>
+          <h2>Just filling some space so I can test the scrolling</h2>
+          <h2>Just filling some space so I can test the scrolling</h2>
+          <h2>Just filling some space so I can test the scrolling</h2>
+          */}
 
-        
+        </body>
       </div>
 
       </>
