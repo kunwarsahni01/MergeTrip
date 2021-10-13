@@ -135,13 +135,17 @@ div {
 }
 
 .secondPage-imgOne {
+  display: inline-block;
   position: absolute;
-  top: 0;
+  align-items: center;
+  margin-bottom: 1.5em;
+  top: 25%;
   bottom: 0;
-  left: 0;
-  right: 50%;
-  height: 200px;
-  width: 200px;
+  left: 20%;
+  right: 0;
+  height: 250px;
+  width: 250px;
+  border-radius: 16px;
 }
 
 .second-description {
@@ -170,4 +174,17 @@ div {
   align-items: center;
   justify-content: center;
 
+}
+.secondPage-imgTwo {
+  display: inline-block;
+  position: absolute;
+  align-items: center;
+  margin-bottom: 1.5em;
+  top: 60%;
+  bottom: 0;
+  left: 60%;
+  right: 0;
+  height: 250px;
+  width: 250px;
+  border-radius: 16px;
 }
