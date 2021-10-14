@@ -209,6 +209,9 @@ class SimpleForm extends Component {
             />
           </div>
           <div className="Account-requirements"> 
+            * username must exist *
+          </div>
+          <div className="Account-requirements"> 
             * password must be 6 characters long *
           </div>
           <div>
