@@ -23,7 +23,71 @@ db = firestore.client()
 
 @app.route("/")
 def home():
-    return check_date_time("07/23/2009")
+    text = """Your reservation is confirmed        
+          You
+          Modern 2BR Apartment with Laundry
+          Entire home/apt hosted by Frontdesk
+        Friday,
+
+
+        Sunday,
+
+
+          View full itinerary
+      Address
+      917 Locust St, St. Louis, MO 63101, USA
+        Get directions
+      Guests
+      4
+        Invite guests
+      Cancellation policy
+      Cancel before 3:00 PM on Oct 7 and get a full refund. After that, cancel before 3:00 PM on Oct 8 and get a full 
+refund, minus the first night and service fee.
+      Cutoff times are based on the listing
+        More details
+      Payments
+                Payment 1 of 1
+                $573.99
+                Oct 07, 2021
+                VISA
+                Amount paid (USD)
+                $573.99
+      Reservation code
+      HMYWPPWRFD
+          Change reservation
+        House rules
+            Check-in: After 3:00 PM
+            Checkout: 11:00 AM
+            Self check-in with lockbo
+          Show all
+        Safety & Property Info
+            Security camera/recording device
+            Carbon mono
+            Smoke alarm
+          Show all
+      Frontdesk is your host
+      Contact Frontdesk to coordinate arrival time and key e
+        Message host
+                  +1 (314) 530-3306
+      Know what to e
+      Make sure to review the House Rules and amenities.
+        Go to House Rules
+      Customer support
+      Contact our support team 24/7 from anywhere in the world.
+        Visit Help Center
+        Contact Airbnb
+Considering travel insurance?
+Get information on how to protect your trip.Learn more
+Check for local travel advisories
+Many places around the world are issuing new restrictions on lodging and travel each day. Before you travel, please check the latest from the local government in order to keep everyone safe and healthy.Learn more
+Refer a host, earn $15 cash
+                            Learn more
+Refer a host, earn $15 cash
+                            Learn more
+        Get a friend to start hosting on Airbnb and make e
+
+          Sent with"""
+    return reservation_code_airbnb_regex(text)
 
 @app.route("/itinerary")
 def show_itinerary():
@@ -129,32 +193,47 @@ def reservation_code_airbnb_regex(text):
     pattern = r'[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z]'
     code = re.search(pattern, text)
 
-    return code
+    if code:
+        return ("found a match")
+    else:
+        return ("none found")
 
 # 8 digit confirmation codes for hotels
 def confirmation_code_regex(text):
     pattern = r'[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
     code = re.search(pattern, text)
 
-    return code
+    if code:
+        return ("found a match")
+    else:
+        return ("none found")
 
 def time_regex(text):
     pattern = r'((0?[1-9]|1[0-2]):([0-5][0-9]) ?([AaPp][Mm]))'
     time = re.search(pattern, text)
 
-    return time
+    if time:
+        return ("found a match")
+    else:
+        return ("none found")
 
 def date_regex_no_char(text):
     pattern = r'(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d'
     date = re.search(pattern, text)
 
-    return date
+    if date:
+        return ("found a match")
+    else:
+        return ("none found")
 
 def date_regex_char(text):
     pattern = r'(January|February|March|April|May|June?|July|August|September|October|November|December)\s(\d\d?).+?(\d\d\d\d)'
     date = re.search(pattern, text)
 
-    return date
+    if date:
+        return ("found a match")
+    else:
+        return ("none found")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
