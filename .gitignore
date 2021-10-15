@@ -1,5 +1,5 @@
-creds.json
-client_creds.json
+flaskr/creds.json
+flaskr/client_creds.json
+mytoken.json
 docs/.DS_Store
 .DS_Store
-venv
