@@ -87,7 +87,7 @@ Refer a host, earn $15 cash
         Get a friend to start hosting on Airbnb and make e
 
           Sent with"""
-    return reservation_code_airbnb_regex(text)
+    return date_regex_char(text)
 
 @app.route("/itinerary")
 def show_itinerary():
@@ -191,9 +191,13 @@ def hotel_or_flight(text):
 # AirBNB testing (regex)
 def reservation_code_airbnb_regex(text):
     pattern = r'[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z]'
-    code = re.search(pattern, text)
+    check = re.search(pattern, text)
+    code = re.findall(pattern, text)
 
-    if code:
+    for i in code:
+        print(i)
+
+    if check:
         return ("found a match")
     else:
         return ("none found")
@@ -201,36 +205,53 @@ def reservation_code_airbnb_regex(text):
 # 8 digit confirmation codes for hotels
 def confirmation_code_regex(text):
     pattern = r'[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
-    code = re.search(pattern, text)
+    check = re.search(pattern, text)
+    code = re.findall(pattern, text)
 
-    if code:
+    for i in code:
+        print(i)
+
+    if check:
         return ("found a match")
     else:
         return ("none found")
 
+
 def time_regex(text):
     pattern = r'((0?[1-9]|1[0-2]):([0-5][0-9]) ?([AaPp][Mm]))'
-    time = re.search(pattern, text)
+    check = re.search(pattern, text)
+    time = re.findall(pattern, text)
 
-    if time:
+    for i in time:
+        print(i)
+
+    if check:
         return ("found a match")
     else:
         return ("none found")
 
 def date_regex_no_char(text):
     pattern = r'(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d'
-    date = re.search(pattern, text)
+    check = re.search(pattern, text)
+    date = re.findall(pattern, text)
 
-    if date:
+    for i in date:
+        print(i)
+
+    if check:
         return ("found a match")
     else:
         return ("none found")
 
 def date_regex_char(text):
     pattern = r'(January|February|March|April|May|June?|July|August|September|October|November|December)\s(\d\d?).+?(\d\d\d\d)'
-    date = re.search(pattern, text)
+    check = re.search(pattern, text)
+    date = re.findall(pattern, text)
 
-    if date:
+    for i in date:
+        print(i)
+
+    if check:
         return ("found a match")
     else:
         return ("none found")
