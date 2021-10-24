@@ -10,8 +10,11 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from firebase_admin import credentials, firestore, initialize_app, auth
+import nltk
 
 app = Flask(__name__)
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
 
 client_secrets = json.load(open('flaskr/client_creds.json'))['installed']
 
@@ -19,7 +22,6 @@ cred = credentials.Certificate('flaskr/creds.json')
 
 default_app = initialize_app(cred)
 db = firestore.client()
-
 
 @app.route("/")
 def home():
@@ -87,7 +89,11 @@ Refer a host, earn $15 cash
         Get a friend to start hosting on Airbnb and make e
 
           Sent with"""
-    return date_regex_char(text)
+    
+    sent = preprocess_email(text)
+    print(sent)
+    # return a regex test to find a match
+    return "success"
 
 @app.route("/itinerary")
 def show_itinerary():
@@ -255,6 +261,14 @@ def date_regex_char(text):
         return ("found a match")
     else:
         return ("none found")
+    
+def preprocess_email(text):
+    text = nltk.word_tokenize(text)
+    text = nltk.pos_tag(text)
+
+    return text
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
