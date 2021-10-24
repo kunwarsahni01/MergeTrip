@@ -1,4 +1,9 @@
 import nltk
+from pprint import pprint
+import spacy
+from spacy import displacy
+from collections import Counter
+import en_core_web_sm
 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
@@ -79,5 +84,17 @@ sent = preprocess_email(text)
 pattern = 'NP: {<DT>?<JJ>*<NN>}'
 cp = nltk.RegexpParser(pattern)
 cs = cp.parse(sent)
-print(cs)
-cs.draw()
+#pprint(cs)
+#cs.draw()
+
+iot_tags = nltk.tree2conlltags(cs)
+#pprint(iot_tags)
+
+# using spacy to extract and classify data from text
+nlp = en_core_web_sm.load()
+doc = nlp(text)
+pprint([(X.text, X.label_) for X in doc.ents])
+
+# Using BILUO tagging
+# spaces and other clutter is included
+pprint([(X, X.ent_iob_, X.ent_type_) for X in doc])
