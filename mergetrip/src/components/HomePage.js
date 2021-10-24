@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import './HomePage.css';
 import { withRouter } from 'react-router-dom';
 import leftBoarding from './BoardingLeft.svg'
-import rightBoarding from './BoardingRight.svg'
 
 class HomePage extends Component {
   constructor() {
@@ -22,7 +21,7 @@ class HomePage extends Component {
     return (
       <div className="HomePage">
         <img src={leftBoarding} className="Homepage-left" alt="boarding-left" />
-        <img src={rightBoarding} className="Homepage-right" alt="boarding-right" />
+        <img src={leftBoarding} className="Homepage-right" alt="boarding-right" />
         <style>
           @import url("https://use.typekit.net/osw3soi.css");
         </style>

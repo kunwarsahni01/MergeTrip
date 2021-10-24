@@ -1,6 +1,8 @@
 .HomePage {
   background-color: #DFD2B6;
   text-align: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .HomePage-header {
@@ -41,13 +43,14 @@
 }
 
 .Homepage-left {
-  position: absolute;
+  position: fixed;
   left: -225px;
   top: -225px;
 }
 
 .Homepage-right {
-  position: absolute;
+  position: fixed;
   right: -225px;
   bottom: -225px;
+  overflow: auto;
 }
