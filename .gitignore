@@ -3,3 +3,4 @@ flaskr/client_creds.json
 mytoken.json
 docs/.DS_Store
 .DS_Store
+venv
