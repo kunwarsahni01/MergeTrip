@@ -20,11 +20,11 @@ class HomePage extends Component {
   render() {
     return (
       <div className="HomePage">
-        <img src={leftBoarding} className="Homepage-left" alt="boarding-left" />
-        <img src={leftBoarding} className="Homepage-right" alt="boarding-right" />
         <style>
           @import url("https://use.typekit.net/osw3soi.css");
         </style>
+        <img src={leftBoarding} className="Homepage-left" alt="boarding-left" />
+        <img src={leftBoarding} className="Homepage-right" alt="boarding-right" />
         <button className="HomePage-button" onClick={this.onSignUp}>
           Sign Up
         </button>
