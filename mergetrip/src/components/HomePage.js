@@ -3,6 +3,13 @@ import './HomePage.css';
 import { withRouter } from 'react-router-dom';
 import leftBoarding from './BoardingLeft.svg'
 
+import rightBoarding from './BoardingRight.svg'
+import downArrow from './DownArrow.svg'
+import imgOne from './plane.svg'
+import imgTwo from './nature.svg'
+import globe from './Heavy-L.svg'
+
+
 class HomePage extends Component {
   constructor() {
     super();
@@ -17,27 +24,69 @@ class HomePage extends Component {
     this.props.history.push('/account');
   }
 
+  scroll() {
+    window.scrollBy(0, 8000);
+  }
+
+  toTop() {
+    window.scrollBy(0, -10000);
+  }
+
+
   render() {
     return (
-      <div className="HomePage">
+      <><div className="HomePage">
+        <embed src={leftBoarding} className="Homepage-left" alt="boarding-left" />
+        <embed src={rightBoarding} className="Homepage-right" alt="boarding-right" />
         <style>
           @import url("https://use.typekit.net/osw3soi.css");
         </style>
-        <img src={leftBoarding} className="Homepage-left" alt="boarding-left" />
-        <img src={leftBoarding} className="Homepage-right" alt="boarding-right" />
-        <button className="HomePage-button" onClick={this.onSignUp}>
-          Sign Up
+       
+        <button className="home-button" onClick={this.toTop}>
+         <img src={globe} className="header-globe"></img> MergeTrip
         </button>
-        <header className="HomePage-header">
-          MERGETRIP
+        <button className="Login-button" onClick={this.onSignUp}>
+          Log In / Sign Up
+        </button>
+        
+        <h1 className="HomePage-header">
+          <embed src={globe} className="main-globe"></embed>MERGETRIP
           <span className="HomePage-subtitle">No More Stress</span>
-        </header>
+          <button className="HomePage-Scroll-Button" onClick={this.scroll}>
+            <img src={downArrow} className="scroll-img"></img>
+          </button>
+        </h1>
       </div>
+      <div className="secondPage">
+        <button className="home-button" onClick={this.toTop}>
+          <img src={globe} className="header-globe"></img> MergeTrip
+        </button>
+        <button className="Login-button" onClick={this.onSignUp}>
+          Log In / Sign Up
+        </button>
+        <body className="body">
+          <embed className="secondPage-imgOne" src={imgOne}></embed>
+          <p className="first-description">
+            MergeTrip can seemlesly create 
+            travel itineraries just by linking to your email
+          </p>
+          <p className="second-description">
+            See all of you travel details in one place. Hotels, Flights, Rental Cars, Parks, and much more
+          </p>
+          <embed className="secondPage-imgTwo" src={imgTwo}></embed>
+          {/*
+          <h2>Just filling some space so I can test the scrolling</h2>
+          <h2>Just filling some space so I can test the scrolling</h2>
+          <h2>Just filling some space so I can test the scrolling</h2>
+          <h2>Just filling some space so I can test the scrolling</h2>
+          */}
+
+        </body>
+      </div>
+
+      </>
     );
   }
-
 }
-
-
 
 export default withRouter(HomePage);
