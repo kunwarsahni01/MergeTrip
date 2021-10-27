@@ -70,6 +70,12 @@ class Main extends Component {
                             </a>
                             <span class="tooltip">Settings</span>
                         </li>
+                        <li>
+                            <a href="#">
+                                <i class = 'bx bx-group' ></i>
+                                <span class="links_name">Groups</span>
+                            </a>
+                        </li>   
                         <li class="profile">
                             <div class="profile-details">
                                 <img src={this.state.profileURL} alt="profileImg" />
