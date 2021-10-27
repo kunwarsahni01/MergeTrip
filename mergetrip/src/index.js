@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { getFirestore } from "firebase/firestore";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -25,6 +26,8 @@ const firebaseConfig = {
 // Initialize Firebase
 // eslint-disable-next-line
 const app = initializeApp(firebaseConfig);
+const db = getFirestore();
+
 // const analytics = getAnalytics(app);
 
 ReactDOM.render(

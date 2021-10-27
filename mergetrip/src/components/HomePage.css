@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(40px + 2vmin);
+  font-size: calc(37px + 2vmin);
   font-family: Termina;
   font-weight: 900;
   color: rgb(0, 0, 0);
@@ -69,14 +69,23 @@
   position: fixed;
   right: 0px;
 }
+@media 
+  only screen and (max-width: 767px)  {
+    .Homepage-left{
+       display:none;
+     }
+     .Homepage-right{
+      display:none;
+    }
+}
 
 .Homepage-left {
-  position: absolute;
+  position: fixed;
   left: -225px;
   top: -225px;
 }
 .Homepage-right {
-  position: absolute;
+  position: fixed;
   right: -225px;
   bottom: -225px;
 }
@@ -187,4 +196,5 @@ div {
   height: 250px;
   width: 250px;
   border-radius: 16px;
+  overflow: auto;
 }

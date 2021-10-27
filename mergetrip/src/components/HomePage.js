@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import './HomePage.css';
 import { withRouter } from 'react-router-dom';
 import leftBoarding from './BoardingLeft.svg'
+
 import rightBoarding from './BoardingRight.svg'
 import downArrow from './DownArrow.svg'
 import imgOne from './plane.svg'
 import imgTwo from './nature.svg'
 import globe from './Heavy-L.svg'
+
 
 class HomePage extends Component {
   constructor() {
