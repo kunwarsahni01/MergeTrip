@@ -16,6 +16,7 @@ class Main extends Component {
         this.state.name = auth.currentUser.displayName;
         this.state.profileURL = auth.currentUser.photoURL
         this.onLogout = this.onLogout.bind(this);
+        this.onGroup = this.onGroup.bind(this);
     }
 
     clickMenu() {
@@ -28,7 +29,7 @@ class Main extends Component {
         auth.signOut();
         this.props.history.push('/');
     }
-/*
+
     onGroup() {
         this.toGroup();
     }
@@ -36,7 +37,7 @@ class Main extends Component {
     toGroup() {
         this.props.history.push('/groups');
     }
-*/
+
     render() {
         return (
             <div>
@@ -80,7 +81,7 @@ class Main extends Component {
                         </li>
                         <li>
                             <a href="#">
-                                <i class = 'bx bx-group' onClick={this.props.history.push('/groups')}></i>
+                                <i class = 'bx bx-group' onClick={this.onGroup}></i>
                                 <span class="links_name">Groups</span>
                             </a>
                             <span class="tooltip">Groups</span>
