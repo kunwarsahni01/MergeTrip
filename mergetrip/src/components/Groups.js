@@ -1,9 +1,32 @@
 import './Groups.css'
+import react, { Component } from 'react';
 
-class Groups {
+class Groups extends Compoent {
     constructor() {
-        
+        super();
+        this.state = {
+            name: "",
+            profileURL: ""
+        };
+        this.clickMenu = this.clickMenu.bind(this);
+        const auth = getAuth();
+        console.log(auth.currentUser.displayName);
+        this.state.name = auth.currentUser.displayName;
+        this.state.profileURL = auth.currentUser.photoURL
+        this.onLogout = this.onLogout.bind(this);
     }
+    
+    clickMenu() {
+        let sidebar = document.querySelector(".sidebar");
+        sidebar.classList.toggle("open");
+    }
+
+    onLogout() {
+        const auth = getAuth();
+        auth.signOut();
+        this.props.history.push('/');
+    }
+    
     render() {
         return (
             <div>
@@ -63,6 +86,9 @@ class Groups {
                         </li>
                     </ul>
                 </div>
+                <section class="home-section">
+                    <div class="text">Groups</div>
+                </section>
             </div>
         )
     }
