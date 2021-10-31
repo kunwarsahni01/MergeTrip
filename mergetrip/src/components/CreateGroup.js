@@ -10,6 +10,7 @@ class CreateGroup extends Component {
             name: "",
             profileURL: ""
         };
+        this.onInputchange = this.onInputchange.bind(this);
         this.clickMenu = this.clickMenu.bind(this);
         const auth = getAuth();
         console.log(auth.currentUser.displayName);
@@ -34,6 +35,11 @@ class CreateGroup extends Component {
         this.props.history.push('/groups');
     }
     
+    onInputchange(event) {
+        this.setState({
+          [event.target.name]: event.target.value
+        });
+    }
     render() {
         return (
             <div>
@@ -95,6 +101,17 @@ class CreateGroup extends Component {
                 </div>
                 <section class="home-section">
                     <div class="text">Create a new group</div>
+                    <div>
+                        <input class="group-input"
+                            name="groupName"
+                            type="text"
+                            placeholder="Group Name ..."
+                            onChange={this.onInputchange}>
+                        </input>
+                    </div>
+                    <div>
+                        <button class="create-button" onClick={this.createGroup}>Create</button>
+                    </div>
                 </section>
             </div>
         )
