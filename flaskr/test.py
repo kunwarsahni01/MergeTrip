@@ -1,12 +1,13 @@
-import nltk
-from pprint import pprint
+
+import re
+import dateparser
 import spacy
 from spacy import displacy
+from spacy.matcher import Matcher
+from spacy.tokenizer import Tokenizer
 from collections import Counter
+from pprint import pprint
 import en_core_web_sm
-
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
 
 text = """Your reservation is confirmed        
           You
@@ -73,28 +74,94 @@ Refer a host, earn $15 cash
 
           Sent with"""
 
-def preprocess_email(text):
-    text = nltk.word_tokenize(text)
-    text = nltk.pos_tag(text)
+def custom_tokenizer(nlp, infix_reg):
+	"""
+	Function to return a customized tokenizer based on the infix regex
+	PARAMETERS
+	----------
+	nlp : Language
+	A Spacy language object with loaded model
+	infix_reg : relgular expression object
+	The infix regular expression object based on which the tokenization is to be 
+	carried out.
+	RETURNS
+	-------
+	Tokenizer : Tokenizer object
+	The Spacy tokenizer obtained based on the infix regex.
+	"""
+	return Tokenizer(nlp.vocab, infix_finditer = infix_reg.finditer)
 
-    return text
 
-sent = preprocess_email(text)
+def is_valid_date(matcher, doc, i, matches):
+	"""
+	on match function to validate whether a matched instance is an actual date or not
+	PARAMETERS
+	----------
+	matcher : Matcher
+	The Matcher instance
+	doc : Doc
+	The document the matcher was used on 
+	i : int
+	Index of the current match
+	matches : list
+	A list of (match_ic, start, end) tuples, describing the matches. A matched
+	tuple describe the span doc[start:end]
+	RETURNS:
+	-------
+	The function doesn't return a value, it just prints whether the found date instance is valid 
+	if it's a valid date.
+	"""
+	match_id, start, end = matches[i]
+	if dateparser.parse(doc[start:end].text):
+		print (doc[start:end].text, 'valid')
 
-pattern = 'NP: {<DT>?<JJ>*<NN>}'
-cp = nltk.RegexpParser(pattern)
-cs = cp.parse(sent)
-#pprint(cs)
-#cs.draw()
+def add_regex_flag(vocab, pattern_str):
+	"""
+	Function to create a custom regex based flag for token pattern matching
+	Parameters
+	----------
+	vocab : Vocab
+	The nlp model's vocabulary, which is simply a lookup to access Lexeme objects as well as
+	StringStore
+	pattern_str : String
+	The string regular expression pattern we want to create the flag for
+	RETURNS
+	-------
+	flag_id : int
+	The integer ID by which the flag value can be checked.
+	"""
+	flag_id = vocab.add_flag(re.compile(pattern_str).match)
+	return flag_id
 
-iot_tags = nltk.tree2conlltags(cs)
-#pprint(iot_tags)
 
-# using spacy to extract and classify data from text
-nlp = en_core_web_sm.load()
-doc = nlp(text)
-pprint([(X.text, X.label_) for X in doc.ents])
+if __name__ == '__main__':
+  infix_re = re.compile(r'''[-/,]''')
+  nlp = en_core_web_sm.load()
+  nlp.tokenizer = custom_tokenizer(nlp, infix_re)
 
-# Using BILUO tagging
-# spaces and other clutter is included
-pprint([(X, X.ent_iob_, X.ent_type_) for X in doc])
+  DATE = nlp.vocab.strings['DATE']
+ 	
+   	# for the token pattern 1st, 22nd, 15th etc
+  IS_REGEX_MATCH = add_regex_flag(nlp.vocab, '\d{1,2}(?:[stndrh]){2}?')
+
+  # MM/DD/YYYY and YYYY/MM/DD
+  pattern_1 = [{'IS_DIGIT': True}, {'ORTH': '/'}, {'IS_DIGIT': True}, {'ORTH': '/'}, {'IS_DIGIT': True}]
+  # MM-DD-YYYY and YYYY-MM-DD
+  pattern_2 = [{'IS_DIGIT': True}, {'ORTH': '-'}, {'IS_DIGIT': True}, {'ORTH': '-'}, {'IS_DIGIT': True}]
+  # dates of the form 10-Aug-2018
+  pattern_3 = [{'IS_DIGIT': True}, {'ORTH': '-'}, {'IS_ALPHA': True}, {'ORTH': '-'}, {'IS_DIGIT': True}]
+  # dates of the form Aug-10-2018
+  pattern_4 = [{'IS_ALPHA': True}, {'ORTH': '-'}, {'IS_DIGIT': True}, {'ORTH': '-'}, {'IS_DIGIT': True}]
+  # dates of the form 10th August, 2018
+  pattern_5 = [{IS_REGEX_MATCH: True}, {'IS_ALPHA': True}, {'ORTH': ',', 'OP': '?'}, {'IS_DIGIT': True}]
+  # dates of the form August 10th, 2018
+  pattern_6 = [{'IS_ALPHA': True}, {IS_REGEX_MATCH: True}, {'ORTH': ',', 'OP': '?'}, {'IS_DIGIT': True}]
+	
+  matcher = Matcher(nlp.vocab)
+  patterns = [pattern_1, pattern_2, pattern_3, pattern_4, pattern_5, pattern_6]
+  matcher.add("Date patterns", patterns)
+  
+  doc = nlp('Today is 06/11/2018 yesterday was 10-Jun-2018 and tomorrow is 06-12-2018 and I will go home on 7-Jul-2018 but clearly not on 39/02/2011 and some dates are of the form 12th February,2017')
+  matches = matcher(doc)
+  for match in matches:
+    print(match)
