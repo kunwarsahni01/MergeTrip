@@ -1,9 +1,9 @@
-import './Groups.css'
+import './CreateGroup.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
 
-class Groups extends Component {
+class CreateGroup extends Component {
     constructor() {
         super();
         this.state = {
@@ -16,12 +16,9 @@ class Groups extends Component {
         this.state.name = auth.currentUser.displayName;
         this.state.profileURL = auth.currentUser.photoURL
         this.onLogout = this.onLogout.bind(this);
-        this.onCreate = this.onCreateButton.bind(this);
+        this.onGroup = this.onGroup.bind(this);
     }
-    onCreateButton() {
-        this.toCreate();
-    }
-    
+
     clickMenu() {
         let sidebar = document.querySelector(".sidebar");
         sidebar.classList.toggle("open");
@@ -33,8 +30,8 @@ class Groups extends Component {
         this.props.history.push('/');
     }
 
-    toCreate() {
-        this.props.history.push('/createGroup');
+    onGroup() {
+        this.props.history.push('/groups');
     }
     
     render() {
@@ -80,7 +77,7 @@ class Groups extends Component {
                         </li>
                         <li>
                             <a href="#">
-                                <i class = 'bx bx-group' ></i>
+                                <i class = 'bx bx-group' onClick={this.onGroup}></i>
                                 <span class="links_name">Groups</span>
                             </a>
                             <span class="tooltip">Groups</span>
@@ -97,15 +94,10 @@ class Groups extends Component {
                     </ul>
                 </div>
                 <section class="home-section">
-                    <div class="text">
-                        Groups
-                        <button class="create-group-button" onClick={this.onCreate}>
-                            New Group
-                        </button>
-                    </div>
+                    <div class="text">Create a new group</div>
                 </section>
             </div>
         )
     }
 }
-export default withRouter(Groups);
+export default withRouter(CreateGroup);

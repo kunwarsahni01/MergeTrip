@@ -4,6 +4,7 @@ import Account from './components/Account';
 import Main from './components/Main';
 import { Helmet } from "react-helmet";
 import Groups from './components/Groups';
+import CreateGroup from './components/CreateGroup';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route exact path='/account' component={Account} />
         <Route exact path='/main' component={Main} />
         <Route exact path='/groups' component={Groups} />
+        <Route exact path='/createGroup' component={CreateGroup} />
       </Switch>
     </div>
   );
