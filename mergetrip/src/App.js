@@ -3,6 +3,7 @@ import HomePage from './components/HomePage';
 import Account from './components/Account';
 import Main from './components/Main';
 import { Helmet } from "react-helmet";
+import Groups from './components/Groups';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         </Route>
         <Route exact path='/account' component={Account} />
         <Route exact path='/main' component={Main} />
+        <Route exact path='/groups' component={Groups} />
       </Switch>
     </div>
   );

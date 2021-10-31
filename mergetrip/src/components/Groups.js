@@ -1,7 +1,9 @@
 import './Groups.css'
-import react, { Component } from 'react';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import { getAuth } from "firebase/auth";
 
-class Groups extends Compoent {
+class Groups extends Component {
     constructor() {
         super();
         this.state = {
@@ -15,6 +17,9 @@ class Groups extends Compoent {
         this.state.profileURL = auth.currentUser.photoURL
         this.onLogout = this.onLogout.bind(this);
     }
+    onCreateButton() {
+        this.createGroup();
+    }
     
     clickMenu() {
         let sidebar = document.querySelector(".sidebar");
@@ -25,6 +30,11 @@ class Groups extends Compoent {
         const auth = getAuth();
         auth.signOut();
         this.props.history.push('/');
+    }
+
+    createGroup() {
+        //Still have to create the page for this so commenting out for now
+        //this.props.history.push('/createGroup');
     }
     
     render() {
@@ -88,8 +98,12 @@ class Groups extends Compoent {
                 </div>
                 <section class="home-section">
                     <div class="text">Groups</div>
+                    <button class="create-group-button" onclick={this.onCreateButton}>
+                        New Group
+                    </button>
                 </section>
             </div>
         )
     }
 }
+export default withRouter(Groups);

@@ -28,7 +28,15 @@ class Main extends Component {
         auth.signOut();
         this.props.history.push('/');
     }
+/*
+    onGroup() {
+        this.toGroup();
+    }
 
+    toGroup() {
+        this.props.history.push('/groups');
+    }
+*/
     render() {
         return (
             <div>
@@ -72,7 +80,7 @@ class Main extends Component {
                         </li>
                         <li>
                             <a href="#">
-                                <i class = 'bx bx-group' ></i>
+                                <i class = 'bx bx-group' onClick={this.props.history.push('/groups')}></i>
                                 <span class="links_name">Groups</span>
                             </a>
                             <span class="tooltip">Groups</span>
