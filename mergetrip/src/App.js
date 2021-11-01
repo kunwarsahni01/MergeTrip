@@ -2,6 +2,7 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import Account from './components/Account';
 import Main from './components/Main';
+import AccountDetails from "./components/AccountDetails"
 import { Helmet } from "react-helmet";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         </Route>
         <Route exact path='/account' component={Account} />
         <Route exact path='/main' component={Main} />
+        <Route exact path='/account_details' component={AccountDetails} />
       </Switch>
     </div>
   );
