@@ -7,11 +7,10 @@ import rightBoarding from './BoardingRight.svg'
 class HomePage extends Component {
   constructor() {
     super();
-    this.onClickBack = this.onClickBack.bind(this);
-  }
-
-  onClickBack() {
-    this.props.history.push('/main');
+    this.state = {
+            name: "",
+            profileURL: ""
+        };
   }
 
   render() {
@@ -20,9 +19,6 @@ class HomePage extends Component {
         <style>
           @import url("https://use.typekit.net/osw3soi.css");
         </style>
-        <button className="HomePage-button" onClick={this.onClickBack}>
-          Back
-        </button>
         <header className="HomePage-header">
           USER INFO
           <span className="HomePage-subtitle">Information Here</span>
