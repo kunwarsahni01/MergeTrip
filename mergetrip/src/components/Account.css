@@ -3,6 +3,12 @@
   text-align: center;
 }
 
+.Account-requirements {
+  font-size: 0.2em;
+  font-style: italic;
+  font-weight: 1;
+}
+
 .Account-home {
   font-family: Termina;
   font-weight: 900;
