@@ -1,9 +1,9 @@
-.HomePage {
+.AccountDetails {
     background-color: #DFD2B6;
     text-align: center;
   }
   
-  .HomePage-header {
+  .AccountDetails-header {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@
     color: rgb(0, 0, 0);
   }
   
-  .HomePage-subtitle{
+  .AccountDetails-subtitle{
     font-size: calc(10px + 2vmin);
     font-family: Termina;
     font-weight: 900;
@@ -23,7 +23,7 @@
     margin-bottom: .5rem;
   }
   
-  .HomePage-button {
+  .AccountDetails-button {
     background-color: #E13234;
     color: white;
     border: none;
@@ -40,13 +40,13 @@
     right: 0px;
   }
   
-  .Homepage-left {
+  .AccountDetails-left {
     position: absolute;
     left: -225px;
     top: -225px;
   }
   
-  .Homepage-right {
+  .AccountDetails-right {
     position: absolute;
     right: -225px;
     bottom: -225px;
