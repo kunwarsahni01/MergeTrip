@@ -28,11 +28,18 @@ class Main extends Component {
         }
 
         this.onLogout = this.onLogout.bind(this);
+        this.clickProfile = this.clickProfile.bind(this);
     }
 
     clickMenu() {
         let sidebar = document.querySelector(".sidebar");
         sidebar.classList.toggle("open");
+    }
+
+    clickProfile() {
+        const auth = getAuth();
+        auth.signOut();
+        this.props.history.push('/account_details');
     }
 
     onLogout() {
@@ -72,6 +79,7 @@ class Main extends Component {
                             <a href="#">
                                 <i class='bx bx-user' ></i>
                                 <span class="links_name">Profile</span>
+                                <i class='bx bx-profile' id="profile" onClick={this.clickProfile} ></i>
                             </a>
                             <span class="tooltip">Profile</span>
                         </li>
