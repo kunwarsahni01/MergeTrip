@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './Main.css';
 import { withRouter } from 'react-router-dom';
-import { getAuth } from "firebase/auth";
+import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { ThemeConsumer } from "styled-components";
 
 class Main extends Component {
@@ -13,7 +13,24 @@ class Main extends Component {
         };
         this.clickMenu = this.clickMenu.bind(this);
         const auth = getAuth();
-        console.log(auth.currentUser.displayName);
+
+        setPersistence(auth, browserSessionPersistence.session)
+        .then(() => {
+            // Existing and future Auth states are now persisted in the current
+            // session only. Closing the window would clear any existing state even
+            // if a user forgets to sign out.
+            // ...
+            // New sign-in will be persisted with session persistence.
+            //return signInWithEmailAndPassword(auth, email, password);
+            return;
+        })
+        .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+
+        console.log(auth.currentUser.name);
         this.defaultName = "User";
         this.defaultProfileURL = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp";
 
