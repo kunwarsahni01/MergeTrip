@@ -277,7 +277,7 @@
     right: 200px;
   }
 
-  .invite-button {
+  .home-section .invite-button {
     background-color: #E13234;
     color: white;
     border: none;
@@ -291,7 +291,7 @@
     cursor: pointer;
     border-radius: 16px;
     position: absolute;
-    right: 0px;
+    left: 0px;
   }
   .group-input {
     background-color: #37363A;
@@ -304,6 +304,7 @@
     font-family: Termina;
     font-weight: 900;
     color: #FFFFFF;
+    margin-top: 10%;
     margin-bottom: .5rem;
   }
   .invite-input {

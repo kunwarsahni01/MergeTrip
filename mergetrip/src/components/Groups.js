@@ -151,7 +151,6 @@ class Groups extends Component {
                         </button>
                     </div>
                     <div>
-                        
                         <div>
                             <input class="group-input"
                                 name="inviteUid"
