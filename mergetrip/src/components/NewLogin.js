@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import './Login.css';
+import React from 'react';
 import google from './google.svg';
 import { useAuthState } from '../firebase';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
 import { useHistory } from 'react-router';
 
 const NewLogin = (props) => {

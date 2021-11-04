@@ -5,7 +5,7 @@ import {
   Switch
 } from 'react-router-dom';
 import { Main } from './Components/Main';
-import { Home } from './Components/Home';
+import Home from './Components/Home';
 import NewLogin from './Components/NewLogin';
 // import { Login } from './Components/Login';
 
