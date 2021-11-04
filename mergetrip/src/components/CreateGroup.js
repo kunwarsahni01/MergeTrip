@@ -46,11 +46,8 @@ class CreateGroup extends Component {
 
     createGroup() {
         const auth = getAuth();
-        //TODO: Create new group with name from input and uid
         const userId = auth.currentUser.uid;
         const db = getFirestore();
-        //print("Testing 1: " + this.state.groupName);
-        //console.log("Testing something: " + this.state.groupName);
         setDoc(doc(db, "groups", `${this.state.groupName}`), {
             groupName: this.state.groupName
         });

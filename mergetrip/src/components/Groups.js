@@ -2,14 +2,18 @@ import './Groups.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
+import { doc, getDoc, collection, query, where, getFirestore, getDocs, exists, data } from 'firebase/firestore';
 
 class Groups extends Component {
     constructor() {
         super();
         this.state = {
             name: "",
-            profileURL: ""
+            profileURL: "",
+            groupName: "",
+            inviteUid: ""
         };
+        this.onInputchange = this.onInputchange.bind(this);
         this.clickMenu = this.clickMenu.bind(this);
         const auth = getAuth();
         console.log(auth.currentUser.displayName);
@@ -17,9 +21,29 @@ class Groups extends Component {
         this.state.profileURL = auth.currentUser.photoURL
         this.onLogout = this.onLogout.bind(this);
         this.onCreate = this.onCreateButton.bind(this);
+        this.onInvite = this.onInvite.bind(this);
     }
     onCreateButton() {
         this.toCreate();
+    }
+
+    onInvite = async () => {
+        //Invite other users
+        const db = getFirestore();
+        //const ref = collection(db, "users");
+        //const q = query(ref, where("userId", "==", this.state.inviteUid));
+        //const snapshot = await getDocs(q);
+        alert(getDoc(doc(db, "groups", "Will's Group")));
+        const ref = collection(db, "users");
+        const docref = doc(db, "users", `${this.state.inviteUid}`);
+        const docSnap = await getDoc(docref);
+        alert(docSnap.id);
+        if (docSnap.exists) {
+            //Invite user
+            alert("Invitation sent");
+        } else {
+            alert("No user with that userId: " + `${this.state.inviteUid}`);
+        }
     }
     
     clickMenu() {
@@ -36,6 +60,12 @@ class Groups extends Component {
     toCreate() {
         this.props.history.push('/createGroup');
     }
+    onInputchange(event) {
+        this.setState({
+          [event.target.name]: event.target.value
+        });
+    }
+
     
     render() {
         return (
@@ -102,6 +132,23 @@ class Groups extends Component {
                         <button class="create-group-button" onClick={this.onCreate}>
                             New Group
                         </button>
+                    </div>
+                    <div>
+                        
+                        <div>
+                            <input class="group-input"
+                                name="inviteUid"
+                                type="text"
+                                value={this.state.inviteUid}
+                                placeholder="Enter your group name"
+                                onChange={this.onInputchange}
+                            />
+                        </div>  
+                        <div>
+                        <button class="invite-button" onClick={this.onInvite}>
+                            Invite users
+                        </button>
+                        </div>
                     </div>
                 </section>
             </div>
