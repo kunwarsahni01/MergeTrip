@@ -3,8 +3,11 @@ import apple from './apple.svg';
 import google from './google.svg';
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
+import { getAuth, setPersistence, browserSessionPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
+import { FirebaseError } from '@firebase/util';
+//import firebase from './firebase'
+//require('firebase/auth')
 
 class SimpleForm extends Component {
   constructor() {
@@ -129,6 +132,9 @@ class SimpleForm extends Component {
 
   loginToAccount() {
     const auth = getAuth();
+
+    //firebase.auth().setPersistence(auth.Auth.Persistence.SESSION)
+
     signInWithEmailAndPassword(auth, this.state.username, this.state.password)
       .then((userCredential) => {
         // Signed in 
@@ -151,24 +157,23 @@ class SimpleForm extends Component {
   createAccount() {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, this.state.username, this.state.password)
-      .then((userCredential) => {
-        // Signed in 
-        // const user = userCredential.user;
-        console.log("Sign Up Succesful");
-        // ...
-      })
-      .catch((error) => {
-        // const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-        if (this.state.username === "") {
-          alert("You need to input an Email!");
-        } else {
-          alert("Email is already in use");
-        }
-        // ..
-      });
-
+    .then((userCredential) => {
+      // Signed in 
+      // const user = userCredential.user;
+      console.log("Sign Up Succesful");
+      // ...
+    })
+    .catch((error) => {
+      // const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      if (this.state.username === "") {
+        alert("You need to input an Email!");
+      } else {
+        alert("Email is already in use");
+      }
+      // ..
+    });
   }
 
   render() {

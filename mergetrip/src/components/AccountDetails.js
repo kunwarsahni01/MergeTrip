@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './AccountDetails.css';
 import { withRouter } from 'react-router-dom';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider, updateProfile } from "firebase/auth";
+import { getAuth, deleteUser, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider, updateProfile } from "firebase/auth";
 import leftBoarding from './BoardingLeft.svg'
 import rightBoarding from './BoardingRight.svg'
 import { update } from "@firebase/database";
@@ -57,6 +57,8 @@ class AccountDetails extends Component {
     this.onChangePassword = this.onChangePassword.bind(this);
     this.showUsername = this.showUsername.bind(this);
     this.showEmail = this.showEmail.bind(this);
+    this.deleteAcount = this.deleteAcount.bind(this);
+    this.deleteAccountCheck = this.deleteAccountCheck.bind(this);
   }
 
   
@@ -132,6 +134,23 @@ class AccountDetails extends Component {
       });
   }
 
+  deleteAccountCheck() {
+      if (window.confirm("Are you sure you want to delete your account?")) {
+          this.deleteAcount();
+      }
+  }
+
+  deleteAcount() {
+      const auth = getAuth();
+      auth.currentUser.deleteUser().then(() => {
+            alert("Account Deleted")
+            this.props.history.push('/');
+      }).catch((error) => {
+          alert("Delete Account Error")
+          console.log(error)
+      })
+  }
+
   render() {
     return (
       <div className="AccountDetails">
@@ -183,6 +202,11 @@ class AccountDetails extends Component {
                         id="emailTextbox.id"
                         placeholder="Email"
                     /> : null}
+            </div>
+            <div>
+            <button className="AccountDetails-button" onClick={this.deleteAccountCheck}>
+                    Delete Account
+                </button>
             </div>
 
         </header>
