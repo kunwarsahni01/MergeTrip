@@ -2,13 +2,15 @@ import './CreateGroup.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
+import { collection, addDoc, getFirestore, setDoc, doc } from "firebase/firestore";
 
 class CreateGroup extends Component {
     constructor() {
         super();
         this.state = {
             name: "",
-            profileURL: ""
+            profileURL: "",
+            groupName: ""
         };
         this.onInputchange = this.onInputchange.bind(this);
         this.clickMenu = this.clickMenu.bind(this);
@@ -18,6 +20,7 @@ class CreateGroup extends Component {
         this.state.profileURL = auth.currentUser.photoURL
         this.onLogout = this.onLogout.bind(this);
         this.onGroup = this.onGroup.bind(this);
+        this.createGroup = this.createGroup.bind(this);
     }
 
     clickMenu() {
@@ -37,9 +40,24 @@ class CreateGroup extends Component {
     
     onInputchange(event) {
         this.setState({
-          [event.target.name]: event.target.value
+          [event.target.groupName]: event.target.value
         });
     }
+
+    createGroup() {
+        const auth = getAuth();
+        //TODO: Create new group with name from input and uid
+        const userId = auth.currentUser.uid;
+        const db = getFirestore();
+        setDoc(doc(db, "groups", "groupName"), {
+            groupName: "test"
+        });
+        setDoc(doc(db, "groups/groupName/members", userId), {
+            uid: userId
+        });
+
+    }
+
     render() {
         return (
             <div>
