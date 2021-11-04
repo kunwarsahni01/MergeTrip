@@ -1,10 +1,21 @@
+import { getAuth } from 'firebase/auth'
+import { useAuthState } from '../firebase'
+import './Main.css'
 import React, { Component } from "react";
-import './Main.css';
 import { withRouter } from 'react-router-dom';
-import { getAuth } from "firebase/auth";
-import { ThemeConsumer } from "styled-components";
 
-class Main extends Component {
+// export const Main = () => {
+//     const { user } = useAuthState()
+
+//     return (
+//         <>
+//             <h1>Welcome {user?.email}</h1>
+//             <button onClick={() => signOut(getAuth())}>Sign out</button>
+//         </>
+//     )
+// }
+
+export class Main extends Component {
     constructor() {
         super();
         this.state = {
@@ -62,21 +73,21 @@ class Main extends Component {
                             <span class="tooltip">Search</span>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="#">
                                 <i class='bx bx-grid-alt'></i>
                                 <span class="links_name">Trips</span>
                             </a>
                             <span class="tooltip">Trips</span>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/profile">
                                 <i class='bx bx-user' ></i>
                                 <span class="links_name">Profile</span>
                             </a>
                             <span class="tooltip">Profile</span>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/settings">
                                 <i class='bx bx-cog' ></i>
                                 <span class="links_name">Settings</span>
                             </a>

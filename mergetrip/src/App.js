@@ -1,32 +1,55 @@
-import { Switch, Route } from 'react-router-dom';
-import HomePage from './components/HomePage';
-import Account from './components/Account';
-import Main from './components/Main';
-import AccountDetails from "./components/AccountDetails"
-import { Helmet } from "react-helmet";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom'
+import { Main } from './Components/Main'
+import { Home } from './Components/Home'
+import { Login } from './Components/Login'
+import { Profile } from './Components/Profile'
+import { AuthContextProvider, useAuthState } from './firebase'
+import './App.css';
+
+const AuthenticatedRoute = ({ component: C, ...props }) => {
+  const { isAuthenticated } = useAuthState()
+  console.log(`AuthenticatedRoute: ${isAuthenticated}`)
+  return (
+    <Route
+      {...props}
+      render={routeProps =>
+        isAuthenticated ? <C {...routeProps} /> : <Redirect to="/login" />
+      }
+    />
+  )
+}
+
+const UnauthenticatedRoute = ({ component: C, ...props }) => {
+  const { isAuthenticated } = useAuthState()
+  console.log(`UnauthenticatedRoute: ${isAuthenticated}`)
+  return (
+    <Route
+      {...props}
+      render={routeProps =>
+        !isAuthenticated ? <C {...routeProps} /> : <Redirect to="/" />
+      }
+    />
+  )
+}
 
 function App() {
   return (
-    <div>
-      <Helmet>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#dfd2b6" />
-        <meta name="theme-color" content="#DFD2B6" />
-      </Helmet>
-      <Switch>
-        <Route exact path='/' component={HomePage} />
-        <Route exact path='/otherpage'>
-          <p>Other page</p>
-        </Route>
-        <Route exact path='/account' component={Account} />
-        <Route exact path='/main' component={Main} />
-        <Route exact path='/account_details' component={AccountDetails} />
-      </Switch>
-    </div>
-  );
+    <AuthContextProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <AuthenticatedRoute exact path="/main" component={Main} />
+          <Route exact path="/profile" component={Profile} />
+        </Switch>
+      </Router>
+    </AuthContextProvider>
+  )
 }
 
 export default App;
