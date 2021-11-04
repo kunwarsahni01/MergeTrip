@@ -10,7 +10,7 @@ class CreateGroup extends Component {
         this.state = {
             name: "",
             profileURL: "",
-            groupName: ""
+            groupName: "",
         };
         this.onInputchange = this.onInputchange.bind(this);
         this.clickMenu = this.clickMenu.bind(this);
@@ -40,7 +40,7 @@ class CreateGroup extends Component {
     
     onInputchange(event) {
         this.setState({
-          [event.target.groupName]: event.target.value
+          [event.target.name]: event.target.value
         });
     }
 
@@ -49,13 +49,15 @@ class CreateGroup extends Component {
         //TODO: Create new group with name from input and uid
         const userId = auth.currentUser.uid;
         const db = getFirestore();
-        setDoc(doc(db, "groups", "groupName"), {
-            groupName: "test"
+        //print("Testing 1: " + this.state.groupName);
+        //console.log("Testing something: " + this.state.groupName);
+        setDoc(doc(db, "groups", `${this.state.groupName}`), {
+            groupName: this.state.groupName
         });
-        setDoc(doc(db, "groups/groupName/members", userId), {
+        setDoc(doc(db, `groups/${this.state.groupName}/members`, userId), {
             uid: userId
         });
-
+        this.onGroup();
     }
 
     render() {
@@ -123,9 +125,10 @@ class CreateGroup extends Component {
                         <input class="group-input"
                             name="groupName"
                             type="text"
-                            placeholder="Group Name ..."
-                            onChange={this.onInputchange}>
-                        </input>
+                            value={this.state.groupName}
+                            placeholder="Enter your group name"
+                            onChange={this.onInputchange}
+                        />
                     </div>
                     <div>
                         <button class="create-button" onClick={this.createGroup}>Create</button>
