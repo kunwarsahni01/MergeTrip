@@ -4,7 +4,7 @@ import {
   Redirect,
   Switch
 } from 'react-router-dom';
-import { Main } from './Components/Main';
+import Main from './Components/Main';
 import Home from './Components/Home';
 import NewLogin from './Components/NewLogin';
 // import { Login } from './Components/Login';
@@ -14,7 +14,8 @@ import { AuthContextProvider, useAuthState } from './firebase';
 import './App.css';
 
 const AuthenticatedRoute = ({ component: C, ...props }) => {
-  const { isAuthenticated } = useAuthState();
+  const auth = useAuthState();
+  const isAuthenticated = auth;
   console.log(`AuthenticatedRoute: ${isAuthenticated}`);
   return (
     <Route
