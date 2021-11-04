@@ -4,7 +4,7 @@ import google from './google.svg';
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
-import { collection, addDoc, getFirestore, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from "firebase/firestore";
 
 class SimpleForm extends Component {
   constructor() {
@@ -76,7 +76,7 @@ class SimpleForm extends Component {
         const db = getFirestore();
         const userId = auth.currentUser.uid;
         try {
-          const docRef = setDoc(doc(db, "users", userId), {
+          const docRef = updateDoc(doc(db, "users", userId), {
             googleToken: token,
             userId: userId
           });

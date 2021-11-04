@@ -320,3 +320,11 @@
     color: #FFFFFF;
     margin-bottom: .5rem;
   }
+
+  .home-section .current-group {
+    display: inline-block;
+    color: #000000;
+    font-size: 30px;
+    font-weight: 500;
+    margin: 18px
+  }

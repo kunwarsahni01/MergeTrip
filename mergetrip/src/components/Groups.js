@@ -2,7 +2,7 @@ import './Groups.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, deleteDoc, DocumentSnapshot, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, deleteDoc, deleteField, getDocs, collection, updateDoc } from 'firebase/firestore';
 
 class Groups extends Component {
     constructor() {
@@ -23,6 +23,7 @@ class Groups extends Component {
         this.onCreate = this.onCreateButton.bind(this);
         this.onInvite = this.onInvite.bind(this);
         this.onLeave = this.onLeave.bind(this);
+
     }
     onCreateButton() {
         this.toCreate();
@@ -55,6 +56,7 @@ class Groups extends Component {
     toCreate() {
         this.props.history.push('/createGroup');
     }
+
     onInputchange(event) {
         this.setState({
           [event.target.name]: event.target.value
@@ -65,7 +67,6 @@ class Groups extends Component {
         const auth = getAuth();
         const db = getFirestore();
         const uIdDocSnap = await getDoc(doc(db, "users", auth.currentUser.uid));
-        alert(uIdDocSnap.get("group"));
         const groupName = uIdDocSnap.get("group");
         if (groupName != null) {
             const docRef = doc(db, `groups/${groupName}/members`, auth.currentUser.uid);
@@ -73,12 +74,20 @@ class Groups extends Component {
             updateDoc(doc(db, "users", auth.currentUser.uid), {
                 group: ""
             });
+            var count = 0;
+            const querySnap = await getDocs(collection(db, `groups/${groupName}/members`));
+            querySnap.forEach((doc) => {
+                count++;
+            });
+            if (count == 0) {
+                await deleteDoc(doc(db, "groups", groupName));
+            }
             alert("Successfully left group");
         } else {
             alert("Unable to leave group")
         }
-        //const docRef = doc(db, "groups");
     }
+
 
     
     render() {
@@ -156,15 +165,16 @@ class Groups extends Component {
                                 name="inviteUid"
                                 type="text"
                                 value={this.state.inviteUid}
-                                placeholder="Enter your group name"
+                                placeholder="Enter the User Id to invite"
                                 onChange={this.onInputchange}
                             />
                         </div>  
                         <div>
-                        <button class="invite-button" onClick={this.onInvite}>
-                            Invite users
-                        </button>
+                            <button class="invite-button" onClick={this.onInvite}>
+                                Invite users
+                            </button>
                         </div>
+                        
                     </div>
                 </section>
             </div>
