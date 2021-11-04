@@ -2,7 +2,7 @@ import './Groups.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, collection, query, where, getFirestore, getDocs, exists, data } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, deleteDoc, DocumentSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 
 class Groups extends Component {
     constructor() {
@@ -22,6 +22,7 @@ class Groups extends Component {
         this.onLogout = this.onLogout.bind(this);
         this.onCreate = this.onCreateButton.bind(this);
         this.onInvite = this.onInvite.bind(this);
+        this.onLeave = this.onLeave.bind(this);
     }
     onCreateButton() {
         this.toCreate();
@@ -30,19 +31,13 @@ class Groups extends Component {
     onInvite = async () => {
         //Invite other users
         const db = getFirestore();
-        //const ref = collection(db, "users");
-        //const q = query(ref, where("userId", "==", this.state.inviteUid));
-        //const snapshot = await getDocs(q);
-        alert(getDoc(doc(db, "groups", "Will's Group")));
-        const ref = collection(db, "users");
         const docref = doc(db, "users", `${this.state.inviteUid}`);
         const docSnap = await getDoc(docref);
-        alert(docSnap.id);
         if (docSnap.exists) {
             //Invite user
             alert("Invitation sent");
         } else {
-            alert("No user with that userId: " + `${this.state.inviteUid}`);
+            alert("No user with the userId: " + `${this.state.inviteUid}`);
         }
     }
     
@@ -64,6 +59,25 @@ class Groups extends Component {
         this.setState({
           [event.target.name]: event.target.value
         });
+    }
+
+    onLeave = async () => {
+        const auth = getAuth();
+        const db = getFirestore();
+        const uIdDocSnap = await getDoc(doc(db, "users", auth.currentUser.uid));
+        alert(uIdDocSnap.get("group"));
+        const groupName = uIdDocSnap.get("group");
+        if (groupName != null) {
+            const docRef = doc(db, `groups/${groupName}/members`, auth.currentUser.uid);
+            await deleteDoc(docRef);
+            updateDoc(doc(db, "users", auth.currentUser.uid), {
+                group: ""
+            });
+            alert("Successfully left group");
+        } else {
+            alert("Unable to leave group")
+        }
+        //const docRef = doc(db, "groups");
     }
 
     
@@ -131,6 +145,9 @@ class Groups extends Component {
                         Groups
                         <button class="create-group-button" onClick={this.onCreate}>
                             New Group
+                        </button>
+                        <button class="leave-group-button" onClick={this.onLeave}>
+                            Leave Group
                         </button>
                     </div>
                     <div>

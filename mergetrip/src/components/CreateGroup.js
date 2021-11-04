@@ -2,7 +2,7 @@ import './CreateGroup.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
-import { collection, addDoc, getFirestore, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from "firebase/firestore";
 
 class CreateGroup extends Component {
     constructor() {
@@ -54,6 +54,9 @@ class CreateGroup extends Component {
         setDoc(doc(db, `groups/${this.state.groupName}/members`, userId), {
             uid: userId
         });
+        const userRef = doc(db, "users", userId);
+        //Update group field of current user in firestore
+        updateDoc(userRef, "group", `${this.state.groupName}`);
         this.onGroup();
     }
 
