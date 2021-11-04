@@ -213,6 +213,12 @@ class SimpleForm extends Component {
               placeholder="Password"
             />
           </div>
+          <div className="Account-requirements"> 
+            * username must exist *
+          </div>
+          <div className="Account-requirements"> 
+            * password must be 6 characters long *
+          </div>
           <div>
             <button className="Account-button" onClick={this.onSignUp}>Sign Up</button>
             <button className="Account-button" onClick={this.onLogin}>Log In</button>
