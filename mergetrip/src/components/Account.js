@@ -6,8 +6,6 @@ import { withRouter } from 'react-router-dom';
 import { getAuth, setPersistence, browserSessionPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 import { FirebaseError } from '@firebase/util';
-//import firebase from './firebase'
-//require('firebase/auth')
 
 class SimpleForm extends Component {
   constructor() {

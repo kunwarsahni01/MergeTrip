@@ -3,6 +3,7 @@ import './Main.css';
 import { withRouter } from 'react-router-dom';
 import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { ThemeConsumer } from "styled-components";
+import { initializeApp } from "@firebase/app";
 
 class Main extends Component {
     constructor() {
@@ -11,7 +12,7 @@ class Main extends Component {
             name: "",
             profileURL: ""
         };
-        this.clickMenu = this.clickMenu.bind(this);
+
         const auth = getAuth();
 
         console.log(auth.currentUser.name);
@@ -30,6 +31,13 @@ class Main extends Component {
 
         this.onLogout = this.onLogout.bind(this);
         this.clickProfile = this.clickProfile.bind(this);
+        this.clickMenu = this.clickMenu.bind(this);
+        this.getUsers = this.getUsers.bind(this);
+    }
+
+
+    getUsers(searchedTerm) {
+        console.log(this.table);
     }
 
     clickMenu() {
@@ -39,7 +47,6 @@ class Main extends Component {
 
     clickProfile() {
         const auth = getAuth();
-        auth.signOut();
         this.props.history.push('/account_details');
     }
 
@@ -66,7 +73,7 @@ class Main extends Component {
                     <ul class="nav-list">
                         <li>
                             <i class='bx bx-search' ></i>
-                            <input type="text" placeholder="Search..." />
+                            <input type="text" placeholder="Search..." onClick={this.getUsers}/>
                             <span class="tooltip">Search</span>
                         </li>
                         <li>

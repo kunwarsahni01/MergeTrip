@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import './AccountDetails.css';
 import { withRouter } from 'react-router-dom';
-import { getAuth, deleteUser, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider, updateProfile } from "firebase/auth";
+import { getAuth, updateEmail, deleteUser, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider, updateProfile } from "firebase/auth";
 import leftBoarding from './BoardingLeft.svg'
 import rightBoarding from './BoardingRight.svg'
-import { update } from "@firebase/database";
+import { update } from "@firebase/database"
+import { initializeApp } from "@firebase/app";
+//import firebaseConfig from '../index.js'
+
+//const app = fireConfig.initializeApp(firebaseConfig);
 
 class AccountDetails extends Component {
   constructor() {
@@ -43,11 +47,11 @@ class AccountDetails extends Component {
     onAuthStateChanged(auth, (user) => {
         if (user) {
           this.loggedIn = true;
-          alert("logged!");
+        //   alert("logged!");
         } else {
           // No user is signed in.
           this.loggedIn = false;
-          alert("Change!");
+        //   alert("Change!");
         }
       });
 
@@ -96,9 +100,9 @@ class AccountDetails extends Component {
         return;
     }
 
-    if (!this.loggedIn) {
-        alert("logged??");
-    }
+    // if (!this.loggedIn) {
+    //     alert("logged??");
+    // }
 
 
     if (auth.currentUser == null) {
@@ -108,7 +112,7 @@ class AccountDetails extends Component {
     this.state.newUsername = document.getElementById("usernameTextbox.id").value;
     //alert("Done!");
     
-    updateProfile(auth.currentUser, {displayName: "Testing"})
+    updateProfile(auth.currentUser, {displayName: this.state.newUsername})
     .then(() => {
         alert("Username Changed Successfully");
         this.state.name = this.state.newUsername;
@@ -121,14 +125,26 @@ class AccountDetails extends Component {
   }
 
   onChangeEmail() {
+    const auth = getAuth();
 
+    this.state.newEmail = document.getElementById("emailTextbox.id").value;
+
+    updateEmail(auth.currentUser, this.state.newEmail)
+      .then(() => {
+        alert("Email Changed");
+        this.showEmail();
+        this.state.email = this.state.newEmail;
+        console.log(auth.currentUser.email);
+      }).catch(function (error) {
+        console.log(error);
+      });
   }
 
   onChangePassword() {
     const auth = getAuth();
     sendPasswordResetEmail(auth, this.state.email)
       .then((userCredential) => {
-        alert("Email sent");
+        alert("Password Reset Email Sent");
       }).catch(function (error) {
         alert(error);
       });
@@ -142,7 +158,7 @@ class AccountDetails extends Component {
 
   deleteAcount() {
       const auth = getAuth();
-      auth.currentUser.deleteUser().then(() => {
+      deleteUser(auth.currentUser).then(() => {
             alert("Account Deleted")
             this.props.history.push('/');
       }).catch((error) => {
@@ -186,6 +202,11 @@ class AccountDetails extends Component {
                 {this.state.showUsernameText ? 
                     <button className="Reset-button" onClick={this.onChangeUsername}>
                         New Username
+                    </button>: null}
+
+                {this.state.showEmailText ? 
+                    <button className="Reset-button" onClick={this.onChangeEmail}>
+                        New Email
                     </button>: null}
 
                 {this.state.showUsernameText ? 
