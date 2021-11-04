@@ -62,7 +62,7 @@ class Main extends Component {
                             <span class="tooltip">Search</span>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="">
                                 <i class='bx bx-grid-alt'></i>
                                 <span class="links_name">Trips</span>
                             </a>
