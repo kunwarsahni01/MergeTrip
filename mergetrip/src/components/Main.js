@@ -1,11 +1,13 @@
 import { useAuthState } from '../firebase';
 import './Main.css';
 import React, { useState } from 'react';
+import Trips from '../pages/Trips';
 
 const Main = () => {
+  const DEFAULT_PROFILE_URL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
   const auth = useAuthState();
 
-  const DEFAULT_PROFILE_URL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
+  const [currentPage, setCurrentPage] = useState(<Trips />);
 
   const [showBar, setShowBar] = useState(false);
   const toggleShowBar = () => {
@@ -70,6 +72,8 @@ const Main = () => {
 
             <section class='home-section'>
               <div class='text'> {auth.user.displayName}'s Trips</div>
+
+              {currentPage}
             </section>
           </>
           )
