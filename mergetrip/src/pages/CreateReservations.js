@@ -7,6 +7,7 @@ import { getAuth } from '@firebase/auth';
 
 import Input from '../components/Input';
 import { createReservation } from '../api/flaskr_api';
+import './Trip.css'
 
 const CreateTripFormSchema = Yup.object({
   resName: Yup.string().required('Trip name is required'),
@@ -45,37 +46,34 @@ const CreateReservation = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit, onError)}>
-      <p>Create trips form:</p>
+    <form className='Trip-form' onSubmit={handleSubmit(onSubmit, onError)}>
+      <p>Create a Reservation:</p>
       <Input
         name='resName'
-        label='Reservation Name'
-        placeholder='Enter the reservation name'
+        label=''
+        placeholder='Reservation Name'
         type='text'
-        required
         errors={errors}
         register={register}
       />
       <Input
         name='resLocation'
-        label='Reservation Location'
-        placeholder='Enter the reservation location'
+        label=''
+        placeholder='Reservation Location'
         type='text'
-        required
         errors={errors}
         register={register}
       />
       <Input
         name='resTime'
-        label='Reservation Time'
-        placeholder='Enter the reservation time'
+        label=''
+        placeholder='Reservation Time'
         type='time'
-        required
         errors={errors}
         register={register}
       />
 
-      <button type='submit'>Create Reservation</button>
+      <button className='Trip-button' type='submit'>Create Reservation</button>
     </form>
 
   );

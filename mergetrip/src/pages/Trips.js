@@ -3,6 +3,7 @@ import { getAuth } from '@firebase/auth';
 import { createReservation, deleteTrip, getTrips } from '../api/flaskr_api';
 import CreateTrip from './CreateTrip';
 import CreateReservation from './CreateReservations';
+import './Trip.css'
 
 const Trips = (props) => {
   const auth = getAuth();
@@ -48,40 +49,43 @@ const Trips = (props) => {
 
   return (
     <div>
+      <style>
+        @import url("https://use.typekit.net/osw3soi.css");
+      </style>
       {
         trips
           ? trips.map((trip, index) => (
-            <div key={index} style={{ marginTop: '50px', marginBottom: '50px' }}>
-
-              <button onClick={() => { handleDeleteTrip(trip); }}>Delete trip</button>
-
-              <CreateReservation tripId={trip.trip_id} updateReservations={addNewReservation} />
-
-              <p>trip name: {trip.trip_name}</p>
-              <p>start date: {trip.start_date}</p>
-              <p>end date: {trip.end_date}</p>
-              <hr />
-              <p>reservations:</p>
-              {trip.reservations.length != 0
-                ? (trip.reservations.map((res, index) => (
-                  <div key={index}>
-                    <hr />
-                    <p>reservation name: {res.res_name}</p>
-                    <p>reservation location: {res.res_location}</p>
-                    <p>reservation time: {res.res_time}</p>
-                    <hr />
-                  </div>
+            <div key={index} className='Trip-container'>
+              <div className='Trip-header'>
+                <p>{trip.trip_name}</p>
+              </div>
+              <div className='Trip-body'>
+                <p>Start: {trip.start_date}</p>
+                <p>End: {trip.end_date}</p>
+              </div>
+              <button className='Trip-button' onClick={() => { handleDeleteTrip(trip); }}>Delete trip</button>
+              <p>Reservations:</p>
+              {
+                trip.reservations.length != 0
+                  ? (trip.reservations.map((res, index) => (
+                    <div className='Trip-reservation' key={index}>
+                      <h1>{res.res_name}</h1>
+                      <p>{res.res_location}</p>
+                      <p>{res.res_time}</p>
+                      <button className='Reservation-button' >Delete reservation</button>
+                    </div>
                   ))
                   )
-                : <p>No reservations ;-;</p>}
-
+                  : null
+              }
+              < CreateReservation tripId={trip.trip_id} updateReservations={addNewReservation} />
             </div>
-            ))
+          ))
           : <p>Loading Trips...</p>
       }
-      <hr style={{ marginBottom: '50px' }} />
+      <hr style={{ marginBottom: '20px', marginTop: '20px'}} />
       <CreateTrip updateTrips={addNewTrip} />
-    </div>
+    </div >
 
   );
 };

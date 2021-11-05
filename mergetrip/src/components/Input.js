@@ -1,5 +1,6 @@
 import React from 'react';
 import { ErrorMessage } from '@hookform/error-message';
+import './Inputs.css';
 
 const Input = (props) => (
   <div className={'px-3 ' + props.className}>
@@ -12,10 +13,11 @@ const Input = (props) => (
           {props.label}
           {props.required ? <span className='text-red-600'>*</span> : null}
         </label>
-        )
+      )
       : null}
 
     <input
+      className='Account-input'
       {...props.register(props.name)}
       name={props.name}
       type={props.type ? props.type : 'text'}
@@ -29,7 +31,7 @@ const Input = (props) => (
         <p>
           <ErrorMessage errors={props.errors} name={props.name} />
         </p>
-        )
+      )
       : null}
   </div>
 );

@@ -7,6 +7,7 @@ import { getAuth } from '@firebase/auth';
 
 import Input from '../components/Input';
 import { createTrip } from '../api/flaskr_api';
+import './CreateTrip.css'
 
 const CreateTripFormSchema = Yup.object({
   tripName: Yup.string().required('Trip name is required'),
@@ -49,39 +50,40 @@ const CreateTrip = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit, onError)}>
-      <p>Create trips form:</p>
-      <Input
-        name='tripName'
-        label='Trip Name'
-        placeholder='Enter the trip name'
-        type='text'
-        required
-        errors={errors}
-        register={register}
-      />
-      <Input
-        name='startDate'
-        label='Start Date'
-        placeholder='Enter the start date'
-        type='date'
-        required
-        errors={errors}
-        register={register}
-      />
-      <Input
-        name='endDate'
-        label='End Date'
-        placeholder='Enter the end date'
-        type='date'
-        required
-        errors={errors}
-        register={register}
-      />
+    <div className='Form-containter'>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <style>
+          @import url("https://use.typekit.net/osw3soi.css");
+        </style>
+        <header className='Form-header'>Lets Create a trip:</header>
+        <Input
+          name='tripName'
+          type='text'
+          placeholder='Trip Name'
+          required
+          errors={errors}
+          register={register}
+        />
+        <Input
+          name='startDate'
+          label=''
+          placeholder='Start Date'
+          type='date'
+          errors={errors}
+          register={register}
+        />
+        <Input
+          name='endDate'
+          label=''
+          placeholder='End Date'
+          type='date'
+          errors={errors}
+          register={register}
+        />
 
-      <button type='submit'>Create Trip</button>
-    </form>
-
+        <button className='Account-button' type='submit'>Create Trip</button>
+      </form>
+    </div>
   );
 };
 
