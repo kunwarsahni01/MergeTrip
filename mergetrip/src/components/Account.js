@@ -65,6 +65,7 @@ class SimpleForm extends Component {
 
   createGoogle() {
     const provider = new GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
     const auth = getAuth();
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -213,10 +214,10 @@ class SimpleForm extends Component {
               placeholder="Password"
             />
           </div>
-          <div className="Account-requirements"> 
+          <div className="Account-requirements">
             * username must exist *
           </div>
-          <div className="Account-requirements"> 
+          <div className="Account-requirements">
             * password must be 6 characters long *
           </div>
           <div>
