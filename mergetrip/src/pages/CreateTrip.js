@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { ErrorMessage } from '@hookform/error-message';
 import { getAuth } from '@firebase/auth';
 
-import Input from '../Components/Input';
+import Input from '../components/Input';
 import { createTrip } from '../api/flaskr_api';
 
 const CreateTripFormSchema = Yup.object({

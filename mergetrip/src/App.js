@@ -4,11 +4,11 @@ import {
   Redirect,
   Switch
 } from 'react-router-dom';
-import Main from './Components/Main';
-import Home from './Components/Home';
-import NewLogin from './Components/NewLogin';
+import Main from './components/Main';
+import Home from './components/Home';
+import NewLogin from './components/NewLogin';
 // import { Login } from './Components/Login';
-import Profile from './Components/Profile';
+import Profile from './components/Profile';
 
 import { AuthContextProvider, useAuthState } from './firebase';
 import './App.css';
