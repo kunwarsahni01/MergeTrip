@@ -1,0 +1,26 @@
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+ 
+.Account-input {
+    margin: auto;
+    background-color: #37363A;
+    width: 90%;
+    height: 50px;
+    border: 1px solid #E13234;
+    border-radius: 16px;
+    padding: 0px 45px 0px 15px;
+    font-size: 20px;
+    font-family: Termina;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin: 0 auto 1em auto;
+  }
+
+
+  input[type=text], input[type=time]{
+    margin: 0 auto 1em auto;
+    width: 90%;
+    padding: 5px;
+}

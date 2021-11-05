@@ -1,0 +1,64 @@
+.Trip-header {
+    font-size: calc(30px);
+    font-weight: lighter;
+    font-family: Termina;
+    color: white;
+}
+
+.Trip-container{ 
+    margin: auto;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 50%;
+    background-color:#37363A;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+
+.Trip-button {
+    background-color: #E13234;
+    color: white;
+    border: none;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    font-family: Termina;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+
+  .Trip-form{
+      margin: auto;
+  }
+
+  .Trip-reservation{
+      width: 40%;
+      height: 50%;
+      background-color:#3000c2;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 8px;
+  }
+
+  .Reservation-button{
+    background-color: #E13234;
+    color: white;
+    border: none;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    font-family: Termina;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+  }

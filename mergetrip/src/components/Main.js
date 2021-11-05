@@ -34,7 +34,7 @@ const Main = () => {
               <ul class='nav-list'>
                 <li>
                   <i class='bx bx-search' />
-                  <input type='text' placeholder='Search...' />
+                  <input type='search' placeholder='Search...' />
                   <span class='tooltip'>Search</span>
                 </li>
                 <li>
