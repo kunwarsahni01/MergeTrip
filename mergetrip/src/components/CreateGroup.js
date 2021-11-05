@@ -57,11 +57,6 @@ class CreateGroup extends Component {
         const userRef = doc(db, "users", userId);
         //Update group field of current user in firestore
         updateDoc(userRef, "group", `${this.state.groupName}`);
-
-        //Temp add second member for testing
-        setDoc(doc(db, `groups/${this.state.groupName}/members`, "gclNCq6VJQcmgAbdmiZWFwOEqot2"), {
-            uid: "gclNCq6VJQcmgAbdmiZWFwOEqot2"
-        });
         this.onGroup();
     }
 
