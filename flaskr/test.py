@@ -1,5 +1,4 @@
 import re
-import dateparser
 import spacy
 from spacy import displacy
 from spacy.matcher import Matcher
@@ -14,9 +13,10 @@ from pathlib import Path
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 
+#relative path to parsed test emails
 path = "C:\\Users\\yashy\\Documents\\MergeTrip\\flaskr\\delta.txt"
 text = Path(path).read_text()
-text = text.replace('\n', '')
+text = text.strip()
 
 print(text)
           
@@ -118,7 +118,6 @@ for i in doc.ents:
   if i.label_ is 'DATE' and i.text not in matches:
     matches.append(i.text)
     print(i.text)
-
 
 # for the token pattern 1st, 22nd, 15th etc
 IS_REGEX_MATCH = add_regex_flag(nlp.vocab, '\d{1,2}(?:[stndrh]){2}?')
