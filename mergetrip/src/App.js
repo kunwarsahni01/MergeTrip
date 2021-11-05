@@ -8,8 +8,8 @@ import Main from './Components/Main';
 import Home from './Components/Home';
 import NewLogin from './Components/NewLogin';
 // import { Login } from './Components/Login';
+import Profile from './Components/Profile';
 
-import { Profile } from './Components/Profile';
 import { AuthContextProvider, useAuthState } from './firebase';
 import './App.css';
 
