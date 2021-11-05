@@ -305,17 +305,13 @@ def create_reservation(trip_id):
         return f"An Error Occured: {e}", 400
 
 
-@app.route('/reservation/<trip_id>/<res_id>/delete', methods=['POST'])
-def delete_reservation(trip_id, res_id):
+@app.route('/reservation/<user_id>/<trip_id>/<res_id>/delete', methods=['POST'])
+def delete_reservation(user_id, trip_id, res_id):
     """
       delete_reservation(): Deletes reservation in trip
     """
     try:
-        # CHECK If user has permission to add reservation to that user (owner_id)
-        # id_token = request.headers['Authorization']
-        # claims = auth.verify_id_token(id_token)
-        # uid = claims['uid']
-        uid = '1'  # Hardcoded for now - until we get auth flow going on frontend
+        uid = user_id
 
         trip_doc = TRIPS.document(uid).collection(
             'trips').document(trip_id)
