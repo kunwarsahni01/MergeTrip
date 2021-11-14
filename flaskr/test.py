@@ -1,5 +1,4 @@
 import re
-import dateparser
 import spacy
 from spacy import displacy
 from spacy.matcher import Matcher
