@@ -21,10 +21,10 @@ const NewLogin = (props) => {
   const handleLogout = () => {
     auth.logout()
       .then(() => {
-        console.log('LOGIN SUCCESSFUL !');
+        console.log('LOGOUT SUCCESSFUL !');
       })
       .catch(() => {
-        console.log('LOGIN FAILED');
+        console.log('LOGOUT FAILED');
       });
   };
 

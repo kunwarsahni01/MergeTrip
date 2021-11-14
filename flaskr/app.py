@@ -13,8 +13,6 @@ from googleapiclient.discovery import build
 from firebase_admin import credentials, firestore, initialize_app, auth
 from gmail_utils import get_clean_body, parse_message
 from model_playground.bert_base_ner import Extractor
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
 
 app = Flask(__name__)
 CORS(app)
@@ -116,26 +114,13 @@ def get_gmails(userId):
     client_secret = client_secrets['client_secret']
     token_uri = client_secrets['token_uri']
 
-    # get refresh token for the user from database here
-    # refresh_token = USERS.document(userId).get().to_dict()['googleToken']
-
-    refresh_token = '1//04PcJ4HRzLNt_CgYIARAAGAQSNwF-L9IryImhZ6OEVC3mNI3Uay_N_ajg9ICGOhqGDvdeUnNIkDBvrOx955-9URziQhOU7geX8tU'
-    # access_token = "ya29.a0ARrdaM884_IiQyC6TRHr-LOWmspYjkWZ3sUJ4I88mtXTR_hP8lJw4hKLFaulvV0pQGl6lgOOGDtJerEGBoG75tVvsQPH6PniO99_W0LUzMJ1wBMR2cwHsLNor9z-5mwky_VDG-asWc_uGVUfvFcaJ8Ypw9yn"
-    # token_id = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1ODI4YzU5Mjg0YTY5YjU0YjI3NDgzZTQ4N2MzYmQ0NmNkMmEyYjMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMTQ1MDkxNzUzODQtMWJvbmJ1djhmbHZjZG0zbmhoNTM3Y2QxMzhmNDdiNnMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxNDUwOTE3NTM4NC0xYm9uYnV2OGZsdmNkbTNuaGg1MzdjZDEzOGY0N2I2cy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwMzU4NjExMjk2NTMxMTY5NDgxMiIsImVtYWlsIjoiaWJyYWhpbS5hbGFzc2FkMDAxQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiRG90ZWc5MUxuR1ROZXAxRFI2N2FoQSIsImlhdCI6MTYzNjA4ODM1NywiZXhwIjoxNjM2MDkxOTU3fQ.qlkKmVhaK5DgrK_by3Wb6cvBFUckdDbs1xizE4EToWI4D8z4Eu47rHI-DeD6IwH9zV1guLUcheRk6B2Z7ZgP5bV95b8c7TyfvUNhNKgJt13Zw0TQhLlzDjS_3WIrGorvNKoWvJ-ob2OGkN992IPxiEQzeEEKpcZg6JzDyuS4BBIr04psWhrhnoleeiePK0P87xPdPY19oNUgVOMPFiOlX_UhIDRvDSfKi-pizwrGE2wqGIHsNsblHyIlf093mi4lvrTKQcl7cgLiHsaA_Ug7Kwk0ZZotHthkdzfo2j-UUUSh0BlqJOny-y88rNy_cDAr05PeZktnaXr_12MhaUwq6g"
-
-    # flow = flow_from_clientsecrets('client_creds.json', ' '.join(SCOPES))
-    # # flow.redirect_uri = REDIRECT_URI
-
-    # credentials = flow.step2_exchange(access_token)
-    # print(credentials.to_json())
-
-    creds = Credentials(token=None, refresh_token=refresh_token, token_uri=token_uri,
+    # get access token for the user from database here
+    access_token = USERS.document(userId).get().to_dict()['googleToken']
+    creds = Credentials(token=access_token, token_uri=token_uri,
                         client_id=client_id, client_secret=client_secret, scopes=SCOPES)
-    # creds = Credentials(token=access_token, id_token=token_id, token_uri=token_uri,
-    # client_id=client_id, client_secret=client_secret, scopes=SCOPES)
 
     # generates access token from refresh token
-    creds.refresh(Request())
+    # creds.refresh(Request())
 
     service = build('gmail', 'v1', credentials=creds)
 
@@ -158,13 +143,13 @@ def get_gmails(userId):
 
     messages = []
     reservations = []
+    extractor = Extractor()
     for ids in message_ids:
         message_response = service.users().messages().get(
             userId='me', id=ids['id']).execute()
 
         message = parse_message(message_response['payload'])
 
-        extractor = Extractor()
         res = extractor.extract(message['body'])
 
         message['address'] = res['address']
@@ -178,10 +163,6 @@ def get_gmails(userId):
         }
 
         reservations.append(curr_res)
-        # if (message['From'].find('roy su')):
-        #     confirmation_code = reservation_code_airbnb_regex(message['body'])
-        # else:
-        #     confirmation_code = confirmation_code_regex(message['body'])
 
     trip_doc = TRIPS.document(userId).collection('trips').document()
 

@@ -15,6 +15,8 @@ export const firebaseApp = firebase.initializeApp({
   measurementId: 'G-1MW1Z2SLT1'
 });
 
+const db = firebase.firestore();
+
 // set persistance
 // const auth = getAuth();
 // setPersistence(auth, browserSessionPersistence)
@@ -91,9 +93,17 @@ function useProvideAuth () {
 
   const loginWithGoogle = async () => {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
-    return await firebase
+    googleProvider.addScope('https://www.googleapis.com/auth/gmail.readonly');
+    const result = await firebase
       .auth()
       .signInWithPopup(googleProvider);
+
+    const uid = result.user.uid;
+    const accessToken = result.credential.accessToken;
+    console.log(accessToken);
+    // return await db.collection('users').doc(uid).set(accessToken);
+    // console.log(writeRes);
+    return result.user != null;
   };
 
   useEffect(() => {
