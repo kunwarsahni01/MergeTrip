@@ -26,7 +26,6 @@ const firebaseConfig = {
 // Initialize Firebase
 // eslint-disable-next-line
 const app = initializeApp(firebaseConfig);
-
 //set persistance
 const auth = getAuth();
 setPersistence(auth, browserSessionPersistence)
