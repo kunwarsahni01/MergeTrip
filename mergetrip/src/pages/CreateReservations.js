@@ -2,12 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { ErrorMessage } from '@hookform/error-message';
 import { getAuth } from '@firebase/auth';
 
 import Input from '../components/Input';
 import { createReservation } from '../api/flaskr_api';
-import './Trip.css'
+import './Trip.css';
 
 const CreateTripFormSchema = Yup.object({
   resName: Yup.string().required('Trip name is required'),
