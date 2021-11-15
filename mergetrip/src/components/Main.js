@@ -46,7 +46,7 @@ class Main extends Component {
     }
 
     clickProfile() {
-        const auth = getAuth();
+        // const auth = getAuth();
         this.props.history.push('/account_details');
     }
 
@@ -73,7 +73,7 @@ class Main extends Component {
                     <ul class="nav-list">
                         <li>
                             <i class='bx bx-search' ></i>
-                            <input type="text" placeholder="Search..." onClick={this.getUsers}/>
+                            <input type="text" placeholder="Search..." onClick={this.getUsers} />
                             <span class="tooltip">Search</span>
                         </li>
                         <li>
@@ -84,10 +84,9 @@ class Main extends Component {
                             <span class="tooltip">Trips</span>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/account_details">
                                 <i class='bx bx-user' ></i>
                                 <span class="links_name">Profile</span>
-                                <i class='bx bx-profile' id="profile" onClick={this.clickProfile} ></i>
                             </a>
                             <span class="tooltip">Profile</span>
                         </li>

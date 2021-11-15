@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import './AccountDetails.css';
 import { withRouter } from 'react-router-dom';
 import { getAuth, updateEmail, deleteUser, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider, updateProfile } from "firebase/auth";
-import leftBoarding from './BoardingLeft.svg'
-import rightBoarding from './BoardingRight.svg'
-import { update } from "@firebase/database"
-import { initializeApp } from "@firebase/app";
 //import firebaseConfig from '../index.js'
 
 //const app = fireConfig.initializeApp(firebaseConfig);

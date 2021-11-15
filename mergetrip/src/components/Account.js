@@ -3,9 +3,8 @@ import apple from './apple.svg';
 import google from './google.svg';
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
-import { getAuth, setPersistence, browserSessionPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
-import { FirebaseError } from '@firebase/util';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
+import { getFirestore, addDoc, collection } from "firebase/firestore";
 
 class SimpleForm extends Component {
   constructor() {
