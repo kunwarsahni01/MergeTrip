@@ -3,9 +3,8 @@ import apple from './apple.svg';
 import google from './google.svg';
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
-import { getAuth, setPersistence, browserSessionPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
-import { FirebaseError } from '@firebase/util';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
+import { getFirestore, addDoc, collection } from "firebase/firestore";
 
 class SimpleForm extends Component {
   constructor() {
@@ -66,6 +65,7 @@ class SimpleForm extends Component {
 
   createGoogle() {
     const provider = new GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
     const auth = getAuth();
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -74,10 +74,15 @@ class SimpleForm extends Component {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        const db = getDatabase();
-        set(ref(db, 'users/' + user.uid), {
-          googletoken: token
-        });
+        const db = getFirestore();
+        try {
+          const docRef = addDoc(collection(db, "users"), {
+            googleToken: token
+          });
+          console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
 
         console.log("Login Succesful");
         this.props.history.push("/main");
@@ -211,10 +216,10 @@ class SimpleForm extends Component {
               placeholder="Password"
             />
           </div>
-          <div className="Account-requirements"> 
+          <div className="Account-requirements">
             * username must exist *
           </div>
-          <div className="Account-requirements"> 
+          <div className="Account-requirements">
             * password must be 6 characters long *
           </div>
           <div>

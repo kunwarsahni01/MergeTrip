@@ -127,8 +127,8 @@
   color: #FFF;
 }
 .sidebar.open .bx-search:hover{
-  background: #1d1b31;
-  color: #FFF;
+  background: #FFF;
+  color: #1d1b31;
 }
 .sidebar .bx-search:hover{
   background: #FFF;
