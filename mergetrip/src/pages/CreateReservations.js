@@ -88,7 +88,8 @@ const CreateReservation = (props) => {
               <button className='Trip-button' type='submit'>Create Reservation</button>
             </form>
             )
-          : <BsPlusLg onClick={toggleShow} />
+          : <button className='Trip-button' type='button' onClick={toggleShow}>Show create reservation</button>
+
       }
     </>
   );

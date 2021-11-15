@@ -11,6 +11,8 @@ const Trips = (props) => {
   const auth = useAuthState();
 
   const [trips, setTrips] = useState(false);
+  const [showTrips, setShowTrips] = useState(false);
+
   const addNewTrip = (newTrip) => {
     setTrips(prevTrips => [...prevTrips, newTrip]);
   };
@@ -71,8 +73,9 @@ const Trips = (props) => {
               </div>
               <button className='Trip-button' onClick={() => { handleDeleteTrip(trip); }}>Delete trip</button>
               <p>Reservations:</p>
+              <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
               {
-                trip.reservations.length !== 0
+                showTrips && trip.reservations.length !== 0
                   ? trip.reservations.map((res, index) => <Reservation res={res} key={index} />)
                   : null
               }
