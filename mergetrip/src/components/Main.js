@@ -4,6 +4,10 @@ import { withRouter } from 'react-router-dom';
 import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { ThemeConsumer } from "styled-components";
 import { initializeApp } from "@firebase/app";
+import { Database, getDatabase, onValue, query, ref } from "@firebase/database";
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import '../index.js';
+import { database } from "../index.js";
 
 class Main extends Component {
     constructor() {
@@ -37,7 +41,13 @@ class Main extends Component {
 
 
     getUsers(searchedTerm) {
-        console.log(this.table);
+        const db = database;
+        const q = ref(db, 'users/googleToken');
+        onValue(q, (snapshot) => {
+            const data = snapshot.val;
+            console.log(data);
+        })
+        //console.log(q);
     }
 
     clickMenu() {

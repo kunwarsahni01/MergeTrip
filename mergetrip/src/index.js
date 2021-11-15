@@ -8,6 +8,7 @@ import { browserSessionPersistence, getAuth, setPersistence } from '@firebase/au
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getDatabase } from '@firebase/database';
 // import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,6 +27,7 @@ const firebaseConfig = {
 // Initialize Firebase
 // eslint-disable-next-line
 const app = initializeApp(firebaseConfig);
+const database = getDatabase(app)
 
 //set persistance
 const auth = getAuth();
@@ -51,3 +53,5 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+export { app, database }
