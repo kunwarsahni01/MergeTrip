@@ -11,7 +11,6 @@ const Trips = (props) => {
   const auth = useAuthState();
 
   const [trips, setTrips] = useState(false);
-
   const addNewTrip = (newTrip) => {
     setTrips(prevTrips => [...prevTrips, newTrip]);
   };
@@ -63,6 +62,9 @@ const Trips = (props) => {
               <div className='Trip-header'>
                 <p>{trip.trip_name}</p>
               </div>
+
+              <CreateReservation tripId={trip.trip_id} updateReservations={addNewReservation} />
+
               <div className='Trip-body'>
                 <p>Start: {trip.start_date}</p>
                 <p>End: {trip.end_date}</p>
@@ -74,7 +76,6 @@ const Trips = (props) => {
                   ? trip.reservations.map((res, index) => <Reservation res={res} key={index} />)
                   : null
               }
-              <CreateReservation tripId={trip.trip_id} updateReservations={addNewReservation} />
             </div>
             ))
           : <p>Loading Trips...</p>

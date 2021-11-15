@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -8,6 +8,8 @@ import Input from '../components/Input';
 import { createReservation } from '../api/flaskr_api';
 import './Trip.css';
 
+import { BsPlusLg } from 'react-icons/bs';
+
 const CreateTripFormSchema = Yup.object({
   resName: Yup.string().required('Trip name is required'),
   resLocation: Yup.string().required('Start date is required'),
@@ -15,6 +17,12 @@ const CreateTripFormSchema = Yup.object({
 });
 
 const CreateReservation = (props) => {
+  const [show, setShow] = useState(false);
+
+  const toggleShow = () => {
+    setShow(prevShow => !prevShow);
+  };
+
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -45,36 +53,44 @@ const CreateReservation = (props) => {
   };
 
   return (
-    <form className='Trip-form' onSubmit={handleSubmit(onSubmit, onError)}>
-      <p>Create a Reservation:</p>
-      <Input
-        name='resName'
-        label=''
-        placeholder='Reservation Name'
-        type='text'
-        errors={errors}
-        register={register}
-      />
-      <Input
-        name='resLocation'
-        label=''
-        placeholder='Reservation Location'
-        type='text'
-        errors={errors}
-        register={register}
-      />
-      <Input
-        name='resTime'
-        label=''
-        placeholder='Reservation Time'
-        type='time'
-        errors={errors}
-        register={register}
-      />
+    <>
+      {
+        show
+          ? (
+            <form className='Trip-form' onSubmit={handleSubmit(onSubmit, onError)}>
+              <p>Create a Reservation:</p>
+              <Input
+                name='resName'
+                label=''
+                placeholder='Reservation Name'
+                type='text'
+                errors={errors}
+                register={register}
+              />
+              <Input
+                name='resLocation'
+                label=''
+                placeholder='Reservation Location'
+                type='text'
+                errors={errors}
+                register={register}
+              />
+              <Input
+                name='resTime'
+                label=''
+                placeholder='Reservation Time'
+                type='time'
+                errors={errors}
+                register={register}
+              />
 
-      <button className='Trip-button' type='submit'>Create Reservation</button>
-    </form>
-
+              <button className='Trip-button' type='button' onClick={toggleShow}>Hide</button>
+              <button className='Trip-button' type='submit'>Create Reservation</button>
+            </form>
+            )
+          : <BsPlusLg onClick={toggleShow} />
+      }
+    </>
   );
 };
 
