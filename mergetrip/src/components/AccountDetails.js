@@ -15,13 +15,14 @@ class AccountDetails extends Component {
         profileURL: "",
         showUsernameText:false,
         showEmailText:false,
+        disconnected:false,
         newUsername: "",
         newEmail: ""
     };
 
     //this.clickMenu = this.clickMenu.bind(this);
     const auth = getAuth();
-    console.log(auth.currentUser.displayName);
+    //console.log(auth.currentUser.displayName);
     this.defaultName = "User";
     this.defaultProfileURL = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp";
 
@@ -59,6 +60,8 @@ class AccountDetails extends Component {
     this.showEmail = this.showEmail.bind(this);
     this.deleteAcount = this.deleteAcount.bind(this);
     this.deleteAccountCheck = this.deleteAccountCheck.bind(this);
+    this.disconnectAccount = this.disconnectAccount.bind(this);
+    this.connectAccount = this.connectAccount.bind(this);
   }
 
   
@@ -163,6 +166,14 @@ class AccountDetails extends Component {
       })
   }
 
+  disconnectAccount() {
+    this.setState({disconnected : false});
+  }
+
+  connectAccount() {
+    this.setState({disconnected : true});
+  }
+
   render() {
     return (
       <div className="AccountDetails">
@@ -224,6 +235,19 @@ class AccountDetails extends Component {
             <button className="AccountDetails-button" onClick={this.deleteAccountCheck}>
                     Delete Account
                 </button>
+            
+            {this.state.disconnected ?
+            <button className="AccountDetails-button" onClick ={this.disconnectAccount}>
+                    Disconnect Email
+               </button>
+             : null} 
+
+            {!this.state.disconnected ?
+            <button className="AccountDetails-button" onClick ={this.connectAccount}>
+                    Connect Email
+               </button>
+             : null} 
+
             </div>
 
         </header>
