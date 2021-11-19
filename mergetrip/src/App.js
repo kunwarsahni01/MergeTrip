@@ -7,6 +7,8 @@ import {
 import Main from './components/Main';
 import Home from './components/Home';
 import NewLogin from './components/NewLogin';
+import AccountDetails from './components/AccountDetails';
+
 // import { Login } from './Components/Login';
 import Profile from './components/Profile';
 
@@ -46,7 +48,7 @@ function App () {
           <Route exact path='/' component={Home} />
           <Route exact path='/login' component={NewLogin} />
           <AuthenticatedRoute exact path='/main' component={Main} />
-          <Route exact path='/profile' component={Profile} />
+          <Route exact path='/profile' component={AccountDetails} />
         </Switch>
       </Router>
     </AuthContextProvider>
