@@ -3,8 +3,9 @@ import apple from './apple.svg';
 import google from './google.svg';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
-import { collection, addDoc, getFirestore } from 'firebase/firestore';
+import { getAuth, setPersistence, browserSessionPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
+import { getDatabase, ref, set } from 'firebase/database';
+import { FirebaseError } from '@firebase/util';
 
 export class Login extends Component {
   constructor () {
@@ -133,6 +134,9 @@ export class Login extends Component {
 
   loginToAccount () {
     const auth = getAuth();
+
+    // firebase.auth().setPersistence(auth.Auth.Persistence.SESSION)
+
     signInWithEmailAndPassword(auth, this.state.username, this.state.password)
       .then((userCredential) => {
         // Signed in
@@ -194,7 +198,7 @@ export class Login extends Component {
           </div>
           <div>
             <input
-className='Account-input'
+              className='Account-input'
               name='username'
               type='text'
               value={this.state.username}
@@ -204,7 +208,7 @@ className='Account-input'
           </div>
           <div>
             <input
-className='Account-input'
+              className='Account-input'
               name='password'
               type='password'
               value={this.state.password}
