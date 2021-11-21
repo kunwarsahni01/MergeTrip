@@ -12,6 +12,7 @@ const NewLogin = (props) => {
     auth.loginWithGoogle()
       .then(() => {
         console.log('LOGIN SUCCESSFUL !');
+        history.push('/main');
       })
       .catch(() => {
         console.log('LOGIN FAILED');

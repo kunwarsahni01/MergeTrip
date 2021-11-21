@@ -18,9 +18,9 @@ const Main = () => {
     setShowBar(prevShowBarState => !prevShowBarState);
   };
 
-  const handleLogout = () => {
+  const logoutButton = () => {
     auth.logout();
-    history.push('/login');
+    history.push('/');
   };
 
   return (
@@ -73,7 +73,7 @@ const Main = () => {
                       <div class='name'>{auth.user.displayName}</div>
                     </div>
                   </div>
-                  <i class='bx bx-log-out' id='log_out' onClick={handleLogout} />
+                  <i class='bx bx-log-out' id='log_out' onClick={logoutButton} />
                 </li>
               </ul>
             </div>
