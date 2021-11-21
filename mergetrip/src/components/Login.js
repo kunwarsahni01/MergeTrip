@@ -4,8 +4,9 @@ import google from './google.svg';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { getAuth, setPersistence, browserSessionPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getFirestore, addDoc, collection } from 'firebase/firestore';
 import { FirebaseError } from '@firebase/util';
+import withoutAuthHOC from './withoutAuthHOC';
 
 export class Login extends Component {
   constructor () {
@@ -233,4 +234,4 @@ export class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+export default withRouter(withoutAuthHOC(Login));

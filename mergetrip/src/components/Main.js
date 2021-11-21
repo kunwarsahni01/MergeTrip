@@ -2,10 +2,13 @@ import { useAuthState } from '../firebase';
 import './Main.css';
 import React, { useState } from 'react';
 import Trips from '../pages/Trips';
+import { useHistory } from 'react-router';
+import withAuthHOC from './withAuthHOC';
 
 const Main = () => {
   const DEFAULT_PROFILE_URL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
   const auth = useAuthState();
+  const history = useHistory();
 
   const [currentPage, setCurrentPage] = useState(<Trips />);
 
@@ -13,6 +16,11 @@ const Main = () => {
   const toggleShowBar = () => {
     // toggles between true and false
     setShowBar(prevShowBarState => !prevShowBarState);
+  };
+
+  const handleLogout = () => {
+    auth.logout();
+    history.push('/login');
   };
 
   return (
@@ -65,7 +73,7 @@ const Main = () => {
                       <div class='name'>{auth.user.displayName}</div>
                     </div>
                   </div>
-                  <i class='bx bx-log-out' id='log_out' onClick={auth.logout} />
+                  <i class='bx bx-log-out' id='log_out' onClick={handleLogout} />
                 </li>
               </ul>
             </div>
@@ -82,4 +90,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default withAuthHOC(Main);

@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import Main from './components/Main';
 import Home from './components/Home';
-import NewLogin from './components/NewLogin';
+import Login from './components/Login';
 import AccountDetails from './components/AccountDetails';
 
 // import { Login } from './Components/Login';
@@ -46,8 +46,8 @@ function App () {
       <Router>
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route exact path='/login' component={NewLogin} />
-          <AuthenticatedRoute exact path='/main' component={Main} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/main' component={Main} />
           <Route exact path='/profile' component={AccountDetails} />
         </Switch>
       </Router>
