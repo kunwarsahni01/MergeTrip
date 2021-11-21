@@ -57,11 +57,11 @@ function App () {
       <AuthContextProvider>
         <Router>
           <Switch>
-            <Route exact path='/' component={HomePage} />
+            {/* <Route exact path='/' component={HomePage} /> */}
             <Route exact path='/otherpage'>
               <p>Other page</p>
             </Route>
-            <Route exact path='/account' component={Account} />
+            {/* <Route exact path='/account' component={Account} /> */}
             <Route exact path='/main' component={Main} />
             <Route exact path='/' component={Home} />
             <Route exact path='/login' component={Login} />

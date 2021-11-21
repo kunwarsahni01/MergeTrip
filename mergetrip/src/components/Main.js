@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Trips from '../pages/Trips';
 import { useHistory } from 'react-router';
 import withAuthHOC from './withAuthHOC';
+import AccountDetails from './AccountDetails';
+import Groups from './Groups';
 
 const Main = () => {
   const DEFAULT_PROFILE_URL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
@@ -45,19 +47,26 @@ const Main = () => {
                   <input type='search' placeholder='Search...' />
                   <span class='tooltip'>Search</span>
                 </li>
-                <li>
-                  <a href='#'>
+                <li onClick={() => { setCurrentPage(<Trips />); }}>
+                  <a>
                     <i class='bx bx-grid-alt' />
                     <span class='links_name'>Trips</span>
                   </a>
                   <span class='tooltip'>Trips</span>
                 </li>
-                <li>
-                  <a href='/profile'>
+                <li onClick={() => { setCurrentPage(<AccountDetails />); }}>
+                  <a>
                     <i class='bx bx-user' />
                     <span class='links_name'>Profile</span>
                   </a>
                   <span class='tooltip'>Profile</span>
+                </li>
+                <li onClick={() => { setCurrentPage(<Groups />); }}>
+                  <a>
+                    <i class='bx bx-group' />
+                    <span class='links_name'>Groups</span>
+                  </a>
+                  <span class='tooltip'>Groups</span>
                 </li>
                 <li>
                   <a href='/settings'>
