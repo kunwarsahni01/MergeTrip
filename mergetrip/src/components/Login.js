@@ -3,10 +3,10 @@ import apple from './apple.svg';
 import google from './google.svg';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { getAuth, setPersistence, browserSessionPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
-import { getFirestore, addDoc, collection } from 'firebase/firestore';
 import { FirebaseError } from '@firebase/util';
 import withoutAuthHOC from './withoutAuthHOC';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
+import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
 
 export class Login extends Component {
   constructor () {
@@ -75,9 +75,11 @@ export class Login extends Component {
         // The signed-in user info.
         const user = result.user;
         const db = getFirestore();
+        const userId = auth.currentUser.uid;
         try {
-          const docRef = addDoc(collection(db, 'users'), {
-            googleToken: token
+          const docRef = updateDoc(doc(db, 'users', userId), {
+            googleToken: token,
+            userId: userId
           });
           console.log('Document written with ID: ', docRef.id);
         } catch (e) {
