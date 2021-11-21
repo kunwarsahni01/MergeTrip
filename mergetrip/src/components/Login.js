@@ -76,15 +76,14 @@ export class Login extends Component {
         const user = result.user;
         const db = getFirestore();
         const userId = auth.currentUser.uid;
-        try {
-          const docRef = updateDoc(doc(db, 'users', userId), {
-            googleToken: token,
-            userId: userId
-          });
-          console.log('Document written with ID: ', docRef.id);
-        } catch (e) {
-          console.error('Error adding document: ', e);
-        }
+        setDoc(doc(db, 'users', userId), {
+          googleToken: token,
+          userId: userId
+        }).then(() => {
+          console.log('Got google token successfully: ');
+          console.log('userId: ', userId);
+          console.log('token: ', token);
+        });
 
         console.log('Login Succesful');
         this.props.history.push('/main');

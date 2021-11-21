@@ -6,6 +6,7 @@ import { useHistory } from 'react-router';
 import withAuthHOC from './withAuthHOC';
 import AccountDetails from './AccountDetails';
 import Groups from './Groups';
+import CreateGroup from './CreateGroup';
 
 const Main = () => {
   const DEFAULT_PROFILE_URL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
@@ -67,6 +68,13 @@ const Main = () => {
                     <span class='links_name'>Groups</span>
                   </a>
                   <span class='tooltip'>Groups</span>
+                </li>
+                <li onClick={() => { setCurrentPage(<CreateGroup />); }}>
+                  <a>
+                    <i class='bx bx-group' />
+                    <span class='links_name'>Create Groups</span>
+                  </a>
+                  <span class='tooltip'>Create Groups</span>
                 </li>
                 <li>
                   <a href='/settings'>

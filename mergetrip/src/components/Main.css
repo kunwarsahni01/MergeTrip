@@ -150,6 +150,11 @@
   color: #1d1b31;
 }
 
+.tab-li-active {
+  background: #FFF !important;
+  color: #1d1b31 !important;
+}
+
 .sidebar .bx-search:hover {
   background: #FFF;
   color: #11101d;

@@ -16,18 +16,25 @@ class Groups extends Component {
     };
     this.onInputchange = this.onInputchange.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
-
-    // const auth = this.props.authState.user.auth;
-    // console.log(auth.currentUser.displayName);
-    // this.state.name = auth.currentUser.displayName;
-    // this.state.profileURL = auth.currentUser.photoURL
-
     this.onLogout = this.onLogout.bind(this);
     this.onCreate = this.onCreateButton.bind(this);
     this.onInvite = this.onInvite.bind(this);
     this.onLeave = this.onLeave.bind(this);
 
   }
+
+  componentDidMount() {
+    const auth = this.props.authState.user.auth;
+
+    const defaultName = 'User';
+    const defaultProfileURL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
+
+    this.setState({
+      name: auth.currentUser.displayName ? auth.currentUser.displayName : defaultName,
+      profileURL: auth.currentUser.photoURL ? auth.currentUser.photoURL : defaultProfileURL,
+    });
+  }
+
   onCreateButton() {
     this.toCreate();
   }
