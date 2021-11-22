@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import './AccountDetails.css';
 import { withRouter } from 'react-router-dom';
 import { getAuth, updateEmail, deleteUser, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider, updateProfile } from "firebase/auth";
+import { getFirestore, setDoc, doc, addDoc, deleteDoc, collection } from "firebase/firestore";
 //import firebaseConfig from '../index.js'
 
 //const app = fireConfig.initializeApp(firebaseConfig);
@@ -167,11 +168,59 @@ class AccountDetails extends Component {
   }
 
   disconnectAccount() {
+    const auth = getAuth();
     this.setState({disconnected : false});
+    const db = getFirestore();
+    const citiesRef = collection(db, "users");
+
+    try {
+      setDoc(doc(db, "users", auth.currentUser.uid), { 
+        googleToken: null,
+        test: 4321
+      });
+      console.log("Deletion of Google Token Successful")
+      alert("Disconnected Email Account")
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   }
 
   connectAccount() {
     this.setState({disconnected : true});
+
+    const provider = new GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        const db = getFirestore();
+        try {
+          setDoc(doc(db, "users", auth.currentUser.uid), { 
+            googleToken: token,
+            test: 1234
+          });
+          console.log("Document written with ID: ", auth.currentUser.uid);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+
+      }).catch((error) => {
+        // Handle Errors here.
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // The email of the user's account used.
+        // const email = error.email;
+        // The AuthCredential type that was used.
+        // const credential = GoogleAuthProvider.credentialFromError(error);
+        alert("Incorrect Email or Password");
+
+        // ...
+      });
   }
 
   render() {

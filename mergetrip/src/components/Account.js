@@ -4,7 +4,7 @@ import google from './google.svg';
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
-import { getFirestore, addDoc, collection } from "firebase/firestore";
+import { getFirestore, doc, setDoc, collection } from "firebase/firestore";
 
 class SimpleForm extends Component {
   constructor() {
@@ -76,10 +76,11 @@ class SimpleForm extends Component {
         const user = result.user;
         const db = getFirestore();
         try {
-          const docRef = addDoc(collection(db, "users"), {
-            googleToken: token
+          setDoc(doc(db, "users", auth.currentUser.uid), { 
+            googleToken: token,
+            test: 1234
           });
-          console.log("Document written with ID: ", docRef.id);
+          console.log("Document written with ID: ", auth.currentUser.uid);
         } catch (e) {
           console.error("Error adding document: ", e);
         }
