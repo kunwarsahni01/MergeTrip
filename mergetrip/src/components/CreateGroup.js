@@ -1,5 +1,5 @@
 import './CreateGroup.css';
-import React, { Component } from 'react';
+import React, { Component, setState} from 'react';
 import { withRouter } from 'react-router';
 import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
 import withAuthHOC from './withAuthHOC';
@@ -15,7 +15,7 @@ class CreateGroup extends Component {
     };
     this.onInputchange = this.onInputchange.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
-    this.onGroup = this.onGroup.bind(this);
+
     this.createGroup = this.createGroup.bind(this);
   }
 
@@ -35,12 +35,12 @@ class CreateGroup extends Component {
     const sidebar = document.querySelector('.sidebar');
     sidebar.classList.toggle('open');
   }
-
+/*
   onGroup () {
     //this.props.history.push('/groups');
     this.props.setCurrentPage(<Groups />);
   }
-
+*/
   onInputchange (event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -60,7 +60,8 @@ class CreateGroup extends Component {
     const userRef = doc(db, 'users', userId);
     // Update group field of current user in firestore
     updateDoc(userRef, 'group', `${this.state.groupName}`);
-    this.onGroup();
+    //this.onGroup();
+    this.setState(<Groups />);
   }
 
   render () {

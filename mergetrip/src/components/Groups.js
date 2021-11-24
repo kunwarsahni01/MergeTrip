@@ -37,7 +37,7 @@ class Groups extends Component {
       profileURL: auth.currentUser.photoURL ? auth.currentUser.photoURL : defaultProfileURL,
     });
   }
-
+/*
   onCreateButton() {
     this.toCreate();
   }
@@ -62,7 +62,7 @@ class Groups extends Component {
   toJoin() {
       this.props.setCurrentPage(<JoinGroup />);
   }
-
+*/
   onLeave = async () => {
     const auth = this.props.authState.user.auth;
     const db = getFirestore();
@@ -112,8 +112,6 @@ class Groups extends Component {
     this.props.history.push('/');
   }
 
-
-
   onInputchange(event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -146,7 +144,6 @@ class Groups extends Component {
               Invite users
             </button>
           </div>
-
         </div>
       </>
     );
