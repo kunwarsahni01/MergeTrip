@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
 import withAuthHOC from './withAuthHOC';
+import Groups from './Groups';
 
 class CreateGroup extends Component {
   constructor () {

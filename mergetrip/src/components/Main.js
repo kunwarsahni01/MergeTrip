@@ -7,6 +7,8 @@ import withAuthHOC from './withAuthHOC';
 import AccountDetails from './AccountDetails';
 import Groups from './Groups';
 import CreateGroup from './CreateGroup';
+import SwitchGroup from './SwitchGroup';
+import JoinGroup from './JoinGroup';
 
 const Main = () => {
   const DEFAULT_PROFILE_URL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
@@ -72,9 +74,23 @@ const Main = () => {
                 <li onClick={() => { setCurrentPage(<CreateGroup />); }}>
                   <a>
                     <i class='bx bx-group' />
-                    <span class='links_name'>Create Groups</span>
+                    <span class='links_name'>Create Group</span>
                   </a>
                   <span class='tooltip'>Create Groups</span>
+                </li>
+                <li onClick={() => { setCurrentPage(<SwitchGroup />); }}>
+                  <a>
+                    <i class="bx bx-group" />
+                    <span class='links_name'>Switch Group</span>
+                  </a>
+                  <span class='tooltip'>Switch Groups</span>
+                </li>
+                <li onClick={() => { setCurrentPage(<JoinGroup />); }}>
+                  <a>
+                    <i class="bx bx-group" />
+                    <span class='links_name'>Join Group</span>
+                  </a>
+                  <span class='tooltip'>Join Group</span>
                 </li>
                 <li>
                   <a href='/settings'>

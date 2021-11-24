@@ -4,6 +4,9 @@ import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
 import { doc, getDoc, getFirestore, deleteDoc, deleteField, getDocs, collection, updateDoc } from 'firebase/firestore';
 import withAuthHOC from './withAuthHOC';
+import CreateGroup from './CreateGroup';
+import SwitchGroup from './SwitchGroup';
+import JoinGroup from './JoinGroup';
 
 class Groups extends Component {
   constructor() {
@@ -124,17 +127,8 @@ class Groups extends Component {
       <>
         <div class="text">
             Groups
-            <button class="join-group-button" onClick={this.onJoin}>
-                Join a Group
-            </button>
-            <button class="create-group-button" onClick={this.onCreate}>
-                Create New Group
-            </button>
             <button class="leave-group-button" onClick={this.onLeave}>
                 Leave Group
-            </button>
-            <button class="switch-button" onClick={this.onSwitch}>
-                Switch Groups
             </button>
         </div>
         <div>

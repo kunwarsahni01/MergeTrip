@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
 import { doc, deleteDoc, getFirestore, setDoc, updateDoc, getDoc } from 'firebase/firestore';
+import withAuthHOC from './withAuthHOC';
+import Groups from './Groups';
+
 
 class JoinGroup extends Component {
     constructor() {
@@ -20,6 +23,18 @@ class JoinGroup extends Component {
         this.state.profileURL = auth.currentUser.photoURL
         this.onLogout = this.onLogout.bind(this);
         this.onGroup = this.onGroup.bind(this);
+    }
+
+    componentDidMount() {
+        const auth = this.props.authState.user.auth;
+    
+        const defaultName = 'User';
+        const defaultProfileURL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
+    
+        this.setState({
+          name: auth.currentUser.displayName ? auth.currentUser.displayName : defaultName,
+          profileURL: auth.currentUser.photoURL ? auth.currentUser.photoURL : defaultProfileURL,
+        });
     }
     
     clickMenu() {
@@ -102,4 +117,4 @@ class JoinGroup extends Component {
         )
     }
 }
-export default withRouter(WithAuthHOC(JoinGroup));
+export default withRouter(withAuthHOC(JoinGroup));

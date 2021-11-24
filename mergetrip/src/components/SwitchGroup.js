@@ -2,7 +2,9 @@ import './SwitchGroup.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
+import withAuthHOC from './withAuthHOC';
 import { collection, addDoc, getFirestore, setDoc, doc, updateDoc, getDoc, deleteDoc, getDocs } from "firebase/firestore";
+import Groups from './Groups';
 
 class SwitchGroup extends Component {
     constructor() {
@@ -23,6 +25,18 @@ class SwitchGroup extends Component {
         this.switchGroup = this.switchGroup.bind(this);
     }
 
+    componentDidMount() {
+        const auth = this.props.authState.user.auth;
+        const defaultName = 'User';
+        const defaultProfileURL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
+
+        this.setState({
+            name: auth.currentUser.displayName ? auth.currentUser.displayName : defaultName,
+            profileURL: auth.currentUser.photoURL ? auth.currentUser.photoURL : defaultProfileURL,
+        });
+    }
+
+
     clickMenu() {
         let sidebar = document.querySelector(".sidebar");
         sidebar.classList.toggle("open");
@@ -35,7 +49,8 @@ class SwitchGroup extends Component {
     }
 
     onGroup() {
-        this.props.history.push('/groups');
+        //this.props.history.push('/groups');
+        this.props.setCurrentPage(<Groups />);
     }
     
     onInputchange(event) {
@@ -116,4 +131,4 @@ class SwitchGroup extends Component {
         )
     }
 }
-export default withRouter(WithAuthHOC(SwitchGroup));
+export default withRouter(withAuthHOC(SwitchGroup));
