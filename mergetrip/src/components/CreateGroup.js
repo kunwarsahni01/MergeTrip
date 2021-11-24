@@ -14,7 +14,6 @@ class CreateGroup extends Component {
     };
     this.onInputchange = this.onInputchange.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
-    this.onLogout = this.onLogout.bind(this);
     this.onGroup = this.onGroup.bind(this);
     this.createGroup = this.createGroup.bind(this);
   }
@@ -36,14 +35,9 @@ class CreateGroup extends Component {
     sidebar.classList.toggle('open');
   }
 
-  onLogout () {
-    const auth = this.props.authState.user.auth;
-    auth.signOut();
-    this.props.history.push('/');
-  }
-
   onGroup () {
-    this.props.history.push('/groups');
+    //this.props.history.push('/groups');
+    this.props.setCurrentPage(<Groups />);
   }
 
   onInputchange (event) {
