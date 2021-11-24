@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
 import { doc, getDoc, getFirestore, deleteDoc, deleteField, getDocs, collection, updateDoc } from 'firebase/firestore';
 import withAuthHOC from './withAuthHOC';
+import CreateGroup from './CreateGroup';
 
 class Groups extends Component {
   constructor() {
@@ -16,7 +17,6 @@ class Groups extends Component {
     };
     this.onInputchange = this.onInputchange.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
-    this.onLogout = this.onLogout.bind(this);
     this.onCreate = this.onCreateButton.bind(this);
     this.onInvite = this.onInvite.bind(this);
     this.onLeave = this.onLeave.bind(this);
@@ -57,14 +57,9 @@ class Groups extends Component {
     sidebar.classList.toggle("open");
   }
 
-  onLogout() {
-    const auth = this.props.authState.user.auth;
-    auth.signOut();
-    this.props.history.push('/');
-  }
-
   toCreate() {
-    this.props.history.push('/createGroup');
+    // this.props.history.push('/createGroup');
+    this.props.setCurrentPage(<CreateGroup />)
   }
 
   onInputchange(event) {
