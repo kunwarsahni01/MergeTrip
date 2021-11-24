@@ -154,6 +154,7 @@ def get_gmails(userId):
 
         message['address'] = res['address']
         message['organization'] = res['organization']
+        message['date'] = res['date']
         messages.append(message)
 
         curr_res = {
@@ -383,15 +384,6 @@ def check_valid_username(username):
     """
     return 0
 
-
-def hotel_or_flight(text):
-    if "hotel" in text:
-        return "hotel"
-    elif "flight" in text:
-        return "flight"
-    else:
-        return None
-
 # AirBNB testing (regex)
 
 
@@ -467,14 +459,6 @@ def date_regex_char(text):
         return ("found a match")
     else:
         return ("none found")
-
-
-def preprocess_email(text):
-    text = nltk.word_tokenize(text)
-    text = nltk.pos_tag(text)
-
-    return text
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
