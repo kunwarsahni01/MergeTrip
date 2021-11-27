@@ -5,9 +5,6 @@ import time
 from datetime import datetime
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from google.oauth2.reauth import refresh_grant
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from firebase_admin import credentials, firestore, initialize_app, auth
@@ -130,7 +127,7 @@ def get_gmails(userId):
     date_query = "after:{0} before:{1}".format(test_start_date, test_end_date)
 
     # from_query = "from: {ibrahim.alassad001@gmail.com roymongyue@gmail.com yashyog2012@gmail.com willkao21@gmail.com}"
-    from_query = "from: {ibrahim.alassad001@gmail.com}"
+    from_query = "from: {ibrahim.alassad001@gmail.com yashyog2012@gmail.com}"
 
     gmails_query = date_query + " " + from_query
     # gmails_query = from_query
@@ -150,7 +147,8 @@ def get_gmails(userId):
 
         message = parse_message(message_response['payload'])
 
-        res = extractor.extract(message['body'])
+        res = extractor.extract(
+            message['body'], message['To'], message['Subject'])
 
         message['address'] = res['address']
         message['organization'] = res['organization']
@@ -459,6 +457,7 @@ def date_regex_char(text):
         return ("found a match")
     else:
         return ("none found")
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
