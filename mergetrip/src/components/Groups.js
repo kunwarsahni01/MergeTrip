@@ -2,11 +2,9 @@ import './Groups.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, deleteDoc, deleteField, getDocs, collection, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, deleteDoc, setDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
 import withAuthHOC from './withAuthHOC';
-import CreateGroup from './CreateGroup';
-import SwitchGroup from './SwitchGroup';
-import JoinGroup from './JoinGroup';
+
 
 class Groups extends Component {
   constructor() {
@@ -15,15 +13,18 @@ class Groups extends Component {
       name: "",
       profileURL: "",
       groupName: "",
-      inviteUid: ""
+      inviteUid: "",
+      viewUid: "",
+      trips: false
     };
     this.onInputchange = this.onInputchange.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
-    this.onCreate = this.onCreateButton.bind(this);
+    //this.onCreate = this.onCreateButton.bind(this);
     this.onInvite = this.onInvite.bind(this);
     this.onLeave = this.onLeave.bind(this);
-    this.onSwitch = this.onSwitch.bind(this);
-    this.onJoin = this.onJoin.bind(this);
+    //this.onSwitch = this.onSwitch.bind(this);
+    //this.onJoin = this.onJoin.bind(this);
+    this.onView = this.onView.bind(this);
   }
 
   componentDidMount() {
@@ -89,16 +90,30 @@ class Groups extends Component {
   }
 
   onInvite = async () => {
-    //Invite other users
-    const db = getFirestore();
-    const docref = doc(db, "users", `${this.state.inviteUid}`);
-    const docSnap = await getDoc(docref);
-    if (docSnap.exists) {
-      //Invite user
-      alert("Invitation sent");
+    if (this.state.inviteUid === "") {
+        alert("Please input the user Id that you would like to invite");
     } else {
-      alert("No user with the userId: " + `${this.state.inviteUid}`);
+        //Invite other users
+        const auth = this.props.authState.user.auth;
+        const db = getFirestore();
+        const docref = doc(db, "users", `${this.state.inviteUid}`);
+        const docSnap = await getDoc(docref);
+        if (docSnap.exists()) {
+            //Add user to invited list
+            const uIdDocSnap = await getDoc(doc(db, "users", auth.currentUser.uid));
+            const groupName = uIdDocSnap.get("group");
+            setDoc(doc(db, `groups/${groupName}/invited`, this.state.inviteUid), {
+                uid: this.state.inviteUid
+            });
+            alert("Successfully invited user");
+        } else {
+            alert("No user with the userId: " + `${this.state.inviteUid}`);
+        }            
     }
+  }
+
+  onView() {
+      alert(this.state.viewUid);
   }
 
   clickMenu() {
@@ -123,14 +138,16 @@ class Groups extends Component {
   render() {
     return (
       <>
+        <style>
+            @import url("https://use.typekit.net/osw3soi.css");
+        </style>
+        <br/>
         <div class="text">
             Groups
             <button class="leave-group-button" onClick={this.onLeave}>
                 Leave Group
             </button>
-        </div>
-        <div>
-          <div>
+
             <input class="group-input"
               name="inviteUid"
               type="text"
@@ -138,12 +155,23 @@ class Groups extends Component {
               placeholder="Enter the User Id to invite"
               onChange={this.onInputchange}
             />
-          </div>
-          <div>
+            <br/>
             <button class="invite-button" onClick={this.onInvite}>
               Invite users
             </button>
-          </div>
+            <br/>
+            <br/>
+            <br/>
+            <input class="invite-input"
+                name="viewUid"
+                type="text"
+                value={this.state.viewUid}
+                onchange={this.onInputchange}
+            />
+            <br/>
+            <button class="invite-button" onClick={this.onView}>
+                View
+            </button>
         </div>
       </>
     );

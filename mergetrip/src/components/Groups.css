@@ -242,8 +242,9 @@
     color: #000000;
     font-size: 25px;
     font-weight: 500;
-    margin: 18px
+    margin: 18px;
   }
+  /*
   .create-group-button {
     background-color: #E13234;
     color: white;
@@ -259,7 +260,7 @@
     border-radius: 16px;
     position: absolute;
     right: 0px;
-  }
+  }*/
   .leave-group-button {
     background-color: #E13234;
     color: white;
@@ -293,7 +294,23 @@
     position: absolute;
     left: 0px;
   }
-  .group-input {
+  .home-section .view-button {
+    background-color: #E13234;
+    color: white;
+    border: none;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    font-family: Termina;
+    margin: 25px 30px 0px 0px;
+    cursor: pointer;
+    border-radius: 16px;
+    position: absolute;
+    left: 0px;
+  }
+  .home-section .group-input {
     background-color: #37363A;
     width: 70%;
     height: 50px;
@@ -306,19 +323,21 @@
     color: #FFFFFF;
     margin-top: 10%;
     margin-bottom: .5rem;
+    z-index: 1000;
   }
-  .invite-input {
+  .home-section .invite-input {
     background-color: #37363A;
-    width: 70%;
+    width: 100%;
     height: 50px;
     border: 1px solid #E13234;
     border-radius: 16px;
-    padding: 0px 45px 0px 15px;
+    padding: 0px 0px 0px 15px;
     font-size: 20px;
     font-family: Termina;
     font-weight: 900;
     color: #FFFFFF;
     margin-bottom: .5rem;
+    z-index: 10000;
   }
 
   .home-section .current-group {

@@ -15,7 +15,6 @@ class CreateGroup extends Component {
     };
     this.onInputchange = this.onInputchange.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
-
     this.createGroup = this.createGroup.bind(this);
   }
 
@@ -38,7 +37,7 @@ class CreateGroup extends Component {
 /*
   onGroup () {
     //this.props.history.push('/groups');
-    this.props.setCurrentPage(<Groups />);
+    this.setCurrentPage(<Groups />);
   }
 */
   onInputchange (event) {
@@ -61,7 +60,7 @@ class CreateGroup extends Component {
     // Update group field of current user in firestore
     updateDoc(userRef, 'group', `${this.state.groupName}`);
     //this.onGroup();
-    this.setState(<Groups />);
+    //this.setState(<Groups />);
   }
 
   render () {
