@@ -1,8 +1,11 @@
-from transformers import AutoTokenizer, AutoModelForTokenClassification
-from transformers import pipeline
 import en_core_web_sm
 import spacy
 import re
+from transformers import AutoTokenizer, AutoModelForTokenClassification
+from transformers import pipeline
+from models.NonFlight import NonFlight
+from models.Flight import Flight
+from typing import Union
 
 
 class Extractor:
@@ -19,21 +22,22 @@ class Extractor:
 
         self.nlp_spacy = en_core_web_sm.load()
 
-    def extract(self, example: str, email_sender: str, email_subject: str) -> object:
-        ner_results = self.nlp(example)
-        spacy_results = self.nlp_spacy(example)
-        print(ner_results)
-        print(spacy_results)
+    def extract(self, email_body: str, email_sender: str, email_subject: str) -> Union[Flight, NonFlight]:
+        ner_results = self.nlp(email_body)
+        spacy_results = self.nlp_spacy(email_body)
 
+        # print(ner_results)
+        # print(spacy_results)
+
+        # we need to add confirmation number and date
         address = self.extract_address(ner_results)
         org = self.extract_organization(ner_results)
-        date = self.extract_date(spacy_results)
 
-        print('extracted address: ', address)
-        print('extracted org: ', org)
-        print('extracted date: ', date)
-
-        return {'address': address, 'organization': org, 'date': date}
+        if self.is_flight_email(email_body, email_sender, email_subject):
+            # change address to location
+            return Flight(organization=org, location=address).toJSON()
+        else:
+            return NonFlight(organization=org, address=address).toJSON()
 
     def extract_address(self, ner_results: object) -> str:
         locations = []
@@ -72,10 +76,24 @@ class Extractor:
         print(dates[0])
         return dates[0]
 
-    # def is_flight_email(email_sender: str, email_subject: str):
-    #   email_sender = email_sender.lower();
-    #   email_subject
-    #   if ("american airlines" in )
+    def is_flight_email(self, email_body: str, email_sender: str, email_subject: str):
+        email_body = email_body.lower()
+        email_sender = email_sender.lower()
+        email_subject = email_subject.lower()
+
+        if ("american airlines" in email_sender or "delta" in email_sender):
+            return True
+
+        if ("airbnb" in email_sender or "marriott" in email_sender):
+            return False
+
+        if ("american airlines" in email_body or "delta" in email_body):
+            return True
+
+        if ("airbnb" in email_body or "marriott" in email_body):
+            return False
+
+        return False
 
 
 # example = "My name is Wolfgang and I live in Berlin"

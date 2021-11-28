@@ -7,8 +7,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-from firebase_admin import credentials, firestore, initialize_app, auth
-from gmail_utils import get_clean_body, parse_message
+from firebase_admin import credentials, firestore, initialize_app
+from gmail_utils import parse_message
 from model_playground.bert_base_ner import Extractor
 
 app = Flask(__name__)
@@ -98,8 +98,8 @@ def show_itinerary():
     return "This is your main itinerary."
 
 
-@app.route("/gmails/<userId>", methods=['GET', 'POST'])
-def get_gmails(userId):
+@app.route("/gmails/<userId>/<tripId>", methods=['GET', 'POST'])
+def get_gmails(userId, tripId):
     """
       get_gmails(): Will get access to user's gmail using refresh token in database
       and then return filtered gmail bodies from a specific date range
@@ -150,34 +150,39 @@ def get_gmails(userId):
         res = extractor.extract(
             message['body'], message['To'], message['Subject'])
 
-        message['address'] = res['address']
-        message['organization'] = res['organization']
-        message['date'] = res['date']
+        # message['address'] = res['address']
+        # message['organization'] = res['organization']
+        # # message['date'] = res['date']
         messages.append(message)
 
-        curr_res = {
-            'res_name': message['From'],
-            'res_location': message['address'],
-            'res_time': 'NA'
-        }
+        # curr_res = {
+        #     'res_name': message['From'],
+        #     'res_location': message['address'],
+        #     'res_time': 'NA'
+        # }
 
-        reservations.append(curr_res)
+        # reservations.append(curr_res)
+        reservations.append(res)
 
-    trip_doc = TRIPS.document(userId).collection('trips').document()
+    trip_doc = TRIPS.document(userId).collection('trips').document(tripId)
 
-    for i in range(len(reservations)):
-        reservations[i]['res_id'] = str(trip_doc.id) + "_" + str(i)
+    # for i in range(len(reservations)):
+    #     reservations[i]['res_id'] = str(trip_doc.id) + "_" + str(i)
 
-    trip_doc.set({
-        'trip_id': trip_doc.id,
-        'owner_id': userId,
-        'trip_name': "Automatically Generated Trip",
-        'start_date': 'NA',
-        'end_date': 'NA',
-        'reservations': reservations
+    # trip_doc.set({
+    #     'trip_id': trip_doc.id,
+    #     'owner_id': userId,
+    #     'trip_name': "Automatically Generated Trip",
+    #     'start_date': 'NA',
+    #     'end_date': 'NA',
+    #     'reservations': reservations
+    # })
+
+    trip_doc.update({
+        reservations: reservations
     })
 
-    return jsonify({'results': messages}), 200
+    return jsonify({'results': reservations}), 200
 
 
 @app.route('/trips/create', methods=['POST'])

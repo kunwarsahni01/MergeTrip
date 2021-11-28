@@ -1,6 +1,6 @@
 import re
 import base64
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 
 def get_clean_body(raw_body_bytes: bytes) -> str:
