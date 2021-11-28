@@ -77,14 +77,14 @@ const Groups = (props) => {
     const [showTrips, setShowTrips] = useState(false);
   
     const onLeave = async () => {
-        const auth = this.props.authState.user.auth;
+        //const auth = this.props.authState.user.auth;
         const db = getFirestore();
-        const uIdDocSnap = await getDoc(doc(db, "users", auth.currentUser.uid));
+        const uIdDocSnap = await getDoc(doc(db, "users", auth.user.uid));
         const groupName = uIdDocSnap.get("group");
         if (groupName != null) {
-            const docRef = doc(db, `groups/${groupName}/members`, auth.currentUser.uid);
+            const docRef = doc(db, `groups/${groupName}/members`, auth.user.uid);
         await deleteDoc(docRef);
-        updateDoc(doc(db, "users", auth.currentUser.uid), {
+        updateDoc(doc(db, "users", auth.user.uid), {
             group: ""
         });
         var count = 0;

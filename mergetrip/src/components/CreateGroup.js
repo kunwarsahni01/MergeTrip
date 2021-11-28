@@ -34,12 +34,12 @@ class CreateGroup extends Component {
     const sidebar = document.querySelector('.sidebar');
     sidebar.classList.toggle('open');
   }
-/*
+
   onGroup () {
     //this.props.history.push('/groups');
-    this.setCurrentPage(<Groups />);
+    this.props.setCurrentPage(<Groups />);
   }
-*/
+
   onInputchange (event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -59,7 +59,7 @@ class CreateGroup extends Component {
     const userRef = doc(db, 'users', userId);
     // Update group field of current user in firestore
     updateDoc(userRef, 'group', `${this.state.groupName}`);
-    //this.onGroup();
+    this.onGroup();
     //this.setState(<Groups />);
   }
 

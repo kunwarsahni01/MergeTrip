@@ -67,28 +67,28 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Profile</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<Groups />); }}>
+                <li onClick={() => { setCurrentPage(<Groups setCurrentPage={setCurrentPage}/>); }}>
                   <a>
                     <i class='bx bx-group' />
                     <span class='links_name'>Groups</span>
                   </a>
                   <span class='tooltip'>Groups</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<CreateGroup />); }} setCurrentPage={setToGroup}>
+                <li onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage}/>); }} >
                   <a>
                     <i class='bx bx-group' />
                     <span class='links_name'>Create Group</span>
                   </a>
                   <span class='tooltip'>Create Groups</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<SwitchGroup />); }}>
+                <li onClick={() => { setCurrentPage(<SwitchGroup setCurrentPage={setCurrentPage}/>); }}>
                   <a>
                     <i class="bx bx-group" />
                     <span class='links_name'>Switch Group</span>
                   </a>
                   <span class='tooltip'>Switch Groups</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<JoinGroup />); }}>
+                <li onClick={() => { setCurrentPage(<JoinGroup setCurrentPage={setCurrentPage}/>); }}>
                   <a>
                     <i class="bx bx-group" />
                     <span class='links_name'>Join Group</span>
