@@ -14,9 +14,14 @@ from model_playground.bert_base_ner import Extractor
 app = Flask(__name__)
 CORS(app)
 
-client_secrets = json.load(open('client_creds.json'))['installed']
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+client_creds = os.path.join(THIS_FOLDER, 'client_creds.json')
+creds = os.path.join(THIS_FOLDER, 'creds.json')
 
-cred = credentials.Certificate('creds.json')
+
+client_secrets = json.load(open(client_creds))['installed']
+
+cred = credentials.Certificate(creds)
 
 default_app = initialize_app(cred)
 db = firestore.client()
