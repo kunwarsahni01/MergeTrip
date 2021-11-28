@@ -1,10 +1,12 @@
 import './Groups.css'
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
 import { doc, getDoc, getFirestore, deleteDoc, setDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
 import withAuthHOC from './withAuthHOC';
 import { useAuthState } from '../firebase';
+import Reservation from '../pages/Reservation';
+import {getTrips} from '../api/flaskr_api';
 
 /*
 class Groups extends Component {
@@ -68,9 +70,11 @@ class Groups extends Component {
 */
 const Groups = (props) => {
     const auth = useAuthState();
-    const [groupName, setGroupName] = useState('');
+    //const [groupName, setGroupName] = useState('');
     const [memberUid, setMemUid] = useState('');
     const [inviteUid, setInviteUid] = useState('');
+    const [trips, setTrips] = useState(false);
+    const [showTrips, setShowTrips] = useState(false);
   
     const onLeave = async () => {
         const auth = this.props.authState.user.auth;
@@ -101,7 +105,6 @@ const Groups = (props) => {
         if (inviteUid === "") {
             alert("Please input the user Id that you would like to invite");
         } else {
-            alert(inviteUid);
             //Invite other users
             //const auth = useAuthState();
             const db = getFirestore();
@@ -123,10 +126,12 @@ const Groups = (props) => {
 
     const onView = async () => {
         //Just testing that input is reading correctly
-        alert(this.state.viewUid);
+        alert(memberUid);
+        alert(trips);
         //Set trips to true
-        this.setState({display: true})
+        setTrips(true);
     }
+
 /*
   clickMenu() {
     let sidebar = document.querySelector(".sidebar");
@@ -146,6 +151,17 @@ const Groups = (props) => {
   }
 */
 
+    useEffect(() => {
+        const userId = auth.user.uid;
+        if (!trips) fetchTrips(userId);
+    }, []);
+
+    const fetchTrips = async (userId) => {
+        console.log('Fetching trips:\n');
+
+        const res = await getTrips(userId);
+        setTrips(res.data.trips);
+    };    
 
   //render() {
     return (
@@ -184,7 +200,28 @@ const Groups = (props) => {
             <button class="view-button" onClick={onView}>
                 View
             </button>
-
+            {
+                trips  
+                    ? trips.map((trip, index) => (
+                        <div key={index} className='Trip-container'>
+                            <div className='Trip-header'>
+                                <p>{trip.trip_name}</p>
+                            </div>
+                            <div className='Trip-body'>
+                                <p>Start: {trip.start_date}</p>
+                                <p>End: {trip.end_date}</p>
+                            </div>
+                            <p>Reservations:</p>
+                            <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
+                            {
+                                showTrips && trip.reservations.length !== 0
+                                    ? trip.reservations.map((res, index) => <Reservation res={res} key={index} />)
+                                    : null
+                            }
+                        </div>
+                    ))
+                    : <p>Loading member's itinerary</p>
+            }
         </div>
       </>
     );
