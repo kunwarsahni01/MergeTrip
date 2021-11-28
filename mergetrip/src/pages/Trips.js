@@ -13,17 +13,10 @@ const Trips = (props) => {
   const [trips, setTrips] = useState(false);
   const [showTrips, setShowTrips] = useState(false);
 
-  const addNewTrip = (newTrip) => {
-    setTrips(prevTrips => [...prevTrips, newTrip]);
-  };
-
-  const handleDeleteTrip = async (trip) => {
-    const res = await deleteTrip(auth.user.uid, trip.trip_id);
-
-    setTrips((prevTrips) => {
-      const newTrips = prevTrips.filter(prevTrip => prevTrip.trip_id !== trip.trip_id);
-      return newTrips;
-    });
+  const handleDeleteTrip = async (tripId) => {
+    const userId = auth.user.uid;
+    await deleteTrip(userId, tripId);
+    fetchTrips(userId);
   };
 
   const addNewReservation = async (tripId, res) => {
@@ -61,7 +54,7 @@ const Trips = (props) => {
         @import url("https://use.typekit.net/osw3soi.css");
       </style>
       <hr style={{ marginBottom: '20px', marginTop: '20px' }} />
-      <CreateTrip updateTrips={addNewTrip} />
+      <CreateTrip fetchTrips={fetchTrips} />
       {
         trips
           ? trips.map((trip, index) => (
@@ -76,7 +69,10 @@ const Trips = (props) => {
                 <p>Start: {trip.start_date}</p>
                 <p>End: {trip.end_date}</p>
               </div>
-              <button className='Trip-button' onClick={() => { handleDeleteTrip(trip); }}>Delete trip</button>
+              <button
+                className='Trip-button' onClick={() => { handleDeleteTrip(trip.trip_id); }}
+              >Delete trip
+              </button>
               <p>Reservations:</p>
               {
                 trip.reservations.length !== 0
