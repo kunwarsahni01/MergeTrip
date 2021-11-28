@@ -147,8 +147,8 @@ class Groups extends Component {
             <button class="leave-group-button" onClick={this.onLeave}>
                 Leave Group
             </button>
-
-            <input class="group-input"
+            <br/>
+            <input class="invite-input"
               name="inviteUid"
               type="text"
               value={this.state.inviteUid}
@@ -162,14 +162,14 @@ class Groups extends Component {
             <br/>
             <br/>
             <br/>
-            <input class="invite-input"
+            <input class="group-input"
                 name="viewUid"
                 type="text"
                 value={this.state.viewUid}
-                onchange={this.onInputchange}
+                onChange={this.onInputchange}
             />
             <br/>
-            <button class="invite-button" onClick={this.onView}>
+            <button class="view-button" onClick={this.onView}>
                 View
             </button>
         </div>
