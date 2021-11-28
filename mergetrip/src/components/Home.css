@@ -1,23 +1,23 @@
-.AccountDetails {
+.HomePage {
     background-color: #DFD2B6;
     text-align: center;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
   
-  .AccountDetails-header {
-    padding: 45px;
+  .HomePage-header {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: left;
-    font-size: calc(40px + 2vmin);
+    justify-content: center;
+    font-size: calc(37px + 2vmin);
     font-family: Termina;
     font-weight: 900;
     color: rgb(0, 0, 0);
   }
   
-  .AccountDetails-subtitle{
-    margin: 100px;
+  .HomePage-subtitle{
     font-size: calc(10px + 2vmin);
     font-family: Termina;
     font-weight: 900;
@@ -25,7 +25,7 @@
     margin-bottom: .5rem;
   }
   
-  .AccountDetails-button {
+  .HomePage-button {
     background-color: #E13234;
     color: white;
     border: none;
@@ -35,46 +35,31 @@
     display: inline-block;
     font-size: 15px;
     font-family: Termina;
-    margin: 30px 30px 0px 0px;
-    border-radius: 16px;
-    /*
     margin: 25px 30px 0px 0px;
     cursor: pointer;
-    
+    border-radius: 16px;
     position: absolute;
     right: 0px;
-    */
   }
-
+  @media 
+    only screen and (max-width: 767px)  {
+      .Homepage-left{
+         display:none;
+       }
+       .Homepage-right{
+        display:none;
+      }
+  }
   
-  
-  .AccountDetails-left {
-    position: absolute;
+  .Homepage-left {
+    position: fixed;
     left: -225px;
     top: -225px;
   }
   
-  .AccountDetails-right {
-    position: absolute;
+  .Homepage-right {
+    position: fixed;
     right: -225px;
     bottom: -225px;
-  }
-.Resetbutton {
-    background-color: #E13234;
-    color: white;
-    border: none;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    font-family: Termina;
-    margin: 25px;
-    /*
-    margin: 25px 30px 0px 0px;
-    cursor: pointer;
-    border-radius: 16px;
-    position: absolute;
-    right: 0px;
-    */
+    overflow: auto;
   }

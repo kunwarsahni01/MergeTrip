@@ -1,17 +1,19 @@
-import './Account.css';
+import './Login.css';
 import apple from './apple.svg';
 import google from './google.svg';
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { FirebaseError } from '@firebase/util';
+import withoutAuthHOC from './withoutAuthHOC';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
+import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
 
-class SimpleForm extends Component {
-  constructor() {
+export class Login extends Component {
+  constructor () {
     super();
     this.state = {
-      username: "",
-      password: "",
+      username: '',
+      password: ''
     };
     this.onInputchange = this.onInputchange.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
@@ -20,50 +22,49 @@ class SimpleForm extends Component {
     this.onAppleLogin = this.onAppleLogin.bind(this);
     this.onResetPassword = this.onResetPassword.bind(this);
     this.onHomeButton = this.onHomeButton.bind(this);
-
   }
 
-  onHomeButton() {
-    this.props.history.push("/");
+  onHomeButton () {
+    this.props.history.push('/');
   }
 
-  onInputchange(event) {
+  onInputchange (event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  onResetPassword() {
+  onResetPassword () {
     this.reset();
   }
 
-  onGoogleLogin() {
+  onGoogleLogin () {
     this.createGoogle();
   }
 
-  onAppleLogin() {
+  onAppleLogin () {
     this.createApple();
   }
 
-  onSignUp() {
+  onSignUp () {
     this.createAccount();
   }
 
-  onLogin() {
+  onLogin () {
     this.loginToAccount();
   }
 
-  reset() {
+  reset () {
     const auth = getAuth();
     sendPasswordResetEmail(auth, this.state.username)
       .then((userCredential) => {
-        alert("Email sent");
+        alert('Email sent');
       }).catch(function (error) {
         alert(error);
       });
   }
 
-  createGoogle() {
+  createGoogle () {
     const provider = new GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
     const auth = getAuth();
@@ -75,17 +76,18 @@ class SimpleForm extends Component {
         // The signed-in user info.
         const user = result.user;
         const db = getFirestore();
-        try {
-          const docRef = addDoc(collection(db, "users"), {
-            googleToken: token
-          });
-          console.log("Document written with ID: ", docRef.id);
-        } catch (e) {
-          console.error("Error adding document: ", e);
-        }
+        const userId = auth.currentUser.uid;
+        setDoc(doc(db, 'users', userId), {
+          googleToken: token,
+          userId: userId
+        }).then(() => {
+          console.log('Got google token successfully: ');
+          console.log('userId: ', userId);
+          console.log('token: ', token);
+        });
 
-        console.log("Login Succesful");
-        this.props.history.push("/main");
+        console.log('Login Succesful');
+        this.props.history.push('/main');
         // ...
       }).catch((error) => {
         // Handle Errors here.
@@ -95,13 +97,13 @@ class SimpleForm extends Component {
         // const email = error.email;
         // The AuthCredential type that was used.
         // const credential = GoogleAuthProvider.credentialFromError(error);
-        alert("Incorrect Email or Password");
+        alert('Incorrect Email or Password');
 
         // ...
       });
   }
 
-  createApple() {
+  createApple () {
     const provider = new OAuthProvider('apple.com');
     provider.addScope('email');
     provider.addScope('name');
@@ -115,8 +117,8 @@ class SimpleForm extends Component {
         // const credential = OAuthProvider.credentialFromResult(result);
         // const accessToken = credential.accessToken;
         // const idToken = credential.idToken;
-        console.log("Login Succesful");
-        this.props.history.push("/main");
+        console.log('Login Succesful');
+        this.props.history.push('/main');
 
         // ...
       })
@@ -133,97 +135,100 @@ class SimpleForm extends Component {
       });
   }
 
-  loginToAccount() {
+  loginToAccount () {
     const auth = getAuth();
+
+    // firebase.auth().setPersistence(auth.Auth.Persistence.SESSION)
+
     signInWithEmailAndPassword(auth, this.state.username, this.state.password)
       .then((userCredential) => {
-        // Signed in 
+        // Signed in
         // const user = userCredential.user;
-        console.log("Login Succesful");
-        this.props.history.push("/main");
+        console.log('Login Succesful');
+        this.props.history.push('/main');
         // ...
       })
       .catch((error) => {
         // const errorCode = error.code;
         // const errorMessage = error.message;
-        if (this.state.username === "") {
-          alert("You need to input an Email!");
+        if (this.state.username === '') {
+          alert('You need to input an Email!');
         } else {
-          alert("Incorrect Email or Password");
+          alert('Incorrect Email or Password');
         }
       });
   }
 
-  createAccount() {
+  createAccount () {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, this.state.username, this.state.password)
       .then((userCredential) => {
-        // Signed in 
+        // Signed in
         // const user = userCredential.user;
-        console.log("Sign Up Succesful");
+        console.log('Sign Up Succesful');
         // ...
       })
       .catch((error) => {
         // const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
-        if (this.state.username === "") {
-          alert("You need to input an Email!");
+        if (this.state.username === '') {
+          alert('You need to input an Email!');
         } else {
-          alert("Email is already in use");
+          alert('Email is already in use');
         }
         // ..
       });
-
   }
 
-  render() {
-
+  render () {
     return (
-      <div className="Account">
+      <div className='Account'>
         <style>
           @import url("https://use.typekit.net/osw3soi.css");
         </style>
-        <button className="Account-home" onClick={this.onHomeButton}>MERGETRIP</button>
-        <header className="Account-header">
-          <div className="Account-buttons">
-            <button className="Account-google" onClick={this.onGoogleLogin}>
-              <img src={google} alt="Google" />
+        <button className='Account-home' onClick={this.onHomeButton}>MERGETRIP</button>
+        <header className='Account-header'>
+          <div className='Account-buttons'>
+            <button className='Account-google' onClick={this.onGoogleLogin}>
+              <img src={google} alt='Google' />
               Log In With Google
             </button>
-            <button className="Account-apple" onClick={this.onAppleLogin}>
-              <img src={apple} alt="Apple" />
+            <button className='Account-apple' onClick={this.onAppleLogin}>
+              <img src={apple} alt='Apple' />
               Log In With Apple
             </button>
           </div>
           <div>
-            <input className="Account-input"
-              name="username"
-              type="text"
+            <input
+              className='Account-input'
+              name='username'
+              type='text'
               value={this.state.username}
               onChange={this.onInputchange}
-              placeholder="Username"
+              placeholder='Username'
             />
           </div>
           <div>
-            <input className="Account-input"
-              name="password"
-              type="password"
+            <input
+              className='Account-input'
+              name='password'
+              type='password'
               value={this.state.password}
               onChange={this.onInputchange}
-              placeholder="Password"
+              placeholder='Password'
             />
           </div>
-          <div className="Account-requirements">
+          <div className='Account-requirements'>
             * username must exist *
           </div>
-          <div className="Account-requirements">
+          <div className='Account-requirements'>
             * password must be 6 characters long *
           </div>
           <div>
-            <button className="Account-button" onClick={this.onSignUp}>Sign Up</button>
-            <button className="Account-button" onClick={this.onLogin}>Log In</button>
-            <button className="Account-button" onClick={this.onResetPassword}>Reset Password</button>
+            <button className='Account-button' onClick={this.onSignUp}>Sign Up</button>
+            <button className='Account-button' onClick={this.onLogin}>Log In</button>
+            <button className='Account-button' onClick={this.onResetPassword}>Reset Password</button>
           </div>
         </header>
       </div>
@@ -231,4 +236,4 @@ class SimpleForm extends Component {
   }
 }
 
-export default withRouter(SimpleForm);
+export default withRouter(withoutAuthHOC(Login));
