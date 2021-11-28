@@ -17,9 +17,9 @@ from model_playground.bert_base_ner import Extractor
 app = Flask(__name__)
 CORS(app)
 
-client_secrets = json.load(open('client_creds.json'))['installed']
+client_secrets = json.load(open('C:/Users/yashy/Documents/MergeTrip/flaskr/client_creds.json'))['installed']
 
-cred = credentials.Certificate('creds.json')
+cred = credentials.Certificate('C:/Users/yashy/Documents/MergeTrip/flaskr/creds.json')
 
 default_app = initialize_app(cred)
 db = firestore.client()
@@ -62,11 +62,11 @@ def get_gmails(userId):
     service = build('gmail', 'v1', credentials=creds)
 
     # uses time since epoch
-    test_start_date = int(datetime(2021, 11, 3).timestamp())
-    test_end_date = int(datetime(2021, 11, 5).timestamp())
+    test_start_date = int(datetime(2021, 11, 27).timestamp())
+    test_end_date = int(datetime(2021, 11, 28).timestamp())
     date_query = "after:{0} before:{1}".format(test_start_date, test_end_date)
 
-    # from_query = "from: {ibrahim.alassad001@gmail.com roymongyue@gmail.com yashyog2012@gmail.com willkao21@gmail.com}"
+    #from_query = "from: {ibrahim.alassad001@gmail.com roymongyue@gmail.com yashyog2012@gmail.com willkao21@gmail.com}"
     from_query = "from: {ibrahim.alassad001@gmail.com}"
 
     gmails_query = date_query + " " + from_query
@@ -77,7 +77,7 @@ def get_gmails(userId):
         userId='me', q=gmails_query).execute()
 
     message_ids = results.get('messages', [])
-
+    print(len(message_ids))
     messages = []
     reservations = []
     extractor = Extractor()
