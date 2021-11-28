@@ -121,16 +121,27 @@ def get_gmails(userId, tripId):
 
     service = build('gmail', 'v1', credentials=creds)
 
+    trip_doc_ref = TRIPS.document(userId).collection('trips').document(tripId)
+    trip_doc = trip_doc_ref.get()
+    if (not trip_doc.exists):
+        return "Trip does not exist or not owned by this user: " + userId, 403
+
+    trip_doc = trip_doc.to_dict()
     # uses time since epoch
-    test_start_date = int(datetime(2021, 11, 3).timestamp())
-    test_end_date = int(datetime(2021, 11, 5).timestamp())
-    date_query = "after:{0} before:{1}".format(test_start_date, test_end_date)
+    # test_start_date = int(datetime(2021, 11, 3).timestamp())
+    # test_end_date = int(datetime(2021, 11, 5).timestamp())
+
+    start_date = int(datetime.strptime(
+        trip_doc['start_date'], '%Y-%m-%d').timestamp())
+    end_date = int(datetime.strptime(
+        trip_doc['end_date'], '%Y-%m-%d').timestamp())
+
+    date_query = "after:{0} before:{1}".format(start_date, end_date)
 
     # from_query = "from: {ibrahim.alassad001@gmail.com roymongyue@gmail.com yashyog2012@gmail.com willkao21@gmail.com}"
     from_query = "from: {ibrahim.alassad001@gmail.com yashyog2012@gmail.com}"
 
     gmails_query = date_query + " " + from_query
-    # gmails_query = from_query
 
     # Get email Ids and ThreadIds
     results = service.users().messages().list(
@@ -166,10 +177,10 @@ def get_gmails(userId, tripId):
 
     trip_doc = TRIPS.document(userId).collection('trips').document(tripId)
 
-    # for i in range(len(reservations)):
-    #     reservations[i]['res_id'] = str(trip_doc.id) + "_" + str(i)
+    for i in range(len(reservations)):
+        reservations[i]['res_id'] = str(trip_doc.id) + "_" + str(i)
 
-    # trip_doc.set({
+    # trip_doc_ref.set({
     #     'trip_id': trip_doc.id,
     #     'owner_id': userId,
     #     'trip_name': "Automatically Generated Trip",
@@ -178,8 +189,8 @@ def get_gmails(userId, tripId):
     #     'reservations': reservations
     # })
 
-    trip_doc.update({
-        reservations: reservations
+    trip_doc_ref.update({
+        'reservations': reservations
     })
 
     return jsonify({'results': reservations}), 200
