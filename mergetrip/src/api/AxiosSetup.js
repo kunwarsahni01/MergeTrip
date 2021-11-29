@@ -2,8 +2,7 @@ import axios from 'axios';
 
 const flaskrApp = axios.create({
   // will update once deployed
-  // baseURL: 'https://api.mergetrip.io/'
-  baseURL: 'http://localhost:5000/'
+  baseURL: 'https://api.mergetrip.io/'
 });
 
 export default flaskrApp;
