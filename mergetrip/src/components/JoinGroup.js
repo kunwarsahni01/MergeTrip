@@ -55,7 +55,6 @@ class JoinGroup extends Component {
     }
 
     onGroup() {
-        //this.props.history.push('/groups');
         this.props.setCurrentPage(<Groups />);
     }
 
@@ -83,9 +82,6 @@ class JoinGroup extends Component {
         } else {
             alert("You have not been invited to join this group");
         }
-    }
-    onGroup() {
-        this.props.history.push('/groups');
     }
   
     render() {

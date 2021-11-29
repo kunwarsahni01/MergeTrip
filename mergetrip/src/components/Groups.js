@@ -10,6 +10,8 @@ import CreateGroup from './CreateGroup';
 import { useAuthState } from '../firebase';
 import Reservation from '../pages/Reservation';
 import {getTrips} from '../api/flaskr_api';
+import SwitchGroup from './SwitchGroup';
+import JoinGroup from './JoinGroup';
 
 
 /*
@@ -137,6 +139,9 @@ const Groups = (props) => {
         //Set trips to true
         setTrips(true);
     }
+    const onCreate = async () => {
+        //setCurrentPage(<CreateGroup />);
+    }
 
 /*
   clickMenu() {
@@ -184,11 +189,24 @@ const Groups = (props) => {
         <br/>
         <header class="text">
             Groups
+        </header>
+        <h2>
             <button class="leave-group-button" onClick={onLeave}>
                 Leave Group
             </button>
+            <button class="create-button" onClick={() => props.setCurrentPage(<CreateGroup />)}>
+                Create Group
+            </button>
+            <button class="switch-button" onClick={() => props.setCurrentPage(<SwitchGroup />)}>
+                Switch Groups
+            </button>
+            <button class="join-button" onClick={() => props.setCurrentPage(<JoinGroup />)}>
+                Join Group
+            </button>
             <br/>
-        </header>
+        </h2>
+        <br />
+        <br />
         <div>
             <input class="invite-input"
               name="inviteUid"

@@ -1,7 +1,7 @@
 import './CreateGroup.css';
-import React, { Component, setState} from 'react';
+import React, { Component} from 'react';
 import { withRouter } from 'react-router';
-import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
+import { getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
 import withAuthHOC from './withAuthHOC';
 import Groups from './Groups';
 
@@ -60,7 +60,6 @@ class CreateGroup extends Component {
     // Update group field of current user in firestore
     updateDoc(userRef, 'group', `${this.state.groupName}`);
     this.onGroup();
-    //this.setState(<Groups />);
   }
 
   render () {
