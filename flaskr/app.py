@@ -76,7 +76,7 @@ def get_gmails(userId, tripId):
     date_query = "after:{0} before:{1}".format(start_date, end_date)
 
     # from_query = "from: {ibrahim.alassad001@gmail.com roymongyue@gmail.com yashyog2012@gmail.com willkao21@gmail.com}"
-    from_query = "from: {ibrahim.alassad001@gmail.com yashyog2012@gmail.com}"
+    from_query = "from: {ibrahim.alassad001@gmail.com yashyog2012@gmail.com automated@airbnb.com reservations@res-marriott.com no-reply@notify.email.aa.com DeltaAirLines@t.delta.com}"
 
     gmails_query = date_query + " " + from_query
 
