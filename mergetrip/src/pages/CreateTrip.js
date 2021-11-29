@@ -28,6 +28,7 @@ const CreateTrip = (props) => {
   });
 
   const onSubmit = async (data) => {
+
     const auth = getAuth();
     const userId = auth.currentUser.uid;
 
@@ -36,7 +37,7 @@ const CreateTrip = (props) => {
       alert('something went wrong! ;-;');
       return;
     }
-
+    alert("OnSUBMIT");
     props.updateTrips({
       trip_name: data.tripName,
       start_date: data.startDate,
@@ -44,8 +45,10 @@ const CreateTrip = (props) => {
       owner_id: userId,
       reservations: []
     });
+    alert("success");
   };
   const onError = (errors) => {
+    alert("Error");
     console.log(errors);
   };
 

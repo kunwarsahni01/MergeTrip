@@ -77,7 +77,7 @@ export class Login extends Component {
         const user = result.user;
         const db = getFirestore();
         const userId = auth.currentUser.uid;
-        setDoc(doc(db, 'users', userId), {
+        updateDoc(doc(db, 'users', userId), {
           googleToken: token,
           userId: userId
         }).then(() => {
