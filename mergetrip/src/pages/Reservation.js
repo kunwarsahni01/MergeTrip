@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { BsFillCaretDownFill } from 'react-icons/bs';
+import { deleteReservation } from '../api/flaskr_api';
 
-const Reservation = ({ res }) => {
+const Reservation = ({ res, userId, tripId, fetchTrips }) => {
   const [showOptions, setShowOptions] = useState(false);
   return (
 
@@ -16,12 +17,18 @@ const Reservation = ({ res }) => {
       {Object.keys(res).map((resKey, index) => {
         return <p key={index}>{resKey}: {res[resKey]}</p>;
       })}
-      <BsFillCaretDownFill style={{ transform: `rotate(${90})` }} onClick={() => { setShowOptions(prevShowState => !prevShowState); }} />
+      <BsFillCaretDownFill onClick={() => { setShowOptions(prevShowState => !prevShowState); }} />
       {showOptions
         ? (
           <>
             <button className='Reservation-button'>Edit reservation</button>
-            <button className='Reservation-button'>Delete reservation</button>
+            <button
+              className='Reservation-button' onClick={async () => {
+                await deleteReservation(userId, tripId, res.res_id);
+                fetchTrips(userId);
+              }}
+            >Delete reservation
+            </button>
           </>
           )
         : null}

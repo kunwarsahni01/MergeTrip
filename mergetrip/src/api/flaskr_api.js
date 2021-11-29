@@ -1,5 +1,5 @@
 import flaskrApp from './AxiosSetup';
-import { setDoc, deleteDoc, doc, collection, getFirestore } from '@firebase/firestore';
+import { setDoc, getDoc, deleteDoc, doc, updateDoc, getFirestore, arrayUnion } from '@firebase/firestore';
 
 const db = getFirestore();
 
@@ -20,18 +20,30 @@ export const createTrip = (userId, tripName, startDate, endDate) => {
     });
 };
 
-export const deleteTrip = async (userId, tripId) => {
-  return await deleteDoc(doc(db, 'trips', userId, 'trips', tripId));
+export const deleteTrip = (userId, tripId) => {
+  return deleteDoc(doc(db, 'trips', userId, 'trips', tripId));
 };
 
 export const createReservation = (userId, tripId, resName, resLocation, resTime) => {
-  return flaskrApp.post('/reservation/' + tripId + '/create', {
-    data: {
+  const resId = tripId + Date.now();
+  return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
+    reservations: arrayUnion({
       user_id: userId,
+      res_id: resId,
       res_name: resName,
       res_location: resLocation,
       res_time: resTime
-    }
+    })
+  });
+};
+
+export const deleteReservation = async (userId, tripId, resId) => {
+  const currReservations = (await getDoc(doc(db, 'trips', userId, 'trips', tripId))).data().reservations;
+
+  console.log(currReservations);
+
+  return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
+    reservations: currReservations.filter(res => resId !== res.res_id)
   });
 };
 

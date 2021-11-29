@@ -19,18 +19,6 @@ const Trips = (props) => {
     fetchTrips(userId);
   };
 
-  const addNewReservation = async (tripId, res) => {
-    setTrips((prevTrips) => {
-      const newTrips = [...prevTrips];
-
-      newTrips.forEach((trip) => {
-        if (trip.trip_id === tripId) trip.reservations = [...trip.reservations, res];
-      });
-
-      return newTrips;
-    });
-  };
-
   const generateRes = async (userId, tripId) => {
     await generateReservations(userId, tripId);
     fetchTrips(userId);
@@ -63,7 +51,7 @@ const Trips = (props) => {
                 <p>{trip.trip_name}</p>
               </div>
 
-              <CreateReservation tripId={trip.trip_id} updateReservations={addNewReservation} />
+              <CreateReservation tripId={trip.trip_id} fetchTrips={fetchTrips} />
 
               <div className='Trip-body'>
                 <p>Start: {trip.start_date}</p>
@@ -82,7 +70,7 @@ const Trips = (props) => {
 
               {
                 showTrips && trip.reservations.length !== 0
-                  ? trip.reservations.map((res, index) => <Reservation res={res} key={index} />)
+                  ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
                   : null
               }
 
