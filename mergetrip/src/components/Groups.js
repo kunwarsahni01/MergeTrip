@@ -10,6 +10,7 @@ import Reservation from '../pages/Reservation';
 import {getTrips} from '../api/flaskr_api';
 import SwitchGroup from './SwitchGroup';
 import JoinGroup from './JoinGroup';
+import ViewMember from './ViewMember';
 
 
 
@@ -75,21 +76,14 @@ class Groups extends Component {
       this.props.setCurrentPage(<JoinGroup />);
   }
 */
-const Groups = () => {
-    const useForceRendering = () => {
-        const [counter, setCounter] = useState(0);
-        return () => setCounter(counter => counter + 1);
-    };
-    const forceRerender = useForceRendering();
+const Groups = ({props, inviteId}) => {
     const auth = useAuthState();
     //const [groupName, setGroupName] = useState('');
     const [memberUid, setMemUid] = useState('');
     const [inviteUid, setInviteUid] = useState('');
     const [trips, setTrips] = useState(false);
     const [showTrips, setShowTrips] = useState(false);
-    const [view, setView] = useState(false);
-    //const [trigger, setTrigger] = useState([0,1,2,3]);
-  
+
     const onLeave = async () => {
         //const auth = this.props.authState.user.auth;
         const db = getFirestore();
@@ -139,19 +133,9 @@ const Groups = () => {
     }
 
     const onView = async () => {
-        //Just testing that input is reading correctly
-        //alert(memberUid);
-        //alert(trips);
-        //Set trips to true
-        //setTrips(true);
-        //alert("calling setView");
-        setView(true);
-        forceRerender();
-        alert("Forced rerender");
-        //setView([view]);
-        //setTrigger([...trigger]);
-        //forceUpdate();
-        //alert("setView done");
+        //Maybe change to redirect to new page and pass the uid to view
+        //Having issues since rerendering means I lost value stored in inviteUid(I think)
+
     }
     const onCreate = async () => {
         //setCurrentPage(<CreateGroup />);
@@ -231,7 +215,6 @@ const Groups = () => {
         */}
             <br/>
         </h2>
-        
         <br />
         <br />
         <div>
@@ -256,10 +239,10 @@ const Groups = () => {
                 onChange={e => setMemUid(e.target.value)}
             />
             <br/>
-            <button class="view-button" onClick={onView}>
+            {/*Need to also pass groupName*/}
+            <button class="view-button" onClick={() => props.setCurrentPage(<ViewMember setCurentPage={props.setCurrentPage()} inviteID={inviteUid}/>)}>
                 View
             </button>
-
                 {
                 trips  
                     ? trips.map((trip, index) => (

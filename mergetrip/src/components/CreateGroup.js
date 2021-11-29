@@ -6,8 +6,8 @@ import withAuthHOC from './withAuthHOC';
 import Groups from './Groups';
 
 class CreateGroup extends Component {
-  constructor (props) {
-    super(props);
+  constructor () {
+    super();
     this.state = {
       name: '',
       profileURL: '',
