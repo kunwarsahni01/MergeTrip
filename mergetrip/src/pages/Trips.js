@@ -13,29 +13,10 @@ const Trips = (props) => {
   const [trips, setTrips] = useState(false);
   const [showTrips, setShowTrips] = useState(false);
 
-  const addNewTrip = (newTrip) => {
-    setTrips(prevTrips => [...prevTrips, newTrip]);
-  };
-
-  const handleDeleteTrip = async (trip) => {
-    const res = await deleteTrip(auth.user.uid, trip.trip_id);
-
-    setTrips((prevTrips) => {
-      const newTrips = prevTrips.filter(prevTrip => prevTrip.trip_id !== trip.trip_id);
-      return newTrips;
-    });
-  };
-
-  const addNewReservation = async (tripId, res) => {
-    setTrips((prevTrips) => {
-      const newTrips = [...prevTrips];
-
-      newTrips.forEach((trip) => {
-        if (trip.trip_id === tripId) trip.reservations = [...trip.reservations, res];
-      });
-
-      return newTrips;
-    });
+  const handleDeleteTrip = async (tripId) => {
+    const userId = auth.user.uid;
+    await deleteTrip(userId, tripId);
+    fetchTrips(userId);
   };
 
   const generateRes = async (userId, tripId) => {
@@ -61,7 +42,7 @@ const Trips = (props) => {
         @import url("https://use.typekit.net/osw3soi.css");
       </style>
       <hr style={{ marginBottom: '20px', marginTop: '20px' }} />
-      <CreateTrip updateTrips={addNewTrip} />
+      <CreateTrip fetchTrips={fetchTrips} />
       {
         trips
           ? trips.map((trip, index) => (
@@ -70,13 +51,16 @@ const Trips = (props) => {
                 <p>{trip.trip_name}</p>
               </div>
 
-              <CreateReservation tripId={trip.trip_id} updateReservations={addNewReservation} />
+              <CreateReservation tripId={trip.trip_id} fetchTrips={fetchTrips} />
 
               <div className='Trip-body'>
                 <p>Start: {trip.start_date}</p>
                 <p>End: {trip.end_date}</p>
               </div>
-              <button className='Trip-button' onClick={() => { handleDeleteTrip(trip); }}>Delete trip</button>
+              <button
+                className='Trip-button' onClick={() => { handleDeleteTrip(trip.trip_id); }}
+              >Delete trip
+              </button>
               <p>Reservations:</p>
               {
                 trip.reservations.length !== 0
@@ -86,7 +70,7 @@ const Trips = (props) => {
 
               {
                 showTrips && trip.reservations.length !== 0
-                  ? trip.reservations.map((res, index) => <Reservation res={res} key={index} />)
+                  ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
                   : null
               }
 

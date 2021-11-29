@@ -7,7 +7,7 @@ import { getAuth } from '@firebase/auth';
 
 import Input from '../components/Input';
 import { createTrip } from '../api/flaskr_api';
-import './CreateTrip.css'
+import './CreateTrip.css';
 
 const CreateTripFormSchema = Yup.object({
   tripName: Yup.string().required('Trip name is required'),
@@ -32,20 +32,10 @@ const CreateTrip = (props) => {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
 
-    const res = await createTrip(userId, data.tripName, data.startDate, data.endDate);
-    if (res.status !== 200) {
-      alert('something went wrong! ;-;');
-      return;
-    }
-    alert("OnSUBMIT");
-    props.updateTrips({
-      trip_name: data.tripName,
-      start_date: data.startDate,
-      end_date: data.endDate,
-      owner_id: userId,
-      reservations: []
-    });
-    alert("success");
+
+    await createTrip(userId, data.tripName, data.startDate, data.endDate);
+    props.fetchTrips(userId);
+
   };
   const onError = (errors) => {
     alert("Error");

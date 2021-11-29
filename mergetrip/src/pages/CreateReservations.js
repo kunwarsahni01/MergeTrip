@@ -39,14 +39,13 @@ const CreateReservation = (props) => {
     const userId = auth.currentUser.uid;
 
     const res = await createReservation(userId, props.tripId, data.resName, data.resLocation, data.resTime);
-    if (res.status !== 200) {
-      alert('something went wrong! ;-;');
-    }
-    props.updateReservations(props.tripId, {
-      res_name: data.resName,
-      res_location: data.resLocation,
-      res_time: data.resTime
-    });
+
+    // props.updateReservations(props.tripId, {
+    //   res_name: data.resName,
+    //   res_location: data.resLocation,
+    //   res_time: data.resTime
+    // });
+    props.fetchTrips(userId);
   };
   const onError = (errors) => {
     console.log(errors);
