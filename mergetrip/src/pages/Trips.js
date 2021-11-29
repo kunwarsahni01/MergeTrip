@@ -60,7 +60,7 @@ const Trips = (props) => {
       <style>
         @import url("https://use.typekit.net/osw3soi.css");
       </style>
-      <hr style={{ marginBottom: '20px', marginTop: '20px' }} />
+      <div class='text'> {auth.user.displayName}'s Trips</div>
       <CreateTrip updateTrips={addNewTrip} />
       {
         trips
