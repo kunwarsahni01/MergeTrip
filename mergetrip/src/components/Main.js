@@ -76,13 +76,6 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Create Groups</span>
                 </li>
-                <li>
-                  <a href='/settings'>
-                    <i class='bx bx-cog' />
-                    <span class='links_name'>Settings</span>
-                  </a>
-                  <span class='tooltip'>Settings</span>
-                </li>
                 <li class='profile'>
                   <div class='profile-details'>
                     <img src={auth.user.photoURL ? auth.user.photoURL : DEFAULT_PROFILE_URL} alt='profileImg' />

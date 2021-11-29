@@ -1,28 +1,30 @@
-.AccountDetails {
+  .AccountDetails {
     background-color: #DFD2B6;
-    text-align: center;
+    text-align: left;
   }
   
-  .AccountDetails-header {
-    padding: 45px;
-    min-height: 100vh;
+  .AccountDetails-image {
+    width: 100px;
+    height: 100px;
+    border: #DFD2B6;
+    border-radius: 50%;
+    margin-top: 85px;
+    margin-left: 60px;
+  }
+
+  .AccountDetails-container {
+    text-align: left;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: left;
-    font-size: calc(40px + 2vmin);
-    font-family: Termina;
-    font-weight: 900;
-    color: rgb(0, 0, 0);
   }
   
   .AccountDetails-subtitle{
-    margin: 100px;
-    font-size: calc(10px + 2vmin);
+    font-size: calc(5px + 2vmin);
     font-family: Termina;
     font-weight: 900;
     color: rgb(255, 255, 255);
-    margin-bottom: .5rem;
   }
   
   .AccountDetails-button {
@@ -37,44 +39,23 @@
     font-family: Termina;
     margin: 30px 30px 0px 0px;
     border-radius: 16px;
-    /*
-    margin: 25px 30px 0px 0px;
-    cursor: pointer;
-    
-    position: absolute;
-    right: 0px;
-    */
   }
 
-  
-  
-  .AccountDetails-left {
-    position: absolute;
-    left: -225px;
-    top: -225px;
+  .AccountDetails-ButtonArray {
+    margin-left: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    margin-bottom: 60px;
   }
-  
-  .AccountDetails-right {
-    position: absolute;
-    right: -225px;
-    bottom: -225px;
-  }
-.Resetbutton {
-    background-color: #E13234;
-    color: white;
-    border: none;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    font-family: Termina;
-    margin: 25px;
-    /*
-    margin: 25px 30px 0px 0px;
-    cursor: pointer;
+
+  .Account-input {
+    background-color: #37363A;
+    border: 1px solid #E13234;
     border-radius: 16px;
-    position: absolute;
-    right: 0px;
-    */
+    font-size: 10px;
+    font-family: Termina;
+    font-weight: 900;
+    color: #FFFFFF;
   }
