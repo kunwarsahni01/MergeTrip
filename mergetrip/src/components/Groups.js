@@ -160,12 +160,12 @@ const Groups = (props) => {
     this.setState({
       [event.target.name]: event.target.value
     });
-  }
-*/
+  }*/
 
     useEffect(() => {
         const userId = auth.user.uid;
-        if (!trips) fetchTrips(userId);
+        if (trips && inviteUid != "") fetchTrips(inviteUid);
+        else fetchTrips(userId);
     }, []);
 
     const fetchTrips = async (userId) => {
@@ -182,12 +182,14 @@ const Groups = (props) => {
             @import url("https://use.typekit.net/osw3soi.css");
         </style>
         <br/>
-        <div class="text">
+        <header class="text">
             Groups
             <button class="leave-group-button" onClick={onLeave}>
                 Leave Group
             </button>
             <br/>
+        </header>
+        <div>
             <input class="invite-input"
               name="inviteUid"
               type="text"
@@ -227,8 +229,8 @@ const Groups = (props) => {
                             <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
                             {
                                 showTrips && trip.reservations.length !== 0
-                                    ? trip.reservations.map((res, index) => <Reservation res={res} key={index} />)
-                                    : null
+                                    ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
+                                    : <p>No Reservations on this trip yet</p>
                             }
                         </div>
                     ))

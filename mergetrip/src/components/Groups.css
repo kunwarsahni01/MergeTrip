@@ -1,9 +1,4 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins" , sans-serif;
-}
+
 /*
 .home-section{
   position: relative;
@@ -117,4 +112,29 @@
     font-weight: 900;
     color: #FFFFFF;
     margin-bottom: .5rem;
+  }
+
+  .Trip-container {
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 50%;
+    background-color: #37363A;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .Trip-reservation {
+    width: 40%;
+    height: 50%;
+    background-color: #3000c2;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 8px;
   }
