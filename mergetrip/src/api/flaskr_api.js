@@ -34,3 +34,7 @@ export const createReservation = (userId, tripId, resName, resLocation, resTime)
     }
   });
 };
+
+export const generateReservations = (userId, tripId) => {
+  return flaskrApp.get('/gmails/' + userId + '/' + tripId);
+};

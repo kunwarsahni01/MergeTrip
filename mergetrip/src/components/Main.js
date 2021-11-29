@@ -53,28 +53,31 @@ const Main = () => {
                   <input type='search' placeholder='Search...' />
                   <span class='tooltip'>Search</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<Trips />); }}>
+                <li onClick={() => { setCurrentPage(<Trips setCurrentPage={setCurrentPage} />); }}>
                   <a>
                     <i class='bx bx-grid-alt' />
                     <span class='links_name'>Trips</span>
                   </a>
                   <span class='tooltip'>Trips</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<AccountDetails />); }}>
+                <li onClick={() => { setCurrentPage(<AccountDetails setCurrentPage={setCurrentPage} />); }}>
                   <a>
                     <i class='bx bx-user' />
                     <span class='links_name'>Profile</span>
                   </a>
                   <span class='tooltip'>Profile</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<Groups setCurrentPage={setCurrentPage}/>); }}>
+
+                <li onClick={() => { setCurrentPage(<Groups setCurrentPage={setCurrentPage} />); }}>
+
                   <a>
                     <i class='bx bx-group' />
                     <span class='links_name'>Groups</span>
                   </a>
                   <span class='tooltip'>Groups</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage}/>); }} >
+                <li onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage} />); }}>
+
                   <a>
                     <i class='bx bx-group' />
                     <span class='links_name'>Create Group</span>

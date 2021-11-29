@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth } from '@firebase/auth';
-import { createReservation, deleteTrip, getTrips } from '../api/flaskr_api';
+import { createReservation, deleteTrip, generateReservations, getTrips } from '../api/flaskr_api';
 import CreateTrip from './CreateTrip';
 import CreateReservation from './CreateReservations';
 import './Trip.css';
@@ -38,6 +38,11 @@ const Trips = (props) => {
     });
   };
 
+  const generateRes = async (userId, tripId) => {
+    await generateReservations(userId, tripId);
+    fetchTrips(userId);
+  };
+
   useEffect(() => {
     const userId = auth.user.uid;
     if (!trips) fetchTrips(userId);
@@ -73,12 +78,19 @@ const Trips = (props) => {
               </div>
               <button className='Trip-button' onClick={() => { handleDeleteTrip(trip); }}>Delete trip</button>
               <p>Reservations:</p>
-              <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
+              {
+                trip.reservations.length !== 0
+                  ? <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
+                  : <p>No Reservations</p>
+              }
+
               {
                 showTrips && trip.reservations.length !== 0
                   ? trip.reservations.map((res, index) => <Reservation res={res} key={index} />)
                   : null
               }
+
+              <button className='Trip-button' type='button' onClick={() => { generateRes(auth.user.uid, trip.trip_id); }}>Auto Populate Reservations</button>
             </div>
             ))
           : <p>Loading Trips...</p>

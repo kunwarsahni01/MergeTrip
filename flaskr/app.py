@@ -5,21 +5,23 @@ import time
 from datetime import datetime
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from google.oauth2.reauth import refresh_grant
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-from firebase_admin import credentials, firestore, initialize_app, auth
-from gmail_utils import get_clean_body, parse_message
+from firebase_admin import credentials, firestore, initialize_app
+from gmail_utils import parse_message
 from model_playground.bert_base_ner import Extractor
 
 app = Flask(__name__)
 CORS(app)
 
-client_secrets = json.load(open('client_creds.json'))['installed']
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+client_creds = os.path.join(THIS_FOLDER, 'client_creds.json')
+creds = os.path.join(THIS_FOLDER, 'creds.json')
 
-cred = credentials.Certificate('creds.json')
+
+client_secrets = json.load(open(client_creds))['installed']
+
+cred = credentials.Certificate(creds)
 
 default_app = initialize_app(cred)
 db = firestore.client()
@@ -30,69 +32,6 @@ USERS = db.collection("users")
 
 @app.route("/")
 def home():
-    text = """Your reservation is confirmed
-          You
-          Modern 2BR Apartment with Laundry
-          Entire home/apt hosted by Frontdesk
-        Friday,
-        Sunday,
-          View full itinerary
-      Address
-      917 Locust St, St. Louis, MO 63101, USA
-        Get directions
-      Guests
-      4
-        Invite guests
-      Cancellation policy
-      Cancel before 3:00 PM on Oct 7 and get a full refund. After that, cancel before 3:00 PM on Oct 8 and get a full
-refund, minus the first night and service fee.
-      Cutoff times are based on the listing
-        More details
-      Payments
-                Payment 1 of 1
-                $573.99
-                Oct 07, 2021
-                VISA
-                Amount paid (USD)
-                $573.99
-      Reservation code
-      HMYWPPWRFD
-          Change reservation
-        House rules
-            Check-in: After 3:00 PM
-            Checkout: 11:00 AM
-            Self check-in with lockbo
-          Show all
-        Safety & Property Info
-            Security camera/recording device
-            Carbon mono
-            Smoke alarm
-          Show all
-      Frontdesk is your host
-      Contact Frontdesk to coordinate arrival time and key e
-        Message host
-                  +1 (314) 530-3306
-      Know what to e
-      Make sure to review the House Rules and amenities.
-        Go to House Rules
-      Customer support
-      Contact our support team 24/7 from anywhere in the world.
-        Visit Help Center
-        Contact Airbnb
-Considering travel insurance?
-Get information on how to protect your trip.Learn more
-Check for local travel advisories
-Many places around the world are issuing new restrictions on lodging and travel each day. Before you travel, please check the latest from the local government in order to keep everyone safe and healthy.Learn more
-Refer a host, earn $15 cash
-                            Learn more
-Refer a host, earn $15 cash
-                            Learn more
-        Get a friend to start hosting on Airbnb and make e
-          Sent with"""
-
-    sent = preprocess_email(text)
-    print(sent)
-    # return a regex test to find a match
     return "success"
 
 
@@ -101,8 +40,8 @@ def show_itinerary():
     return "This is your main itinerary."
 
 
-@app.route("/gmails/<userId>", methods=['GET', 'POST'])
-def get_gmails(userId):
+@app.route("/gmails/<userId>/<tripId>", methods=['GET', 'POST'])
+def get_gmails(userId, tripId):
     """
       get_gmails(): Will get access to user's gmail using refresh token in database
       and then return filtered gmail bodies from a specific date range
@@ -124,23 +63,34 @@ def get_gmails(userId):
 
     service = build('gmail', 'v1', credentials=creds)
 
+    trip_doc_ref = TRIPS.document(userId).collection('trips').document(tripId)
+    trip_doc = trip_doc_ref.get()
+    if (not trip_doc.exists):
+        return "Trip does not exist or not owned by this user: " + userId, 403
+
+    trip_doc = trip_doc.to_dict()
     # uses time since epoch
-    test_start_date = int(datetime(2021, 11, 3).timestamp())
-    test_end_date = int(datetime(2021, 11, 5).timestamp())
-    date_query = "after:{0} before:{1}".format(test_start_date, test_end_date)
+    # test_start_date = int(datetime(2021, 11, 3).timestamp())
+    # test_end_date = int(datetime(2021, 11, 5).timestamp())
+
+    start_date = int(datetime.strptime(
+        trip_doc['start_date'], '%Y-%m-%d').timestamp())
+    end_date = int(datetime.strptime(
+        trip_doc['end_date'], '%Y-%m-%d').timestamp())
+
+    date_query = "after:{0} before:{1}".format(start_date, end_date)
 
     # from_query = "from: {ibrahim.alassad001@gmail.com roymongyue@gmail.com yashyog2012@gmail.com willkao21@gmail.com}"
-    from_query = "from: {ibrahim.alassad001@gmail.com}"
+    from_query = "from: {ibrahim.alassad001@gmail.com yashyog2012@gmail.com}"
 
     gmails_query = date_query + " " + from_query
-    # gmails_query = from_query
 
     # Get email Ids and ThreadIds
     results = service.users().messages().list(
         userId='me', q=gmails_query).execute()
 
     message_ids = results.get('messages', [])
-
+    print(len(message_ids))
     messages = []
     reservations = []
     extractor = Extractor()
@@ -150,35 +100,42 @@ def get_gmails(userId):
 
         message = parse_message(message_response['payload'])
 
-        res = extractor.extract(message['body'])
+        res = extractor.extract(
+            message['body'], message['To'], message['Subject'])
 
-        message['address'] = res['address']
-        message['organization'] = res['organization']
+        # message['address'] = res['address']
+        # message['organization'] = res['organization']
+        # # message['date'] = res['date']
         messages.append(message)
 
-        curr_res = {
-            'res_name': message['From'],
-            'res_location': message['address'],
-            'res_time': 'NA'
-        }
+        # curr_res = {
+        #     'res_name': message['From'],
+        #     'res_location': message['address'],
+        #     'res_time': 'NA'
+        # }
 
-        reservations.append(curr_res)
+        # reservations.append(curr_res)
+        reservations.append(res)
 
-    trip_doc = TRIPS.document(userId).collection('trips').document()
+    trip_doc = TRIPS.document(userId).collection('trips').document(tripId)
 
     for i in range(len(reservations)):
         reservations[i]['res_id'] = str(trip_doc.id) + "_" + str(i)
 
-    trip_doc.set({
-        'trip_id': trip_doc.id,
-        'owner_id': userId,
-        'trip_name': "Automatically Generated Trip",
-        'start_date': 'NA',
-        'end_date': 'NA',
+    # trip_doc_ref.set({
+    #     'trip_id': trip_doc.id,
+    #     'owner_id': userId,
+    #     'trip_name': "Automatically Generated Trip",
+    #     'start_date': 'NA',
+    #     'end_date': 'NA',
+    #     'reservations': reservations
+    # })
+
+    trip_doc_ref.update({
         'reservations': reservations
     })
 
-    return jsonify({'results': messages}), 200
+    return jsonify({'results': reservations}), 200
 
 
 @app.route('/trips/create', methods=['POST'])
@@ -383,15 +340,6 @@ def check_valid_username(username):
     """
     return 0
 
-
-def hotel_or_flight(text):
-    if "hotel" in text:
-        return "hotel"
-    elif "flight" in text:
-        return "flight"
-    else:
-        return None
-
 # AirBNB testing (regex)
 
 
@@ -467,13 +415,6 @@ def date_regex_char(text):
         return ("found a match")
     else:
         return ("none found")
-
-
-def preprocess_email(text):
-    text = nltk.word_tokenize(text)
-    text = nltk.pos_tag(text)
-
-    return text
 
 
 if __name__ == '__main__':

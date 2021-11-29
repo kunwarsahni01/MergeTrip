@@ -66,6 +66,7 @@ export class Login extends Component {
 
   createGoogle () {
     const provider = new GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
     const auth = getAuth();
     signInWithPopup(auth, provider)
       .then((result) => {

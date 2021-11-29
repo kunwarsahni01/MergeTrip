@@ -4,9 +4,13 @@ import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
 import { doc, getDoc, getFirestore, deleteDoc, setDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
 import withAuthHOC from './withAuthHOC';
+
+import CreateGroup from './CreateGroup';
+
 import { useAuthState } from '../firebase';
 import Reservation from '../pages/Reservation';
 import {getTrips} from '../api/flaskr_api';
+
 
 /*
 class Groups extends Component {
@@ -22,7 +26,9 @@ class Groups extends Component {
     };
     this.onInputchange = this.onInputchange.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
+
     //this.onCreate = this.onCreateButton.bind(this);
+
     this.onInvite = this.onInvite.bind(this);
     this.onLeave = this.onLeave.bind(this);
     //this.onSwitch = this.onSwitch.bind(this);
@@ -138,10 +144,16 @@ const Groups = (props) => {
     sidebar.classList.toggle("open");
   }
 
+
+  toCreate() {
+    // this.props.history.push('/createGroup');
+    this.props.setCurrentPage(<CreateGroup />)
+
   onLogout() {
     const auth = this.props.authState.user.auth;
     auth.signOut();
     this.props.history.push('/');
+
   }
 
   onInputchange(event) {
