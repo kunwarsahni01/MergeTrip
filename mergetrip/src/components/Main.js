@@ -27,9 +27,6 @@ const Main = () => {
     auth.logout();
     history.push('/');
   };
-  const setToGroup = () => {
-    setCurrentPage(<Groups />);
-  }
 
   return (
     <div>
@@ -67,9 +64,7 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Profile</span>
                 </li>
-
                 <li onClick={() => { setCurrentPage(<Groups setCurrentPage={setCurrentPage} />); }}>
-
                   <a>
                     <i class='bx bx-group' />
                     <span class='links_name'>Groups</span>
@@ -77,7 +72,6 @@ const Main = () => {
                   <span class='tooltip'>Groups</span>
                 </li>
                 <li onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage} />); }}>
-
                   <a>
                     <i class='bx bx-group' />
                     <span class='links_name'>Create Group</span>

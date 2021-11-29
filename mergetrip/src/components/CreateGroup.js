@@ -6,8 +6,8 @@ import withAuthHOC from './withAuthHOC';
 import Groups from './Groups';
 
 class CreateGroup extends Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
       name: '',
       profileURL: '',
@@ -77,7 +77,7 @@ class CreateGroup extends Component {
           />
         </div>
         <div>
-          <button class='create-button' onClick={this.createGroup}>Create</button>
+          <button class='create-group-button' onClick={this.createGroup}>Create</button>
         </div>
       </>
     );

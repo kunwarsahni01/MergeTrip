@@ -75,38 +75,40 @@
 }
 
 .invite-button {
-    background-color: #E13234;
-    color: white;
-    border: none;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    font-family: Termina;
-    margin: 0px 0px 0px 0px;
-    cursor: pointer;
-    border-radius: 16px;
-    position: absolute;
-    left: 0px;
-  }
-  .view-button {
-    background-color: #E13234;
-    color: white;
-    border: 10px black;
-    border-radius: 50px;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    font-family: Termina;
-    margin: 0px 0px 0px 0px;
-    cursor: pointer;
-    border-radius: 16px;
-    position: absolute;
-    left: 0px;
-  }
+  background-color: #E13234;
+  color: white;
+  border: none;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 0px 0px 0px 0px;
+  cursor: pointer;
+  border-radius: 16px;
+  position: absolute;
+  left: 0px;
+}
+
+.view-button {
+  background-color: #E13234;
+  color: white;
+  border: 10px black;
+  border-radius: 50px;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 0px 0px 0px 0px;
+  cursor: pointer;
+  border-radius: 16px;
+  position: absolute;
+  left: 0px;
+}
+
 .group-input {
     background-color: #37363A;
     width: 100%;

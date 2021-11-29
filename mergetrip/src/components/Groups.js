@@ -1,17 +1,16 @@
 import './Groups.css'
 import React, { Component, useState, useEffect } from 'react';
-import { withRouter } from 'react-router';
-import { getAuth } from "firebase/auth";
+//import { withRouter } from 'react-router';
+//import { getAuth } from "firebase/auth";
 import { doc, getDoc, getFirestore, deleteDoc, setDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
-import withAuthHOC from './withAuthHOC';
-
+//import withAuthHOC from './withAuthHOC';
 import CreateGroup from './CreateGroup';
-
 import { useAuthState } from '../firebase';
 import Reservation from '../pages/Reservation';
 import {getTrips} from '../api/flaskr_api';
 import SwitchGroup from './SwitchGroup';
 import JoinGroup from './JoinGroup';
+
 
 
 /*
@@ -76,13 +75,20 @@ class Groups extends Component {
       this.props.setCurrentPage(<JoinGroup />);
   }
 */
-const Groups = (props) => {
+const Groups = () => {
+    const useForceRendering = () => {
+        const [counter, setCounter] = useState(0);
+        return () => setCounter(counter => counter + 1);
+    };
+    const forceRerender = useForceRendering();
     const auth = useAuthState();
     //const [groupName, setGroupName] = useState('');
     const [memberUid, setMemUid] = useState('');
     const [inviteUid, setInviteUid] = useState('');
     const [trips, setTrips] = useState(false);
     const [showTrips, setShowTrips] = useState(false);
+    const [view, setView] = useState(false);
+    //const [trigger, setTrigger] = useState([0,1,2,3]);
   
     const onLeave = async () => {
         //const auth = this.props.authState.user.auth;
@@ -134,10 +140,18 @@ const Groups = (props) => {
 
     const onView = async () => {
         //Just testing that input is reading correctly
-        alert(memberUid);
-        alert(trips);
+        //alert(memberUid);
+        //alert(trips);
         //Set trips to true
-        setTrips(true);
+        //setTrips(true);
+        //alert("calling setView");
+        setView(true);
+        forceRerender();
+        alert("Forced rerender");
+        //setView([view]);
+        //setTrigger([...trigger]);
+        //forceUpdate();
+        //alert("setView done");
     }
     const onCreate = async () => {
         //setCurrentPage(<CreateGroup />);
@@ -169,8 +183,17 @@ const Groups = (props) => {
 
     useEffect(() => {
         const userId = auth.user.uid;
-        if (trips && inviteUid != "") fetchTrips(inviteUid);
-        else fetchTrips(userId);
+        /*
+        alert("in UseEffect");
+        if (view && inviteUid != "") {
+            fetchTrips(inviteUid);
+        } else {
+            //alert("Eval false");
+            alert(view);
+            alert(inviteUid);
+            fetchTrips(userId);
+        }*/
+        if (!trips) fetchTrips(userId);
     }, []);
 
     const fetchTrips = async (userId) => {
@@ -190,11 +213,13 @@ const Groups = (props) => {
         <header class="text">
             Groups
         </header>
+
         <h2>
             <button class="leave-group-button" onClick={onLeave}>
                 Leave Group
             </button>
-            <button class="create-button" onClick={() => props.setCurrentPage(<CreateGroup />)}>
+            {/*
+            <button class="create-button" onClick={() => props.setCurrentPage(<CreateGroup setCurrentPage={props.setCurrentPage()}/>)}>
                 Create Group
             </button>
             <button class="switch-button" onClick={() => props.setCurrentPage(<SwitchGroup />)}>
@@ -203,8 +228,10 @@ const Groups = (props) => {
             <button class="join-button" onClick={() => props.setCurrentPage(<JoinGroup />)}>
                 Join Group
             </button>
+        */}
             <br/>
         </h2>
+        
         <br />
         <br />
         <div>
@@ -232,7 +259,8 @@ const Groups = (props) => {
             <button class="view-button" onClick={onView}>
                 View
             </button>
-            {
+
+                {
                 trips  
                     ? trips.map((trip, index) => (
                         <div key={index} className='Trip-container'>
@@ -248,12 +276,13 @@ const Groups = (props) => {
                             {
                                 showTrips && trip.reservations.length !== 0
                                     ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
-                                    : <p>No Reservations on this trip yet</p>
+                                    : <p>Click the button to hide/show your reservations</p>
                             }
                         </div>
                     ))
-                    : <p>Loading member's itinerary</p>
-            }
+                    : <p>No Trips planned</p>
+                }
+
         </div>
       </>
     );
