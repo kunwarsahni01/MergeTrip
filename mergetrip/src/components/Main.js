@@ -7,6 +7,8 @@ import withAuthHOC from './withAuthHOC';
 import AccountDetails from './AccountDetails';
 import Groups from './Groups';
 import CreateGroup from './CreateGroup';
+import SwitchGroup from './SwitchGroup';
+import JoinGroup from './JoinGroup';
 
 const Main = () => {
   const DEFAULT_PROFILE_URL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
@@ -25,6 +27,9 @@ const Main = () => {
     auth.logout();
     history.push('/');
   };
+  const setToGroup = () => {
+    setCurrentPage(<Groups />);
+  }
 
   return (
     <div>
@@ -62,7 +67,9 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Profile</span>
                 </li>
+
                 <li onClick={() => { setCurrentPage(<Groups setCurrentPage={setCurrentPage} />); }}>
+
                   <a>
                     <i class='bx bx-group' />
                     <span class='links_name'>Groups</span>
@@ -70,11 +77,33 @@ const Main = () => {
                   <span class='tooltip'>Groups</span>
                 </li>
                 <li onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage} />); }}>
+
                   <a>
                     <i class='bx bx-group' />
-                    <span class='links_name'>Create Groups</span>
+                    <span class='links_name'>Create Group</span>
                   </a>
                   <span class='tooltip'>Create Groups</span>
+                </li>
+                <li onClick={() => { setCurrentPage(<SwitchGroup setCurrentPage={setCurrentPage}/>); }}>
+                  <a>
+                    <i class="bx bx-group" />
+                    <span class='links_name'>Switch Group</span>
+                  </a>
+                  <span class='tooltip'>Switch Groups</span>
+                </li>
+                <li onClick={() => { setCurrentPage(<JoinGroup setCurrentPage={setCurrentPage}/>); }}>
+                  <a>
+                    <i class="bx bx-group" />
+                    <span class='links_name'>Join Group</span>
+                  </a>
+                  <span class='tooltip'>Join Group</span>
+                </li>
+                <li>
+                  <a href='/settings'>
+                    <i class='bx bx-cog' />
+                    <span class='links_name'>Settings</span>
+                  </a>
+                  <span class='tooltip'>Settings</span>
                 </li>
                 <li class='profile'>
                   <div class='profile-details'>

@@ -1,37 +1,49 @@
 import flaskrApp from './AxiosSetup';
+import { setDoc, getDoc, deleteDoc, doc, updateDoc, getFirestore, arrayUnion } from '@firebase/firestore';
+
+const db = getFirestore();
 
 export const getTrips = (userId) => {
   return flaskrApp.get('/trips/' + userId);
 };
 
 export const createTrip = (userId, tripName, startDate, endDate) => {
-  return flaskrApp.post('/trips/create', {
-    data: {
+  const tripId = userId + Date.now();
+  return setDoc(doc(db, 'trips', userId, 'trips', tripId),
+    {
       user_id: userId,
+      trip_id: tripId,
       trip_name: tripName,
       start_date: startDate,
-      end_date: endDate
-    }
-  });
+      end_date: endDate,
+      reservations: []
+    });
 };
 
 export const deleteTrip = (userId, tripId) => {
-  console.log(userId, tripId);
-  return flaskrApp.post('/trip/' + tripId + '/delete', {
-    data: {
-      user_id: userId
-    }
-  });
+  return deleteDoc(doc(db, 'trips', userId, 'trips', tripId));
 };
 
 export const createReservation = (userId, tripId, resName, resLocation, resTime) => {
-  return flaskrApp.post('/reservation/' + tripId + '/create', {
-    data: {
+  const resId = tripId + Date.now();
+  return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
+    reservations: arrayUnion({
       user_id: userId,
+      res_id: resId,
       res_name: resName,
       res_location: resLocation,
       res_time: resTime
-    }
+    })
+  });
+};
+
+export const deleteReservation = async (userId, tripId, resId) => {
+  const currReservations = (await getDoc(doc(db, 'trips', userId, 'trips', tripId))).data().reservations;
+
+  console.log(currReservations);
+
+  return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
+    reservations: currReservations.filter(res => resId !== res.res_id)
   });
 };
 
