@@ -37,7 +37,7 @@ const Trips = (props) => {
   };
 
   return (
-    <div>
+    <div className='Trips'>
       <style>
         @import url("https://use.typekit.net/osw3soi.css");
       </style>
