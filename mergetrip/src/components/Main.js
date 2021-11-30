@@ -71,6 +71,7 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Groups</span>
                 </li>
+                {/*
                 <li onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage} />); }}>
                   <a>
                     <i class='bx bx-group' />

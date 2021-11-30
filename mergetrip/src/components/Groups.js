@@ -74,7 +74,7 @@ class Groups extends Component {
       this.props.setCurrentPage(<JoinGroup />);
   }
 */
-const Groups = (props) => {
+const Groups = ({setCurrentPage}) => {
     const auth = useAuthState();
     const [groupName, setGroupName] = useState(false);
     const [memberUid, setMemUid] = useState('');
@@ -101,9 +101,9 @@ const Groups = (props) => {
         if (count == 0) {
             await deleteDoc(doc(db, "groups", groupName));
         }
-        alert("Successfully left group");
+          alert("Successfully left group");
         } else {
-        alert("Unable to leave group")
+          alert("Unable to leave group")
         }
     }
 
@@ -112,7 +112,6 @@ const Groups = (props) => {
             alert("Please input the user Id that you would like to invite");
         } else {
             //Invite other users
-            //const auth = useAuthState();
             const db = getFirestore();
             const docref = doc(db, "users", `${inviteUid}`);
             const docSnap = await getDoc(docref);
@@ -130,52 +129,12 @@ const Groups = (props) => {
         }
     }
 
-    const onView = async () => {
-        //Maybe change to redirect to new page and pass the uid to view
-        //Having issues since rerendering means I lost value stored in inviteUid(I think)
-
-    }
     const onCreate = async () => {
         //setCurrentPage(<CreateGroup />);
     }
 
-/*
-  clickMenu() {
-    let sidebar = document.querySelector(".sidebar");
-    sidebar.classList.toggle("open");
-  }
-
-
-  toCreate() {
-    // this.props.history.push('/createGroup');
-    this.props.setCurrentPage(<CreateGroup />)
-
-  onLogout() {
-    const auth = this.props.authState.user.auth;
-    auth.signOut();
-    this.props.history.push('/');
-
-  }
-
-  onInputchange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-*/
     useEffect(() => {
         const userId = auth.user.uid;
-/*
-        alert("in UseEffect");
-        if (view && inviteUid != "") {
-            fetchTrips(inviteUid);
-        } else {
-            //alert("Eval false");
-            alert(view);
-            alert(inviteUid);
-            fetchTrips(userId);
-        }
-*/
         if (!groupName) getGroupName(userId);
         if (!trips) fetchTrips(userId);
     }, []);
@@ -219,17 +178,15 @@ const Groups = (props) => {
             <button class="leave-group-button" onClick={onLeave}>
                 Leave Group
             </button>
-            {/*
-            <button class="create-button" onClick={() => props.setCurrentPage(<CreateGroup setCurrentPage={props.setCurrentPage()}/>)}>
+            <button class="create-button" onClick={() => {setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage}/>)}}>
                 Create Group
             </button>
-            <button class="switch-button" onClick={() => props.setCurrentPage(<SwitchGroup />)}>
+            <button class="switch-button" onClick={() => {setCurrentPage(<SwitchGroup setCurrentPage={setCurrentPage}/>)}}>
                 Switch Groups
             </button>
-            <button class="join-button" onClick={() => props.setCurrentPage(<JoinGroup />)}>
+            <button class="join-button" onClick={() => {setCurrentPage(<JoinGroup setCurrentPage={setCurrentPage}/>)}}>
                 Join Group
             </button>
-        */}
             <br/>
         </h2>
         <br />
@@ -249,6 +206,7 @@ const Groups = (props) => {
             <br/>
             <br/>
             <br/>
+            <p>Enter the User ID of the group member to view their itinerary</p>
             <input class="group-input"
                 name="viewUid"
                 type="text"
@@ -257,7 +215,7 @@ const Groups = (props) => {
             />
             <br/>
             {/*Need to also pass groupName*/}
-            <button class="view-button" onClick={() => {props.setCurrentPage(<ViewMember viewId={memberUid}/>); }}>
+            <button class="view-button" onClick={() => {setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage}/>); }}>
                 View
             </button>
                 {

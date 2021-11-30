@@ -1,0 +1,16 @@
+.back-button {
+    background-color: #E13234;
+    color: white;
+    border: none;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    font-family: Termina;
+    margin: 25px 30px 0px 0px;
+    cursor: pointer;
+    border-radius: 16px;
+    position: absolute;
+    right: 0%;
+  }

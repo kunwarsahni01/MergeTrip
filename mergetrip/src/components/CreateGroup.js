@@ -37,7 +37,7 @@ class CreateGroup extends Component {
 
   onGroup () {
     //this.props.history.push('/groups');
-    this.props.setCurrentPage(<Groups />);
+    this.props.setCurrentPage(<Groups setCurrentPage={this.props.setCurrentPage}/>);
   }
 
   onInputchange (event) {
