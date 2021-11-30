@@ -13,7 +13,7 @@ import { AuthContext } from '../firebase';
 // const app = fireConfig.initializeApp(firebaseConfig);
 
 class AccountDetails extends Component {
-  constructor () {
+  constructor() {
     super();
     this.state = {
       name: '',
@@ -34,7 +34,7 @@ class AccountDetails extends Component {
     this.deleteAccountCheck = this.deleteAccountCheck.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     console.log('componentDidMount: ', this.props);
 
     const auth = this.props.authState.user.auth;
@@ -49,7 +49,7 @@ class AccountDetails extends Component {
     });
   }
 
-  showEmail () {
+  showEmail() {
     this.setState({
       showUsernameText: false
     });
@@ -59,7 +59,7 @@ class AccountDetails extends Component {
     });
   }
 
-  showUsername () {
+  showUsername() {
     this.setState({
       showUsernameText: true
     });
@@ -69,7 +69,7 @@ class AccountDetails extends Component {
     });
   }
 
-  onChangeUsername () {
+  onChangeUsername() {
     if (!document.getElementById('usernameTextbox.id')) {
       console.log('NULL!');
       return;
@@ -93,7 +93,7 @@ class AccountDetails extends Component {
       });
   }
 
-  onChangeEmail () {
+  onChangeEmail() {
     const auth = this.props.authState.user.auth;
 
     const newEmail = document.getElementById('emailTextbox.id').value;
@@ -109,7 +109,7 @@ class AccountDetails extends Component {
       });
   }
 
-  onChangePassword () {
+  onChangePassword() {
     const auth = this.props.authState.user.auth;
     sendPasswordResetEmail(auth, this.state.email)
       .then((userCredential) => {
@@ -119,13 +119,13 @@ class AccountDetails extends Component {
       });
   }
 
-  deleteAccountCheck () {
+  deleteAccountCheck() {
     if (window.confirm('Are you sure you want to delete your account?')) {
       this.deleteAcount();
     }
   }
 
-  deleteAcount () {
+  deleteAcount() {
     const auth = this.props.authState.user.auth;
     deleteUser(auth.currentUser).then(() => {
       alert('Account Deleted');
@@ -136,71 +136,66 @@ class AccountDetails extends Component {
     });
   }
 
-  render () {
+  render() {
     console.log('render props: ', this.props);
     return (
       <div className='AccountDetails'>
         <style>
           @import url("https://use.typekit.net/osw3soi.css");
         </style>
-        <header className='AccountDetails-header'>
-          <img src={this.state.profileURL} alt='profileImg' />
-          <div class='text'> Profile Information</div>
+        <div className='AccountDetails-container'>
+          <img src={this.state.profileURL} alt='profileImg' className='AccountDetails-image' />
           <div className='AccountDetails-subtitle'>
-            Username: {this.state.name}
+            {this.state.name}
             <br />
-            <br />
-            Email: {this.state.email}
-            <br />
+            {this.state.email}
           </div>
-          <div>
+        </div>
+        <div className='AccountDetails-ButtonArray'>
+          <button className='AccountDetails-button' onClick={this.showUsername}>
+            Change Username
+          </button>
 
-            <button className='AccountDetails-button' onClick={this.showUsername}>
-              Change Username
-            </button>
+          <button className='AccountDetails-button' onClick={this.showEmail}>
+            Change Email
+          </button>
 
-            <button className='AccountDetails-button' onClick={this.showEmail}>
-              Change Email
-            </button>
+          <button className='AccountDetails-button' onClick={this.onChangePassword}>
+            Change Password
+          </button>
 
-            <button className='AccountDetails-button' onClick={this.onChangePassword}>
-              Change Password
-            </button>
+          <button className='AccountDetails-button' onClick={this.deleteAccountCheck}>
+            Delete Account
+          </button>
 
-            <br />
+          <br />
 
-            {this.state.showUsernameText
-              ? <button className='Reset-button' onClick={this.onChangeUsername}>
-                New Username
-                </button> : null}
+        </div>
+        {this.state.showUsernameText
+          ? <input
+            className='Account-input'
+            type='text'
+            id='usernameTextbox.id'
+            placeholder='Username'
+          /> : null}
 
-            {this.state.showEmailText
-              ? <button className='Reset-button' onClick={this.onChangeEmail}>
-                New Email
-                </button> : null}
+        {this.state.showEmailText
+          ? <input
+            className='Account-input'
+            type='text'
+            id='emailTextbox.id'
+            placeholder='Email'
+          /> : null}
 
-            {this.state.showUsernameText
-              ? <input
-                // name="username"
-                  type='text'
-                  id='usernameTextbox.id'
-                  placeholder='Username'
-                /> : null}
+        {this.state.showUsernameText
+          ? <button className='AccountDetails-button' onClick={this.onChangeUsername}>
+            New Username
+          </button> : null}
 
-            {this.state.showEmailText
-              ? <input
-                  type='text'
-                  id='emailTextbox.id'
-                  placeholder='Email'
-                /> : null}
-          </div>
-          <div>
-            <button className='AccountDetails-button' onClick={this.deleteAccountCheck}>
-              Delete Account
-            </button>
-          </div>
-
-        </header>
+        {this.state.showEmailText
+          ? <button className='AccountDetails-button' onClick={this.onChangeEmail}>
+            New Email
+          </button> : null}
       </div>
     );
   }

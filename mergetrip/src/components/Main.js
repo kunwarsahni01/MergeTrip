@@ -118,8 +118,6 @@ const Main = () => {
             </div>
 
             <section class='home-section'>
-              <div class='text'> {auth.user.displayName}'s Trips</div>
-
               {currentPage}
             </section>
           </>
