@@ -1,9 +1,6 @@
 import './Groups.css'
 import React, { Component, useState, useEffect } from 'react';
-//import { withRouter } from 'react-router';
-//import { getAuth } from "firebase/auth";
 import { doc, getDoc, getFirestore, deleteDoc, setDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
-//import withAuthHOC from './withAuthHOC';
 import CreateGroup from './CreateGroup';
 import { useAuthState } from '../firebase';
 import Reservation from '../pages/Reservation';
@@ -12,68 +9,6 @@ import SwitchGroup from './SwitchGroup';
 import JoinGroup from './JoinGroup';
 import ViewMember from './ViewMember';
 
-/*
-class Groups extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: "",
-      profileURL: "",
-      groupName: "",
-      inviteUid: "",
-      viewUid: "",
-      display: false
-    };
-    this.onInputchange = this.onInputchange.bind(this);
-    this.clickMenu = this.clickMenu.bind(this);
-
-    //this.onCreate = this.onCreateButton.bind(this);
-
-    this.onInvite = this.onInvite.bind(this);
-    this.onLeave = this.onLeave.bind(this);
-    //this.onSwitch = this.onSwitch.bind(this);
-    //this.onJoin = this.onJoin.bind(this);
-    this.onView = this.onView.bind(this);
-  }
-
-  componentDidMount() {
-    const auth = this.props.authState.user.auth;
-
-    const defaultName = 'User';
-    const defaultProfileURL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
-
-    this.setState({
-      name: auth.currentUser.displayName ? auth.currentUser.displayName : defaultName,
-      profileURL: auth.currentUser.photoURL ? auth.currentUser.photoURL : defaultProfileURL,
-    });
-  }
-  */
-/*
-  onCreateButton() {
-    this.toCreate();
-  }
-
-  toCreate() {
-    //this.props.history.push('/createGroup');
-    this.props.setCurrentPage(<CreateGroup />);
-  }
-
-  onSwitch() {
-    this.toSwitch();
-  }
-
-  toSwitch() {
-    this.props.setCurrentPage(<SwitchGroup />);
-  }
-
-  onJoin() {
-    this.toJoin();
-  }
-
-  toJoin() {
-      this.props.setCurrentPage(<JoinGroup />);
-  }
-*/
 const Groups = ({setCurrentPage}) => {
     const auth = useAuthState();
     const [groupName, setGroupName] = useState(false);
@@ -129,10 +64,6 @@ const Groups = ({setCurrentPage}) => {
         }
     }
 
-    const onCreate = async () => {
-        //setCurrentPage(<CreateGroup />);
-    }
-
     useEffect(() => {
         const userId = auth.user.uid;
         if (!groupName) getGroupName(userId);
@@ -159,7 +90,6 @@ const Groups = ({setCurrentPage}) => {
       }
     }
 
-  //render() {
     return (
       <>
         <style>
@@ -173,7 +103,6 @@ const Groups = ({setCurrentPage}) => {
               : <p>Join a group first</p>
           }    
         </header>
-
         <h2>
             <button class="leave-group-button" onClick={onLeave}>
                 Leave Group
@@ -215,7 +144,7 @@ const Groups = ({setCurrentPage}) => {
             />
             <br/>
             {/*Need to also pass groupName*/}
-            <button class="view-button" onClick={() => {setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage}/>); }}>
+            <button class="view-button" onClick={() => {setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName}/>); }}>
                 View
             </button>
                 {
@@ -244,7 +173,5 @@ const Groups = ({setCurrentPage}) => {
         </div>
       </>
     );
- // }
 }
-//export default withRouter(withAuthHOC(Groups));
 export default Groups;
