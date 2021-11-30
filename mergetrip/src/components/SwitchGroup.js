@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
 import withAuthHOC from './withAuthHOC';
-import { collection, addDoc, getFirestore, setDoc, doc, updateDoc, getDoc, deleteDoc, getDocs } from "firebase/firestore";
+import { collection, getFirestore, setDoc, doc, updateDoc, getDoc, deleteDoc, getDocs } from "firebase/firestore";
 import Groups from './Groups';
 
 class SwitchGroup extends Component {
@@ -49,8 +49,6 @@ class SwitchGroup extends Component {
     }
 
     onGroup() {
-        //this.props.history.push('/groups');
-        //this.props.setCurrentPage(<Groups />);
         this.props.setCurrentPage(<Groups />);
     }
     

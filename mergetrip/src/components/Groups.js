@@ -1,16 +1,16 @@
 import './Groups.css'
 import React, { Component, useState, useEffect } from 'react';
-import { withRouter } from 'react-router';
-import { getAuth } from "firebase/auth";
+//import { withRouter } from 'react-router';
+//import { getAuth } from "firebase/auth";
 import { doc, getDoc, getFirestore, deleteDoc, setDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
-import withAuthHOC from './withAuthHOC';
-
+//import withAuthHOC from './withAuthHOC';
 import CreateGroup from './CreateGroup';
-
 import { useAuthState } from '../firebase';
 import Reservation from '../pages/Reservation';
 import {getTrips} from '../api/flaskr_api';
-
+import SwitchGroup from './SwitchGroup';
+import JoinGroup from './JoinGroup';
+import ViewMember from './ViewMember';
 
 /*
 class Groups extends Component {
@@ -76,12 +76,12 @@ class Groups extends Component {
 */
 const Groups = (props) => {
     const auth = useAuthState();
-    //const [groupName, setGroupName] = useState('');
+    const [groupName, setGroupName] = useState(false);
     const [memberUid, setMemUid] = useState('');
     const [inviteUid, setInviteUid] = useState('');
     const [trips, setTrips] = useState(false);
     const [showTrips, setShowTrips] = useState(false);
-  
+
     const onLeave = async () => {
         //const auth = this.props.authState.user.auth;
         const db = getFirestore();
@@ -131,11 +131,12 @@ const Groups = (props) => {
     }
 
     const onView = async () => {
-        //Just testing that input is reading correctly
-        alert(memberUid);
-        alert(trips);
-        //Set trips to true
-        setTrips(true);
+        //Maybe change to redirect to new page and pass the uid to view
+        //Having issues since rerendering means I lost value stored in inviteUid(I think)
+
+    }
+    const onCreate = async () => {
+        //setCurrentPage(<CreateGroup />);
     }
 
 /*
@@ -162,9 +163,20 @@ const Groups = (props) => {
     });
   }
 */
-
     useEffect(() => {
         const userId = auth.user.uid;
+/*
+        alert("in UseEffect");
+        if (view && inviteUid != "") {
+            fetchTrips(inviteUid);
+        } else {
+            //alert("Eval false");
+            alert(view);
+            alert(inviteUid);
+            fetchTrips(userId);
+        }
+*/
+        if (!groupName) getGroupName(userId);
         if (!trips) fetchTrips(userId);
     }, []);
 
@@ -175,6 +187,19 @@ const Groups = (props) => {
         setTrips(res.data.trips);
     };    
 
+    const getGroupName = async (userId) => {
+      const db = getFirestore();
+      const docref = doc(db, 'users', userId);
+      const docSnap = await(getDoc(docref));
+      if (docSnap.exists) {
+        //get groupName field from docsnap
+        const group = docSnap.get("group");
+        if (group != null) {
+          setGroupName(group);
+        }
+      }
+    }
+
   //render() {
     return (
       <>
@@ -182,12 +207,34 @@ const Groups = (props) => {
             @import url("https://use.typekit.net/osw3soi.css");
         </style>
         <br/>
-        <div class="text">
-            Groups
+        <header class="text">
+          {
+            groupName
+              ? <p>Current Group: {groupName}</p>
+              : <p>Join a group first</p>
+          }    
+        </header>
+
+        <h2>
             <button class="leave-group-button" onClick={onLeave}>
                 Leave Group
             </button>
+            {/*
+            <button class="create-button" onClick={() => props.setCurrentPage(<CreateGroup setCurrentPage={props.setCurrentPage()}/>)}>
+                Create Group
+            </button>
+            <button class="switch-button" onClick={() => props.setCurrentPage(<SwitchGroup />)}>
+                Switch Groups
+            </button>
+            <button class="join-button" onClick={() => props.setCurrentPage(<JoinGroup />)}>
+                Join Group
+            </button>
+        */}
             <br/>
+        </h2>
+        <br />
+        <br />
+        <div>
             <input class="invite-input"
               name="inviteUid"
               type="text"
@@ -209,10 +256,11 @@ const Groups = (props) => {
                 onChange={e => setMemUid(e.target.value)}
             />
             <br/>
-            <button class="view-button" onClick={onView}>
+            {/*Need to also pass groupName*/}
+            <button class="view-button" onClick={() => {props.setCurrentPage(<ViewMember viewId={memberUid}/>); }}>
                 View
             </button>
-            {
+                {
                 trips  
                     ? trips.map((trip, index) => (
                         <div key={index} className='Trip-container'>
@@ -227,13 +275,14 @@ const Groups = (props) => {
                             <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
                             {
                                 showTrips && trip.reservations.length !== 0
-                                    ? trip.reservations.map((res, index) => <Reservation res={res} key={index} />)
-                                    : null
+                                    ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
+                                    : <p>Click the button to hide/show your reservations</p>
                             }
                         </div>
                     ))
-                    : <p>Loading member's itinerary</p>
-            }
+                    : <p>No Trips planned</p>
+                }
+
         </div>
       </>
     );
