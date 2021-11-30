@@ -1,12 +1,17 @@
 import './ViewMember.css';
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
 import withAuthHOC from './withAuthHOC';
 import Groups from './Groups';
 import { getTrips } from '../api/flaskr_api';
+import {doc, getDoc, getFirestore } from 'firebase/firestore';
+import Reservation from '../pages/Reservation';
+import { useAuthState } from '../firebase';
 
-const ViewMember = ({inviteID, groupName}) => {
+
+const ViewMember = ({viewId, groupName, setCurrentPage}) => {
+    const auth = useAuthState();
     const [trips, setTrips] = useState(false);
 
     const fetchTrips = async (userId) => {
@@ -18,18 +23,23 @@ const ViewMember = ({inviteID, groupName}) => {
     useEffect(() => {
         const userId = auth.user.uid;
         //Check if {inviteID} user is in {groupName}
-        const auth = getAuth();
-        const db = getFirestore();
+        checkMember(userId);
+    }, []);
 
-        const docref = doc(db, `groups/${groupName}/members`, inviteID);
+    const checkMember = async (userId) => {
+        if (viewId == null) {
+            if (!trips) fetchTrips(userId);
+        } else {
+        const db = getFirestore();
+        const docref = await doc(db, `groups/${groupName}/members`, viewId);
         const docSnap = await getDoc(docref);
         if (docSnap.exists) {
-
+            if (!trips) fetchTrips(viewId);
         } else {
-            alert("Did not input a group member, now displaying your itinerary");
             if (!trips) fetchTrips(userId);
         }
-      }, []);
+        }
+    }
 
     return (
         <>
@@ -45,9 +55,11 @@ const ViewMember = ({inviteID, groupName}) => {
                             <p>End: {trip.end_date}</p>
                         </div>
                         <p>Reservations:</p>
+                        {/*
                         <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
+                        */}
                         {
-                            showTrips && trip.reservations.length !== 0
+                            trip.reservations.length !== 0
                                 ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
                                 : <p>Click the button to hide/show your reservations</p>
                         }

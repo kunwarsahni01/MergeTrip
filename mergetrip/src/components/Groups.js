@@ -12,8 +12,6 @@ import SwitchGroup from './SwitchGroup';
 import JoinGroup from './JoinGroup';
 import ViewMember from './ViewMember';
 
-
-
 /*
 class Groups extends Component {
   constructor() {
@@ -76,9 +74,9 @@ class Groups extends Component {
       this.props.setCurrentPage(<JoinGroup />);
   }
 */
-const Groups = ({props, inviteId}) => {
+const Groups = (props) => {
     const auth = useAuthState();
-    //const [groupName, setGroupName] = useState('');
+    const [groupName, setGroupName] = useState(false);
     const [memberUid, setMemUid] = useState('');
     const [inviteUid, setInviteUid] = useState('');
     const [trips, setTrips] = useState(false);
@@ -163,11 +161,11 @@ const Groups = ({props, inviteId}) => {
     this.setState({
       [event.target.name]: event.target.value
     });
-  }*/
-
+  }
+*/
     useEffect(() => {
         const userId = auth.user.uid;
-        /*
+/*
         alert("in UseEffect");
         if (view && inviteUid != "") {
             fetchTrips(inviteUid);
@@ -176,7 +174,9 @@ const Groups = ({props, inviteId}) => {
             alert(view);
             alert(inviteUid);
             fetchTrips(userId);
-        }*/
+        }
+*/
+        if (!groupName) getGroupName(userId);
         if (!trips) fetchTrips(userId);
     }, []);
 
@@ -186,6 +186,10 @@ const Groups = ({props, inviteId}) => {
         const res = await getTrips(userId);
         setTrips(res.data.trips);
     };    
+
+    const getGroupName = async (userId) => {
+
+    }
 
   //render() {
     return (
@@ -240,7 +244,7 @@ const Groups = ({props, inviteId}) => {
             />
             <br/>
             {/*Need to also pass groupName*/}
-            <button class="view-button" onClick={() => props.setCurrentPage(<ViewMember setCurentPage={props.setCurrentPage()} inviteID={inviteUid}/>)}>
+            <button class="view-button" onClick={() => {props.setCurrentPage(<ViewMember viewId={memberUid}/>); }}>
                 View
             </button>
                 {
