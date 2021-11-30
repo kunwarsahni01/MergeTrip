@@ -37,11 +37,10 @@ const Trips = (props) => {
   };
 
   return (
-    <div>
+    <div className='Trips'>
       <style>
         @import url("https://use.typekit.net/osw3soi.css");
       </style>
-      <hr style={{ marginBottom: '20px', marginTop: '20px' }} />
       <CreateTrip fetchTrips={fetchTrips} />
       {
         trips

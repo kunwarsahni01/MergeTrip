@@ -93,14 +93,6 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Join Group</span>
                 </li>
-                */}
-                <li>
-                  <a href='/settings'>
-                    <i class='bx bx-cog' />
-                    <span class='links_name'>Settings</span>
-                  </a>
-                  <span class='tooltip'>Settings</span>
-                </li>
                 <li class='profile'>
                   <div class='profile-details'>
                     <img src={auth.user.photoURL ? auth.user.photoURL : DEFAULT_PROFILE_URL} alt='profileImg' />
@@ -114,8 +106,6 @@ const Main = () => {
             </div>
 
             <section class='home-section'>
-              <div class='text'> {auth.user.displayName}'s Trips</div>
-
               {currentPage}
             </section>
           </>
