@@ -7,13 +7,13 @@ import Reservation from '../pages/Reservation';
 import { useAuthState } from '../firebase';
 
 
-const ViewMember = ({viewId, groupName, setCurrentPage}) => {
+const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
     const auth = useAuthState();
     const [trips, setTrips] = useState(false);
 
     const fetchTrips = async (userId) => {
         const res = await getTrips(userId);
-        setTrips(res.data.trips);
+        setTrips(res);
     }
 
     useEffect(() => {
@@ -26,20 +26,20 @@ const ViewMember = ({viewId, groupName, setCurrentPage}) => {
         if (viewId == null) {
             if (!trips) fetchTrips(userId);
         } else {
-        const db = getFirestore();
-        const docref = await doc(db, `groups/${groupName}/members`, viewId);
-        const docSnap = await getDoc(docref);
-        if (docSnap.exists) {
-            if (!trips) fetchTrips(viewId);
-        } else {
-            if (!trips) fetchTrips(userId);
-        }
+            const db = getFirestore();
+            const docref = doc(db, `groups/${groupName}/members`, viewId);
+            const docSnap = await getDoc(docref);
+            if (docSnap.exists) {
+                if (!trips) fetchTrips(viewId);
+            } else {
+                if (!trips) fetchTrips(userId);
+            }
         }
     }
 
     return (
         <>
-            <button class="back-button" onClick={() => setCurrentPage(<Groups />)}>
+            <button class="back-button" onClick={() => setCurrentPage(<Groups setCurrentPage={setCurrentPage}/>)}>
                 Back to Group
             </button>
             {
@@ -54,9 +54,6 @@ const ViewMember = ({viewId, groupName, setCurrentPage}) => {
                             <p>End: {trip.end_date}</p>
                         </div>
                         <p>Reservations:</p>
-                        {/*
-                        <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
-                        */}
                         {
                             trip.reservations.length !== 0
                                 ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)

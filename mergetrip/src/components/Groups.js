@@ -76,7 +76,7 @@ const Groups = ({setCurrentPage}) => {
         console.log('Fetching trips:\n');
 
         const res = await getTrips(userId);
-        setTrips(res.data.trips);
+        setTrips(res);
     };    
 
     const getGroupName = async (userId) => {
@@ -177,7 +177,7 @@ const Groups = ({setCurrentPage}) => {
             />
             <br/>
             {/*Need to also pass groupName*/}
-            <button class="view-button" onClick={() => {setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName}/>); }}>
+            <button class="view-button" onClick={() => {setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName} members={members}/>); }}>
                 View
             </button>
                 {
