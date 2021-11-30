@@ -188,7 +188,16 @@ const Groups = (props) => {
     };    
 
     const getGroupName = async (userId) => {
-
+      const db = getFirestore();
+      const docref = doc(db, 'users', userId);
+      const docSnap = await(getDoc(docref));
+      if (docSnap.exists) {
+        //get groupName field from docsnap
+        const group = docSnap.get("group");
+        if (group != null) {
+          setGroupName(group);
+        }
+      }
     }
 
   //render() {
@@ -199,7 +208,11 @@ const Groups = (props) => {
         </style>
         <br/>
         <header class="text">
-            Groups
+          {
+            groupName
+              ? <p>Current Group: {groupName}</p>
+              : <p>Join a group first</p>
+          }    
         </header>
 
         <h2>

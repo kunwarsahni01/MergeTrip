@@ -1,8 +1,5 @@
 import './ViewMember.css';
-import React, { Component, useEffect, useState } from 'react';
-import { withRouter } from 'react-router';
-import { getAuth } from "firebase/auth";
-import withAuthHOC from './withAuthHOC';
+import React, { useEffect, useState } from 'react';
 import Groups from './Groups';
 import { getTrips } from '../api/flaskr_api';
 import {doc, getDoc, getFirestore } from 'firebase/firestore';
