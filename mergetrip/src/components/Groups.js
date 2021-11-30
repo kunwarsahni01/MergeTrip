@@ -16,9 +16,9 @@ const Groups = ({setCurrentPage}) => {
     const [inviteUid, setInviteUid] = useState('');
     const [trips, setTrips] = useState(false);
     const [showTrips, setShowTrips] = useState(false);
+    const [members, setMembers] = useState(false);
 
     const onLeave = async () => {
-        //const auth = this.props.authState.user.auth;
         const db = getFirestore();
         const uIdDocSnap = await getDoc(doc(db, "users", auth.user.uid));
         const groupName = uIdDocSnap.get("group");
@@ -66,7 +66,9 @@ const Groups = ({setCurrentPage}) => {
 
     useEffect(() => {
         const userId = auth.user.uid;
-        if (!groupName) getGroupName(userId);
+        if (!groupName) {
+          getGroupName(userId);
+        }
         if (!trips) fetchTrips(userId);
     }, []);
 
@@ -87,7 +89,28 @@ const Groups = ({setCurrentPage}) => {
         if (group != null) {
           setGroupName(group);
         }
+        getGroupMembers(group);
       }
+    }
+
+    const getGroupMembers = async (group) => {
+        const db = getFirestore();
+        const ref = collection(db, `groups/${group}/members`);
+        const querySnap = await getDocs(ref);
+        const mems = [];
+        querySnap.forEach((doc) => {
+          mems.push(doc.get("uid"));
+        });
+        setMembers(mems);
+
+    }
+    const showMembers = members => {
+      let content = [];
+      for (let i = 0; i < members.length; i++) {
+        const t = members[i];
+        content.push(<li key={t.id}>{t}</li>);
+      }
+      return content;
     }
 
     return (
@@ -101,7 +124,17 @@ const Groups = ({setCurrentPage}) => {
             groupName
               ? <p>Current Group: {groupName}</p>
               : <p>Join a group first</p>
-          }    
+          }  
+          {
+            groupName
+              ? <>
+                <p>Current Members:</p>
+                <div>
+                  {showMembers(members)}
+                </div>
+                </>
+              : <p></p>
+          }  
         </header>
         <h2>
             <button class="leave-group-button" onClick={onLeave}>
