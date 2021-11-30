@@ -71,6 +71,7 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Groups</span>
                 </li>
+                {/*
                 <li onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage} />); }}>
                   <a>
                     <i class='bx bx-group' />
@@ -92,6 +93,7 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Join Group</span>
                 </li>
+                */}
                 <li>
                   <a href='/settings'>
                     <i class='bx bx-cog' />
