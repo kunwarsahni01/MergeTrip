@@ -1,10 +1,18 @@
 import flaskrApp from './AxiosSetup';
-import { setDoc, getDoc, deleteDoc, doc, updateDoc, getFirestore, arrayUnion } from '@firebase/firestore';
+import { getDocs, collection, setDoc, getDoc, deleteDoc, doc, updateDoc, getFirestore, arrayUnion } from '@firebase/firestore';
 
 const db = getFirestore();
 
-export const getTrips = (userId) => {
-  return flaskrApp.get('/trips/' + userId);
+// export const getTrips = (userId) => {
+//   return flaskrApp.get('/trips/' + userId);
+// };
+
+export const getTrips = async (userId) => {
+  const tripsCol = await getDocs(collection(db, 'trips', userId, 'trips'));
+  const trips = tripsCol.docs.map(docRef => docRef.data());
+
+  // console.log(trips);
+  return trips;
 };
 
 export const createTrip = (userId, tripName, startDate, endDate) => {
