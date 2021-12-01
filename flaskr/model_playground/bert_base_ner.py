@@ -38,7 +38,8 @@ class Extractor:
         if self.is_flight_email(email_body, email_sender, email_subject):
             # change address to location
             date = self.extract_date(spacy_results=spacy_results)
-            return Flight(organization=org, location=address, date=date).toJSON()
+            code = self.extract_confirmation_code(email_body)
+            return Flight(organization=org, location=address, date=date, conf_code=code).toJSON()
         else:
             return NonFlight(organization=org, address=address).toJSON()
 
@@ -100,3 +101,13 @@ class Extractor:
             return False
 
         return False
+
+    def extract_confirmation_code(email_body: str):
+        confirmation_code = r'[A-Z0-9]+'
+        matches = re.findall(email_body, confirmation_code)
+        
+        if not matches:
+            return "N/A"
+        else:
+            code = max(matches, key=len)
+            return code    
