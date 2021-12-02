@@ -1,4 +1,5 @@
 import './Groups.css';
+import '../pages/Trip.css';
 import React, { Component, useState, useEffect } from 'react';
 // import { withRouter } from 'react-router';
 // import { getAuth } from "firebase/auth";
