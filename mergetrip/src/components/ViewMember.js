@@ -67,5 +67,5 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
         </>
     );
 
-};
+}
 export default ViewMember;
