@@ -1,10 +1,18 @@
 import flaskrApp from './AxiosSetup';
-import { setDoc, getDoc, deleteDoc, doc, updateDoc, getFirestore, arrayUnion } from '@firebase/firestore';
+import { getDocs, collection, setDoc, getDoc, deleteDoc, doc, updateDoc, getFirestore, arrayUnion } from '@firebase/firestore';
 
 const db = getFirestore();
 
-export const getTrips = (userId) => {
-  return flaskrApp.get('/trips/' + userId);
+// export const getTrips = (userId) => {
+//   return flaskrApp.get('/trips/' + userId);
+// };
+
+export const getTrips = async (userId) => {
+  const tripsCol = await getDocs(collection(db, 'trips', userId, 'trips'));
+  const trips = tripsCol.docs.map(docRef => docRef.data());
+
+  // console.log(trips);
+  return trips;
 };
 
 export const createTrip = (userId, tripName, startDate, endDate) => {
@@ -24,16 +32,26 @@ export const deleteTrip = (userId, tripId) => {
   return deleteDoc(doc(db, 'trips', userId, 'trips', tripId));
 };
 
-export const createReservation = (userId, tripId, resName, resLocation, resTime) => {
+export const createReservation = (userId, tripId, newRes) => {
   const resId = tripId + Date.now();
+  newRes.res_id = resId;
   return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
-    reservations: arrayUnion({
-      user_id: userId,
-      res_id: resId,
-      res_name: resName,
-      res_location: resLocation,
-      res_time: resTime
-    })
+    reservations: arrayUnion(newRes)
+  });
+};
+
+export const editReservation = async (userId, tripId, resId, newRes) => {
+  newRes.res_id = resId;
+
+  const currReservations = (await getDoc(doc(db, 'trips', userId, 'trips', tripId))).data().reservations;
+
+  const newReservations = currReservations.map((res) => {
+    if (res.res_id === newRes.res_id) return newRes;
+    return res;
+  });
+
+  return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
+    reservations: newReservations
   });
 };
 
@@ -50,3 +68,12 @@ export const deleteReservation = async (userId, tripId, resId) => {
 export const generateReservations = (userId, tripId) => {
   return flaskrApp.get('/gmails/' + userId + '/' + tripId);
 };
+
+// {
+//   "res_type": self.type,
+//   "res_org": self.organization,
+//   "res_confirmation_num": self.confirmation_num,
+//   "res_date": self.date,
+//   "res_from_location": self.from_location,
+//   "res_to_location": self.to_location
+// }

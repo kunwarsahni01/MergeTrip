@@ -1,10 +1,13 @@
-import './Groups.css'
+import './Groups.css';
+import '../pages/Trip.css';
 import React, { Component, useState, useEffect } from 'react';
+
 import { doc, getDoc, getFirestore, deleteDoc, setDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
+
 import CreateGroup from './CreateGroup';
 import { useAuthState } from '../firebase';
 import Reservation from '../pages/Reservation';
-import {getTrips} from '../api/flaskr_api';
+import { getTrips } from '../api/flaskr_api';
 import SwitchGroup from './SwitchGroup';
 import JoinGroup from './JoinGroup';
 import ViewMember from './ViewMember';
@@ -180,31 +183,31 @@ const Groups = ({setCurrentPage}) => {
             <button class="view-button" onClick={() => {setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName} members={members}/>); }}>
                 View
             </button>
-                {
-                trips  
-                    ? trips.map((trip, index) => (
-                        <div key={index} className='Trip-container'>
-                            <div className='Trip-header'>
-                                <p>{trip.trip_name}</p>
-                            </div>
-                            <div className='Trip-body'>
-                                <p>Start: {trip.start_date}</p>
-                                <p>End: {trip.end_date}</p>
-                            </div>
-                            <p>Reservations:</p>
-                            <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
-                            {
-                                showTrips && trip.reservations.length !== 0
-                                    ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
-                                    : <p>Click the button to hide/show your reservations</p>
-                            }
-                        </div>
-                    ))
-                    : <p>No Trips planned</p>
-                }
 
+          trips
+            ? trips.map((trip, index) => (
+              <div key={index} className='Trip-container'>
+                <div className='Trip-header'>
+                  <p>{trip.trip_name}</p>
+                </div>
+                <div className='Trip-body'>
+                  <p>Start: {trip.start_date}</p>
+                  <p>End: {trip.end_date}</p>
+                </div>
+                <p>Reservations:</p>
+                <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
+                {
+                  showTrips && trip.reservations.length !== 0
+                    ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
+                    : <p>Click the button to hide/show your reservations</p>
+                }
+              </div>
+              ))
+            : <p>No Trips planned</p>
+        }
         </div>
       </>
     );
 }
 export default Groups;
+

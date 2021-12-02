@@ -33,7 +33,7 @@ const Trips = (props) => {
     console.log('Fetching trips:\n');
 
     const res = await getTrips(userId);
-    setTrips(res.data.trips);
+    setTrips(res);
   };
 
   return (

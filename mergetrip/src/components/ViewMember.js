@@ -2,10 +2,9 @@ import './ViewMember.css';
 import React, { useEffect, useState } from 'react';
 import Groups from './Groups';
 import { getTrips } from '../api/flaskr_api';
-import {doc, getDoc, getFirestore } from 'firebase/firestore';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import Reservation from '../pages/Reservation';
 import { useAuthState } from '../firebase';
-
 
 const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
     const auth = useAuthState();
@@ -35,7 +34,9 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
                 if (!trips) fetchTrips(userId);
             }
         }
+
     }
+  };
 
     return (
         <>
@@ -65,5 +66,6 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
             }
         </>
     );
+
 };
 export default ViewMember;
