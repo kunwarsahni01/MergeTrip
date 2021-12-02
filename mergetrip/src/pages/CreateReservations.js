@@ -33,7 +33,7 @@ const NON_FLIGHT_SCHEMA = Yup.object({
   res_checkin: Yup.string().required('Check-in time is required'),
   res_checkout: Yup.string().required('Check-out is required'),
   res_address: Yup.string().required('Address is required'),
-  notes: Yup.string()
+  res_notes: Yup.string()
 });
 const NON_FLIGHT_TYPES = {
   res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Airbnb' },
@@ -41,16 +41,16 @@ const NON_FLIGHT_TYPES = {
   res_checkin: { type: 'text', label: 'Checkin Date/Time', placeholder: 'Ex: Thursday 2nd at Noon' },
   res_checkout: { type: 'text', label: 'Checkout Date/Time', placeholder: 'Ex: Thursday 4nd at Noon' },
   res_address: { type: 'text', label: '', placeholder: 'Ex: 1234 Forest Hill Dr' },
-  notes: { type: 'textarea', label: '', placeholder: 'Notes (optional)' }
+  res_notes: { type: 'textarea', label: '', placeholder: 'Notes (optional)' }
 };
 
 const CreateReservation = (props) => {
   const [show, setShow] = useState(false);
 
   const [isFlight, setIsFlight] = useState(true);
-  // useEffect(() => {
-  //   reset();
-  // }, [isFlight]);
+  useEffect(() => {
+    reset();
+  }, []);
 
   const toggleShow = () => {
     setShow(prevShow => !prevShow);
@@ -84,6 +84,7 @@ const CreateReservation = (props) => {
     // console.log(newRes);
     await createReservation(userId, props.tripId, newRes);
     props.fetchTrips(userId);
+    reset();
   };
   const onError = (errors) => {
     console.log(errors);
