@@ -50,17 +50,18 @@ const Groups = ({setCurrentPage}) => {
             alert("Please input the user Id that you would like to invite");
         } else {
             //Invite other users
+            alert(inviteUid);
             const db = getFirestore();
-            const docref = doc(db, "users", `${inviteUid}`);
+            const docref = doc(db, 'users', `${inviteUid}`);
             const docSnap = await getDoc(docref);
             if (docSnap.exists()) {
                 //Add user to invited list
-                const uIdDocSnap = await getDoc(doc(db, "users", auth.user.uid));
-                const groupName = uIdDocSnap.get("group");
+                //const uIdDocSnap = await getDoc(doc(db, "users", auth.user.uid));
+                //const groupName = uIdDocSnap.get("group");
                 setDoc(doc(db, `groups/${groupName}/invited`, inviteUid), {
                     uid: inviteUid
                 });
-                alert("Successfully invited user");
+                alert("Invite Sent");
             } else {
                 alert("No user with the userId: " + `${inviteUid}`);
             }            
@@ -105,7 +106,6 @@ const Groups = ({setCurrentPage}) => {
           mems.push(doc.get("uid"));
         });
         setMembers(mems);
-
     }
     const showMembers = members => {
       let content = [];
@@ -156,7 +156,11 @@ const Groups = ({setCurrentPage}) => {
         </h2>
         <br />
         <br />
-        <div>
+        {
+          groupName
+            ?
+        
+          <div>
             <input class="invite-input"
               name="inviteUid"
               type="text"
@@ -183,8 +187,8 @@ const Groups = ({setCurrentPage}) => {
             <button class="view-button" onClick={() => {setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName} members={members}/>); }}>
                 View
             </button>
-
-          trips
+            {
+            trips
             ? trips.map((trip, index) => (
               <div key={index} className='Trip-container'>
                 <div className='Trip-header'>
@@ -204,8 +208,10 @@ const Groups = ({setCurrentPage}) => {
               </div>
               ))
             : <p>No Trips planned</p>
+            }
+          </div>
+          :<p></p>
         }
-        </div>
       </>
     );
 }
