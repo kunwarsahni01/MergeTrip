@@ -13,10 +13,11 @@ const Input = (props) => (
           {props.label}
           {props.required ? <span className='text-red-600'>*</span> : null}
         </label>
-      )
+        )
       : null}
 
     <input
+      defaultValue={props.defaultValue ? props.defaultValue : ''}
       className='Account-input'
       {...props.register(props.name)}
       name={props.name}
@@ -31,7 +32,7 @@ const Input = (props) => (
         <p>
           <ErrorMessage errors={props.errors} name={props.name} />
         </p>
-      )
+        )
       : null}
   </div>
 );

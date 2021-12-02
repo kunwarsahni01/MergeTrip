@@ -16,15 +16,15 @@ const FLIGHT_SCHEMA = Yup.object({
   res_date: Yup.string().required('End date is required'),
   res_from_location: Yup.string().required('Departure location is required'),
   res_to_location: Yup.string().required('Arrival location is required'),
-  notes: Yup.string()
+  res_notes: Yup.string()
 });
 const FLIGHT_TYPES = {
   res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Delta' },
   res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234' },
   res_date: { type: 'time', label: 'Date', placeholder: '' },
-  res_from_location: { type: 'text', label: '', placeholder: 'Ex: IND' },
-  res_to_location: { type: 'text', label: '', placeholder: 'Ex: ORD' },
-  notes: { type: 'textarea', label: '', placeholder: 'Notes (optional)' }
+  res_from_location: { type: 'text', label: 'Departure location', placeholder: 'Ex: IND' },
+  res_to_location: { type: 'text', label: 'Arrival location', placeholder: 'Ex: ORD' },
+  res_notes: { type: 'textarea', label: 'Additional Notes', placeholder: 'Notes (optional)' }
 };
 
 const NON_FLIGHT_SCHEMA = Yup.object({
@@ -40,8 +40,8 @@ const NON_FLIGHT_TYPES = {
   res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234' },
   res_checkin: { type: 'text', label: 'Checkin Date/Time', placeholder: 'Ex: Thursday 2nd at Noon' },
   res_checkout: { type: 'text', label: 'Checkout Date/Time', placeholder: 'Ex: Thursday 4nd at Noon' },
-  res_address: { type: 'text', label: '', placeholder: 'Ex: 1234 Forest Hill Dr' },
-  res_notes: { type: 'textarea', label: '', placeholder: 'Notes (optional)' }
+  res_address: { type: 'text', label: 'Address', placeholder: 'Ex: 1234 Forest Hill Dr' },
+  res_notes: { type: 'textarea', label: 'Additional Notes', placeholder: 'Notes (optional)' }
 };
 
 const CreateReservation = (props) => {

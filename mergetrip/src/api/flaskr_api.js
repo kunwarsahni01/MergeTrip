@@ -32,24 +32,26 @@ export const deleteTrip = (userId, tripId) => {
   return deleteDoc(doc(db, 'trips', userId, 'trips', tripId));
 };
 
-// export const createReservation = (userId, tripId, resName, resLocation, resTime) => {
-//   const resId = tripId + Date.now();
-//   return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
-//     reservations: arrayUnion({
-//       user_id: userId,
-//       res_id: resId,
-//       res_name: resName,
-//       res_location: resLocation,
-//       res_time: resTime
-//     })
-//   });
-// };
-
 export const createReservation = (userId, tripId, newRes) => {
   const resId = tripId + Date.now();
   newRes.res_id = resId;
   return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
     reservations: arrayUnion(newRes)
+  });
+};
+
+export const editReservation = async (userId, tripId, resId, newRes) => {
+  newRes.res_id = resId;
+
+  const currReservations = (await getDoc(doc(db, 'trips', userId, 'trips', tripId))).data().reservations;
+
+  const newReservations = currReservations.map((res) => {
+    if (res.res_id === newRes.res_id) return newRes;
+    return res;
+  });
+
+  return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
+    reservations: newReservations
   });
 };
 
