@@ -36,7 +36,6 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
                 //ID passed is valid, display itinerary
                 if (!trips) {
                     const t = await fetchTrips(viewId);
-                    //alert(t);
                 }
             } else {
                 //Invalid ID passed, display current user's itinerary
@@ -48,7 +47,6 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
     const fetchAll = async () => {
         let itin = [];
         for (let i = 0; i < members.length; i++) {
-            //alert(members[i]);
             const res = await getTrips(members[i]);
             itin.push(res);
         }
