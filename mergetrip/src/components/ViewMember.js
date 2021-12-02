@@ -34,9 +34,8 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
                 if (!trips) fetchTrips(userId);
             }
         }
-
     }
-  };
+  
 
     return (
         <>
