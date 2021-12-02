@@ -50,9 +50,8 @@ const Groups = ({setCurrentPage}) => {
             alert("Please input the user Id that you would like to invite");
         } else {
             //Invite other users
-            alert(inviteUid);
             const db = getFirestore();
-            const docref = doc(db, 'users', `${inviteUid}`);
+            const docref = doc(db, "users", `${inviteUid}`);
             const docSnap = await getDoc(docref);
             if (docSnap.exists()) {
                 //Add user to invited list
@@ -61,7 +60,7 @@ const Groups = ({setCurrentPage}) => {
                 setDoc(doc(db, `groups/${groupName}/invited`, inviteUid), {
                     uid: inviteUid
                 });
-                alert("Invite Sent");
+                alert("Successfully invited user");
             } else {
                 alert("No user with the userId: " + `${inviteUid}`);
             }            
@@ -90,10 +89,11 @@ const Groups = ({setCurrentPage}) => {
       if (docSnap.exists) {
         //get groupName field from docsnap
         const group = docSnap.get("group");
-        if (group != null) {
+        if (group != null && group.length != 0) {
           setGroupName(group);
+          getGroupMembers(group);
         }
-        getGroupMembers(group);
+        
       }
     }
 
@@ -106,6 +106,7 @@ const Groups = ({setCurrentPage}) => {
           mems.push(doc.get("uid"));
         });
         setMembers(mems);
+
     }
     const showMembers = members => {
       let content = [];
@@ -118,9 +119,7 @@ const Groups = ({setCurrentPage}) => {
 
     return (
       <>
-        <style>
-            @import url("https://use.typekit.net/osw3soi.css");
-        </style>
+        <style>@import url("https://use.typekit.net/osw3soi.css");</style>
         <br/>
         <header class="text">
           {
@@ -158,7 +157,7 @@ const Groups = ({setCurrentPage}) => {
         <br />
         {
           groupName
-            ?
+          ?
         
           <div>
             <input class="invite-input"
@@ -187,8 +186,8 @@ const Groups = ({setCurrentPage}) => {
             <button class="view-button" onClick={() => {setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName} members={members}/>); }}>
                 View
             </button>
-            {
-            trips
+          {
+          trips
             ? trips.map((trip, index) => (
               <div key={index} className='Trip-container'>
                 <div className='Trip-header'>
@@ -208,10 +207,10 @@ const Groups = ({setCurrentPage}) => {
               </div>
               ))
             : <p>No Trips planned</p>
-            }
-          </div>
-          :<p></p>
         }
+        </div>
+        :<p></p>
+      }
       </>
     );
 }

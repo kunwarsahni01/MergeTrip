@@ -13,7 +13,10 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
 
     const fetchTrips = async (userId) => {
         const res = await getTrips(userId);
-        setTrips(res);
+        let itin = [];
+        itin.push(res);
+        //setTrips(res);
+        setItin(itin);
     }
 
     useEffect(() => {
