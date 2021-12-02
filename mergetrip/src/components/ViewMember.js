@@ -51,6 +51,7 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
         let itin = [];
         for (let i = 0; i < members.length; i++) {
             const res = await getTrips(members[i]);
+            console.log(res);
             itin.push(res);
         }
         setItin(itin);
