@@ -32,16 +32,24 @@ export const deleteTrip = (userId, tripId) => {
   return deleteDoc(doc(db, 'trips', userId, 'trips', tripId));
 };
 
-export const createReservation = (userId, tripId, resName, resLocation, resTime) => {
+// export const createReservation = (userId, tripId, resName, resLocation, resTime) => {
+//   const resId = tripId + Date.now();
+//   return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
+//     reservations: arrayUnion({
+//       user_id: userId,
+//       res_id: resId,
+//       res_name: resName,
+//       res_location: resLocation,
+//       res_time: resTime
+//     })
+//   });
+// };
+
+export const createReservation = (userId, tripId, newRes) => {
   const resId = tripId + Date.now();
+  newRes.res_id = resId;
   return updateDoc(doc(db, 'trips', userId, 'trips', tripId), {
-    reservations: arrayUnion({
-      user_id: userId,
-      res_id: resId,
-      res_name: resName,
-      res_location: resLocation,
-      res_time: resTime
-    })
+    reservations: arrayUnion(newRes)
   });
 };
 
@@ -58,3 +66,12 @@ export const deleteReservation = async (userId, tripId, resId) => {
 export const generateReservations = (userId, tripId) => {
   return flaskrApp.get('/gmails/' + userId + '/' + tripId);
 };
+
+// {
+//   "res_type": self.type,
+//   "res_org": self.organization,
+//   "res_confirmation_num": self.confirmation_num,
+//   "res_date": self.date,
+//   "res_from_location": self.from_location,
+//   "res_to_location": self.to_location
+// }
