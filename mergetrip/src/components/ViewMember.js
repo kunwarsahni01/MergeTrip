@@ -70,7 +70,7 @@ const ViewMember = ({ viewId, groupName, setCurrentPage, members }) => {
               <p>Reservations:</p>
               {
                 trip.reservations.length !== 0
-                  ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
+                  ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} hideEdit={true} />)
                   : <p>This trip has no reservations</p>
               }
             </div>
