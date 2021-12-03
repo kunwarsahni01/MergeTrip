@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 //import { FirebaseError } from '@firebase/util';
 import withoutAuthHOC from './withoutAuthHOC';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
-import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, addDoc, getFirestore, setDoc, doc, updateDoc, getDoc } from 'firebase/firestore';
 
 
 export class Login extends Component {
@@ -65,6 +65,16 @@ export class Login extends Component {
       });
   }
 
+  checkUid = async (userId) => {
+    const db = getFirestore();
+    const docSnap = await getDoc(doc(db, 'users', userId));
+    if (docSnap.exists()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   createGoogle () {
     const provider = new GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
@@ -78,18 +88,37 @@ export class Login extends Component {
         const user = result.user;
         const db = getFirestore();
         const userId = auth.currentUser.uid;
-        setDoc(doc(db, 'users', userId), {
-          googleToken: token,
-          userId: userId,
-          email: user.email,
-          username: user.email
-        }).then(() => {
-          console.log('Got google token successfully: ');
-          console.log('userId: ', userId);
-          console.log('token: ', token);
-        }).catch((error) => {
-          alert("setDoc error");
-        });
+        //const docSnap = await getDoc(doc(db, 'users', userId));
+        //if (docSnap.exists()) {
+        if (this.checkUid(userId)) {
+          console.log("updateDoc");
+          updateDoc(doc(db, 'users', userId), {
+            googleToken: token,
+            userId: userId,
+            email: user.email,
+            username: user.email
+          }).then(() => {
+            console.log('Got google token successfully: ');
+            console.log('userId: ', userId);
+            console.log('token: ', token);
+          }).catch((error) => {
+            alert("setDoc error");
+          });
+        } else {
+          console.log("setDoc");
+          setDoc(doc(db, 'users', userId), {
+            googleToken: token,
+            userId: userId,
+            email: user.email,
+            username: user.email
+          }).then(() => {
+            console.log('Got google token successfully: ');
+            console.log('userId: ', userId);
+            console.log('token: ', token);
+          }).catch((error) => {
+            alert("setDoc error");
+          });
+        }
 
         console.log('Login Succesful');
         this.props.history.push('/main');
