@@ -1,4 +1,3 @@
-import './SwitchGroup.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
@@ -15,11 +14,9 @@ class SwitchGroup extends Component {
             groupName: "",
         };
         this.onInputchange = this.onInputchange.bind(this);
-        this.clickMenu = this.clickMenu.bind(this);
         const auth = getAuth();
         this.state.name = auth.currentUser.displayName;
         this.state.profileURL = auth.currentUser.photoURL
-        this.onLogout = this.onLogout.bind(this);
         this.onGroup = this.onGroup.bind(this);
         this.switchGroup = this.switchGroup.bind(this);
     }
@@ -33,18 +30,6 @@ class SwitchGroup extends Component {
             name: auth.currentUser.displayName ? auth.currentUser.displayName : defaultName,
             profileURL: auth.currentUser.photoURL ? auth.currentUser.photoURL : defaultProfileURL,
         });
-    }
-
-
-    clickMenu() {
-        let sidebar = document.querySelector(".sidebar");
-        sidebar.classList.toggle("open");
-    }
-
-    onLogout() {
-        const auth = getAuth();
-        auth.signOut();
-        this.props.history.push('/');
     }
 
     onGroup() {
@@ -63,7 +48,8 @@ class SwitchGroup extends Component {
         const db = getFirestore();
         const uIdDocSnap = await getDoc(doc(db, "users", auth.currentUser.uid));
         const groupName = uIdDocSnap.get("group");
-        if (groupName != null) {
+        if (groupName != null && groupName.length > 0
+            && this.state.groupName != null && this.state.groupName.length > 0) {
             //Current user is in a group
             //Check if user if on invited list for new group
             const docref = doc(db, `groups/${this.state.groupName}/invited`, userId);
@@ -109,21 +95,21 @@ class SwitchGroup extends Component {
     render() {
         return (
             <div>
-                <section class="home-section">
-                    <div class="text">Switch Groups</div>
-                    <div>
-                        <input class="group-input"
-                            name="groupName"
-                            type="text"
-                            value={this.state.groupName}
-                            placeholder="Enter the name of the group you wish to join"
-                            onChange={this.onInputchange}
-                        />
-                    </div>
-                    <div>
-                        <button class="switch-button" onClick={this.switchGroup}>Switch</button>
-                    </div>
-                </section>
+                <header class="header-text">
+                    Switch Groups
+                </header>
+                <div class="input-section">
+                    <input class="group-input"
+                        name="groupName"
+                        type="text"
+                        value={this.state.groupName}
+                        placeholder="Enter the name of the group you wish to join"
+                        onChange={this.onInputchange}
+                    />
+                    <button class="switch-button" onClick={this.switchGroup}>
+                        Switch
+                    </button>
+                </div>
             </div>
         )
     }
