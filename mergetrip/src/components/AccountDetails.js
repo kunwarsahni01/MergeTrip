@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import './AccountDetails.css';
 import { withRouter } from 'react-router-dom';
 import { getAuth, updateEmail, deleteUser, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider, updateProfile } from 'firebase/auth';
@@ -6,8 +6,8 @@ import { getFirestore, setDoc, doc, addDoc, deleteDoc, collection } from "fireba
 import withAuthHOC from './withAuthHOC';
 // import leftBoarding from './BoardingLeft.svg'
 // import rightBoarding from './BoardingRight.svg'
-import { update } from '@firebase/database';
-import { AuthContext } from '../firebase';
+//import { update } from '@firebase/database';
+//import { AuthContext } from '../firebase';
 // import { initializeApp } from '@firebase/app';
 // import firebaseConfig from '../index.js'
 

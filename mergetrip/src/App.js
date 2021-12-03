@@ -13,7 +13,7 @@ import Groups from './components/Groups';
 import CreateGroup from './components/CreateGroup';
 
 // import { Login } from './Components/Login';
-import Profile from './components/Profile';
+//import Profile from './components/Profile';
 
 import { AuthContextProvider, useAuthState } from './firebase';
 import './App.css';
