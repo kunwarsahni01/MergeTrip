@@ -1,11 +1,4 @@
 
-  .home-section .text{
-    display: inline-block;
-    color: #000000;
-    font-size: 25px;
-    font-weight: 500;
-    margin: 18px
-  }
   .group-input {
     background-color: #37363A;
     width: 70%;
@@ -18,13 +11,6 @@
     font-weight: 900;
     color: #FFFFFF;
     margin-bottom: .5rem;
-  }
-
-  .main {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
   }
 
   .create-group-button {
