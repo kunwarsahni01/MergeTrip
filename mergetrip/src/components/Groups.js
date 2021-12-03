@@ -1,9 +1,7 @@
 import './Groups.css';
 import '../pages/Trip.css';
-import React, { Component, useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { doc, getDoc, getFirestore, deleteDoc, setDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
-
 import CreateGroup from './CreateGroup';
 import { useAuthState } from '../firebase';
 import Reservation from '../pages/Reservation';
@@ -23,9 +21,7 @@ const Groups = ({ setCurrentPage }) => {
 
   const onLeave = async () => {
     const db = getFirestore();
-    const uIdDocSnap = await getDoc(doc(db, 'users', auth.user.uid));
-    const groupName = uIdDocSnap.get('group');
-    if (groupName != null) {
+    if (groupName && groupName != null) {
       const docRef = doc(db, `groups/${groupName}/members`, auth.user.uid);
       await deleteDoc(docRef);
       updateDoc(doc(db, 'users', auth.user.uid), {
@@ -36,10 +32,11 @@ const Groups = ({ setCurrentPage }) => {
       querySnap.forEach((doc) => {
         count++;
       });
-      if (count == 0) {
+      if (count === 0) {
         await deleteDoc(doc(db, 'groups', groupName));
       }
-      alert('Successfully left group');
+      await getGroupName(auth.user.uid);
+      console.log(auth.user.uid + ' left group: ' + groupName);
     } else {
       alert('Unable to leave group');
     }
@@ -55,14 +52,12 @@ const Groups = ({ setCurrentPage }) => {
       const docSnap = await getDoc(docref);
       if (docSnap.exists()) {
         // Add user to invited list
-        const uIdDocSnap = await getDoc(doc(db, 'users', auth.user.uid));
-        const groupName = uIdDocSnap.get('group');
         setDoc(doc(db, `groups/${groupName}/invited`, inviteUid), {
           uid: inviteUid
         });
         alert('Successfully invited user');
       } else {
-        alert('No user with the userId: ' + `${inviteUid}`);
+        alert('No user with the userId: ' + inviteUid);
       }
     }
   };
@@ -72,13 +67,14 @@ const Groups = ({ setCurrentPage }) => {
     if (!groupName) {
       getGroupName(userId);
     }
-    if (!trips) fetchTrips(userId);
+    if (!trips) {
+      fetchTrips(userId);
+    }
   }, []);
 
-  const fetchTrips = async (userId) => {
+  const fetchTrips = async (uId) => {
     console.log('Fetching trips:\n');
-
-    const res = await getTrips(userId);
+    const res = await getTrips(uId);
     setTrips(res);
   };
 
@@ -86,13 +82,17 @@ const Groups = ({ setCurrentPage }) => {
     const db = getFirestore();
     const docref = doc(db, 'users', userId);
     const docSnap = await (getDoc(docref));
-    if (docSnap.exists) {
+    if (docSnap.exists()) {
       // get groupName field from docsnap
       const group = docSnap.get('group');
-      if (group != null) {
+      if (group != null && group.length !== 0) {
         setGroupName(group);
+        getGroupMembers(group);
+      } else {
+        setGroupName(false);
       }
-      getGroupMembers(group);
+    } else {
+      setGroupName(false);
     }
   };
 
@@ -106,6 +106,7 @@ const Groups = ({ setCurrentPage }) => {
     });
     setMembers(mems);
   };
+
   const showMembers = members => {
     const content = [];
     for (let i = 0; i < members.length; i++) {
@@ -117,16 +118,15 @@ const Groups = ({ setCurrentPage }) => {
 
   return (
     <>
-      <style>
-        @import url("https://use.typekit.net/osw3soi.css");
-      </style>
-      <br />
-      <header class='text'>
+      <style>@import url("https://use.typekit.net/osw3soi.css");</style>
+      <header class='header-text'>
         {
           groupName
             ? <p>Current Group: {groupName}</p>
-            : <p>Join a group first</p>
+            : <p>You are not currently in a group</p>
         }
+      </header>
+      <h1 class='member-list'>
         {
           groupName
             ? <>
@@ -137,76 +137,86 @@ const Groups = ({ setCurrentPage }) => {
               </>
             : <p />
         }
-      </header>
-      <h2>
-        <button class='leave-group-button' onClick={onLeave}>
-          Leave Group
-        </button>
-        <button class='create-button' onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage} />); }}>
-          Create Group
-        </button>
-        <button class='switch-button' onClick={() => { setCurrentPage(<SwitchGroup setCurrentPage={setCurrentPage} />); }}>
-          Switch Groups
-        </button>
-        <button class='join-button' onClick={() => { setCurrentPage(<JoinGroup setCurrentPage={setCurrentPage} />); }}>
-          Join Group
-        </button>
-        <br />
-      </h2>
-      <br />
-      <br />
-      <div>
-        <input
-          class='invite-input'
-          name='inviteUid'
-          type='text'
-          value={inviteUid}
-          placeholder='Enter the User Id to invite'
-          onChange={e => setInviteUid(e.target.value)}
-        />
-        <br />
-        <button class='invite-button' onClick={onInvite}>
-          Invite users
-        </button>
-        <br />
-        <br />
-        <br />
-        <p>Enter the User ID of the group member to view their itinerary</p>
-        <input
-          class='group-input'
-          name='viewUid'
-          type='text'
-          value={memberUid}
-          onChange={e => setMemUid(e.target.value)}
-        />
-        <br />
-        {/* Need to also pass groupName */}
-        <button class='view-button' onClick={() => { setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName} members={members} />); }}>
-          View
-        </button>
+      </h1>
+      <h2 class='button-section'>
         {
-          trips
-            ? trips.map((trip, index) => (
-              <div key={index} className='Trip-container'>
-                <div className='Trip-header'>
-                  <p>{trip.trip_name}</p>
-                </div>
-                <div className='Trip-body'>
-                  <p>Start: {trip.start_date}</p>
-                  <p>End: {trip.end_date}</p>
-                </div>
-                <p>Reservations:</p>
-                <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
-                {
-                  showTrips && trip.reservations.length !== 0
-                    ? trip.reservations.map((res, index) => <Reservation hideEdit fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
-                    : <p>Click the button to hide/show your reservations</p>
-                }
+          groupName
+            ? <div>
+              <button class='switch-button' onClick={() => { setCurrentPage(<SwitchGroup setCurrentPage={setCurrentPage} />); }}>
+                Switch Groups
+              </button>
+              <button class='leave-group-button' onClick={onLeave}>
+                Leave Group
+              </button>
               </div>
-              ))
-            : <p>No Trips planned</p>
+            : <div>
+              <button class='join-button' onClick={() => { setCurrentPage(<JoinGroup setCurrentPage={setCurrentPage} />); }}>
+                Join Group
+              </button>
+              <button class='create-button' onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage} />); }}>
+                Create Group
+              </button>
+              </div>
         }
-      </div>
+      </h2>
+      {
+        groupName
+          ? <div class='input-section'>
+            <p>Invite a user to your group with their user ID</p>
+            <input
+              class='invite-input'
+              name='inviteUid'
+              type='text'
+              value={inviteUid}
+              placeholder='Enter the User Id to invite'
+              onChange={e => setInviteUid(e.target.value)}
+            />
+            <button class='invite-button' onClick={onInvite}>
+              Invite users
+            </button>
+            <p>Enter the User ID of a group member to view their itinerary</p>
+            <p>Or simply click 'View' to view you're entire group's itinerary</p>
+            <input
+              class='group-input'
+              name='viewUid'
+              type='text'
+              value={memberUid}
+              onChange={e => setMemUid(e.target.value)}
+            />
+            <button class='view-button' onClick={() => { setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName} members={members} />); }}>
+              View
+            </button>
+            <br />
+            <h3 class='centered-text'>Your trips</h3>
+            {
+              trips
+                ? trips.map((trip, index) => (
+                  <div key={index} className='Trip-container'>
+                    <div className='Trip-header'>
+                      <p>{trip.trip_name}</p>
+                    </div>
+                    <div className='Trip-body'>
+                      <p>Start: {trip.start_date}</p>
+                      <p>End: {trip.end_date}</p>
+                    </div>
+                    <p>Reservations:</p>
+                    {
+                      trip.reservations.length !== 0
+                        ? <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
+                        : <p>No Reservations</p>
+                    }
+                    {
+                      showTrips && trip.reservations.length !== 0
+                        ? trip.reservations.map((res, index) => <Reservation hideEdit fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
+                        : null
+                    }
+                  </div>
+                  ))
+                : <p>No Trips planned</p>
+            }
+            </div>
+          : null
+      }
     </>
   );
 };

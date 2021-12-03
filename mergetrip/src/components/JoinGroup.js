@@ -1,4 +1,3 @@
-import './JoinGroup.css'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { getAuth } from "firebase/auth";
@@ -62,16 +61,13 @@ class JoinGroup extends Component {
         const auth = getAuth();
         const userId = auth.currentUser.uid;
         const db = getFirestore();
-
-        const docref = doc(db, `groups/${this.state.groupName}/invited`, userId);
+        const docref = doc(db, `groups/${this.state.groupName}/invited`, userId);        
         const docSnap = await getDoc(docref);
-        if (docSnap.exists) {
-            
+        if (docSnap.exists()) {
             await setDoc(doc(db, `groups/${this.state.groupName}/members`, userId), {
                 uid: userId
             });
             const userRef = doc(db, "users", userId);
-        
             //Remove user from invited list and add to members
             const docRef = doc(db, `groups/${this.state.groupName}/invited`, userId);
             await deleteDoc(docRef);
@@ -87,28 +83,23 @@ class JoinGroup extends Component {
     render() {
         return (
             <div>
-                <section class="home-section">
+                <header class="header-text">
+                    Join an Existing Group
+                </header>
+                <div class="input-section">
+                    <input class="group-input"
+                        name="groupName"
+                        type="text"
+                        value={this.state.groupName}
+                        placeholder="Enter the Group Name"
+                        onChange={this.onInputchange}
+                        />
+                    </div>  
                     <div>
-                        <div class="text">
-                            Join an Existing Group
-                        </div>
-                        <div>
-                            <input class="group-input"
-                                name="groupName"
-                                type="text"
-                                value={this.state.groupName}
-                                placeholder="Enter the Group Name"
-                                onChange={this.onInputchange}
-                            />
-                        </div>  
-                        <div>
-                            <button class="join-button" onClick={this.onJoin}>
-                                Join Group
-                            </button>
-                        </div>
-                        
-                    </div>
-                </section>
+                        <button class="join-button" onClick={this.onJoin}>
+                           Join Group
+                        </button>
+                </div>
             </div>
         )
     }

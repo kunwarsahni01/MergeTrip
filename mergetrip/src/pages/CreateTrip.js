@@ -30,7 +30,6 @@ const CreateTrip = (props) => {
   const onSubmit = async (data) => {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
-
     await createTrip(userId, data.tripName, data.startDate, data.endDate);
     props.fetchTrips(userId);
   };
