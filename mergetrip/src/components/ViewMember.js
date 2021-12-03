@@ -28,6 +28,7 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
         if (viewId.length == 0) {
             //No id passed, display entire group itinerary
             if (!trips) {
+                alert("Displaying entire group's itineraries");
                 fetchAll();
             }
         } else {
@@ -39,6 +40,7 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
                 fetchTrips(viewId);
             } else {
                 //Invalid ID passed, display current user's itinerary
+                alert("That member does not exist/is not in your group\nNow Displaying your itinerary");
                 fetchTrips(userId);
             }
         }

@@ -31,8 +31,6 @@ const CreateTrip = (props) => {
 
     const auth = getAuth();
     const userId = auth.currentUser.uid;
-    alert(userId);
-
     await createTrip(userId, data.tripName, data.startDate, data.endDate);
     props.fetchTrips(userId);
 

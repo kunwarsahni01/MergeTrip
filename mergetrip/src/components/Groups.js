@@ -21,9 +21,7 @@ const Groups = ({setCurrentPage}) => {
   
   const onLeave = async () => {
     const db = getFirestore();
-    const uIdDocSnap = await getDoc(doc(db, "users", auth.user.uid));
-    const groupName = uIdDocSnap.get("group");
-    if (groupName != null) {
+    if (groupName && groupName != null) {
       const docRef = doc(db, `groups/${groupName}/members`, auth.user.uid);
       await deleteDoc(docRef);
       updateDoc(doc(db, "users", auth.user.uid), {
@@ -37,8 +35,8 @@ const Groups = ({setCurrentPage}) => {
       if (count == 0) {
         await deleteDoc(doc(db, "groups", groupName));
       }
-      getGroupName(auth.user.uid);
-      alert("Successfully left group");
+      await getGroupName(auth.user.uid);
+      console.log(auth.user.uid + " left group: " + groupName);
     } else {
       alert("Unable to leave group")
     }
@@ -84,13 +82,15 @@ const Groups = ({setCurrentPage}) => {
     const db = getFirestore();
     const docref = doc(db, 'users', userId);
     const docSnap = await(getDoc(docref));
-    if (docSnap.exists) {
+    if (docSnap.exists()) {
       //get groupName field from docsnap
       const group = docSnap.get("group");
       if (group != null && group.length != 0) {
         setGroupName(group);
         getGroupMembers(group);
-      }    
+      }  else {
+        setGroupName(false);
+      }
     } else {
       setGroupName(false);
     }
@@ -184,6 +184,8 @@ const Groups = ({setCurrentPage}) => {
               <button class="view-button" onClick={() => {setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName} members={members}/>); }}>
                 View
               </button>
+              <br/>
+              <h3 class="centered-text">Your trips</h3>
               {
                 trips
                   ? trips.map((trip, index) => (

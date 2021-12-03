@@ -43,6 +43,8 @@ class SwitchGroup extends Component {
     }
 
     switchGroup = async () => {
+        //this.state.groupName = group to join
+        //groupName = old group
         const auth = getAuth();
         const userId = auth.currentUser.uid;
         const db = getFirestore();
@@ -80,11 +82,28 @@ class SwitchGroup extends Component {
                 const docRefTwo = doc(db, `groups/${this.state.groupName}/invited`, userId);
                 await deleteDoc(docRefTwo);
                 await updateDoc(userRef, "group", `${this.state.groupName}`);
-            
                 alert(`Successfully joined ${this.state.groupName}`);
                 this.onGroup();
             } else {
-                alert("You have not been invited to join this group");
+                const ref = doc(db, 'groups', this.state.groupName);
+                const snap = await (getDoc(ref));
+                if (snap.exists()) {
+                    //Group does exist, user cannot join, do nothing
+                    alert("You have not been invited to join this group");
+                } else {
+                    //Group did not exist, create and add current user to new group
+                    setDoc(doc(db, 'groups', this.state.groupName), {
+                        groupName: this.state.groupName
+                    });
+                    setDoc(doc(db, `groups/${this.state.groupName}/members`, userId), {
+                        uid: userId
+                    });
+                    const userRef = doc(db, 'users', userId);
+                    updateDoc(userRef, 'group', this.state.groupName);
+                    alert("Group did not exist, we created it for you!");
+                    console.log("Created Group from SwitchGroup");
+                    this.onGroup();
+                }
             }
         } else {
             //Current user does not have group field listed in firestore
