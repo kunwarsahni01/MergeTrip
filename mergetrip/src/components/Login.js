@@ -75,7 +75,7 @@ export class Login extends Component {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
-        //const user = result.user;
+        const user = result.user;
         const db = getFirestore();
         const userId = auth.currentUser.uid;
         updateDoc(doc(db, 'users', userId), {
