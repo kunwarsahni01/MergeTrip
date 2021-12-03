@@ -62,10 +62,12 @@ class JoinGroup extends Component {
         const auth = getAuth();
         const userId = auth.currentUser.uid;
         const db = getFirestore();
+        console.log(this.state.groupName);
 
-        const docref = doc(db, `groups/${this.state.groupName}/invited`, userId);
+        const docref = doc(db, `groups/${this.state.groupName}/invited`, userId);        
         const docSnap = await getDoc(docref);
-        if (docSnap.exists) {
+        console.log(docSnap);
+        if (docSnap.exists()) {
             
             await setDoc(doc(db, `groups/${this.state.groupName}/members`, userId), {
                 uid: userId

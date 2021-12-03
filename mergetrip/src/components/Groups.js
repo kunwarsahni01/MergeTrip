@@ -39,6 +39,7 @@ const Groups = ({setCurrentPage}) => {
       if (count == 0) {
         await deleteDoc(doc(db, "groups", groupName));
       }
+      getGroupName(auth.user.uid);
       alert("Successfully left group");
     } else {
       alert("Unable to leave group")
@@ -92,6 +93,8 @@ const Groups = ({setCurrentPage}) => {
         setGroupName(group);
         getGroupMembers(group);
       }    
+    } else {
+      setGroupName(false);
     }
   }
 
