@@ -1,9 +1,10 @@
 .header-text {
   display: inline-block;
   color: #000000;
-  font-size: 32px;
-  font-weight: 800;
+  font-weight: 500;
+  font-size: 23px;
   width: 100%;
+  margin: 20px 15px;
 }
 
 .member-list {
