@@ -82,11 +82,13 @@ export class Login extends Component {
           googleToken: token,
           userId: userId,
           email: user.email,
-          username: user.name
+          username: user.email
         }).then(() => {
           console.log('Got google token successfully: ');
           console.log('userId: ', userId);
           console.log('token: ', token);
+        }).catch((error) => {
+          alert("setDoc error");
         });
 
         console.log('Login Succesful');
@@ -101,6 +103,7 @@ export class Login extends Component {
         // The AuthCredential type that was used.
         // const credential = GoogleAuthProvider.credentialFromError(error);
         alert('Incorrect Email or Password');
+        console.log(error);
 
         // ...
       });
@@ -158,6 +161,7 @@ export class Login extends Component {
           alert('You need to input an Email!');
         } else {
           alert('Incorrect Email or Password');
+          console.log(error);
         }
       });
   }
