@@ -8,7 +8,7 @@
 
 .form-input {
   margin: auto;
-  background-color: #37363A;
+  background-color: transparent;
   width: 100%;
   height: 40px;
   border: 1px solid white;
@@ -22,7 +22,7 @@
 
 .form-error-text {
   color: #E13234;
-  font-size: 8px;
+  font-size: 9px;
   text-align: right;
 }
 

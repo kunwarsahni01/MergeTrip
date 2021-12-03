@@ -3,15 +3,18 @@ import { BsFillCaretDownFill } from 'react-icons/bs';
 import { getAuth } from '@firebase/auth';
 import { deleteReservation } from '../api/flaskr_api';
 import EditReservations from './EditReservations';
+import FlightReservation from './FlightReservation';
+import NonFlightReservations from './NonFlightReservation';
 
 const Reservation = ({ res, userId, tripId, fetchTrips }) => {
   const [showOptions, setShowOptions] = useState(false);
 
   return (
     <div className='Trip-reservation'>
-      {Object.keys(res).map((resKey, index) => {
+      {/* {Object.keys(res).map((resKey, index) => {
         return <p key={index}>{resKey}: {res[resKey]}</p>;
-      })}
+      })} */}
+      {res.res_type === 'Flight' ? <FlightReservation {...res} /> : <NonFlightReservations {...res} />}
       <BsFillCaretDownFill onClick={() => { setShowOptions(prevShowState => !prevShowState); }} />
       {showOptions
         ? (

@@ -79,7 +79,7 @@ const CreateReservation = (props) => {
       }, {});
 
     newRes.user_id = userId;
-    newRes.type = isFlight ? 'Flight' : 'NonFlight';
+    newRes.res_type = isFlight ? 'Flight' : 'NonFlight';
 
     // console.log(newRes);
     await createReservation(userId, props.tripId, newRes);

@@ -43,7 +43,7 @@ const EditReservations = (props) => {
     res_address: { type: 'text', label: 'Address', placeholder: 'Ex: 1234 Forest Hill Dr', required: true, defaultValue: props.res.res_address },
     res_notes: { type: 'textarea', label: 'Additional Notes', placeholder: 'Notes (optional)', defaultValue: props.res.res_notes }
   };
-  const isFlight = props.res.type === 'Flight';
+  const isFlight = props.res.res_type === 'Flight';
 
   useEffect(() => {
     reset();
@@ -67,7 +67,7 @@ const EditReservations = (props) => {
       }, {});
 
     newRes.user_id = props.userId;
-    newRes.type = isFlight ? 'Flight' : 'NonFlight';
+    newRes.res_type = isFlight ? 'Flight' : 'NonFlight';
 
     console.log(newRes);
     await editReservation(props.userId, props.tripId, props.res.res_id, newRes);
@@ -105,7 +105,7 @@ const EditReservations = (props) => {
               placeholder={NON_FLIGHT_TYPES[field].placeholder}
               type={NON_FLIGHT_TYPES[field].type}
               defaultValue={NON_FLIGHT_TYPES[field].defaultValue}
-              required={FLIGHT_TYPES[field].required}
+              required={NON_FLIGHT_TYPES[field].required}
               errors={errors}
               register={register}
             />
