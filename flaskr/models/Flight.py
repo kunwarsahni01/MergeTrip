@@ -20,5 +20,6 @@ class Flight(Reservation):
             "res_confirmation_num": self.confirmation_num,
             "res_date": self.date,
             "res_from_location": self.from_location,
-            "res_to_location": self.to_location
+            "res_to_location": self.to_location,
+            "res_notes": self.notes
         }

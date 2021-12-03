@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import './AccountDetails.css';
 import { withRouter } from 'react-router-dom';
 import { getAuth, updateEmail, deleteUser, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider, updateProfile } from 'firebase/auth';
@@ -6,8 +6,8 @@ import { getFirestore, setDoc, doc, addDoc, deleteDoc, collection } from "fireba
 import withAuthHOC from './withAuthHOC';
 // import leftBoarding from './BoardingLeft.svg'
 // import rightBoarding from './BoardingRight.svg'
-import { update } from '@firebase/database';
-import { AuthContext } from '../firebase';
+//import { update } from '@firebase/database';
+//import { AuthContext } from '../firebase';
 // import { initializeApp } from '@firebase/app';
 // import firebaseConfig from '../index.js'
 
@@ -36,6 +36,7 @@ class AccountDetails extends Component {
     this.deleteAccountCheck = this.deleteAccountCheck.bind(this);
     this.disconnectAccount = this.disconnectAccount.bind(this);
     this.connectAccount = this.connectAccount.bind(this);
+    this.hideBoth = this.hideBoth.bind(this);
   }
 
   componentDidMount() {
@@ -89,7 +90,8 @@ class AccountDetails extends Component {
       .then(() => {
         alert('Username Changed Successfully');
         this.setState({ newUsername: newUsername });
-        this.showUsername();
+        //this.showUsername();
+        this.hideBoth();
         console.log(auth.currentUser.displayName);
       }).catch((error) => {
         alert("Error: Couldn't change Username");
@@ -97,19 +99,32 @@ class AccountDetails extends Component {
       });
   }
 
+  hideBoth() {
+    this.setState({
+      showUsernameText: false
+    });
+
+    this.setState({
+      showEmailText: false
+    });
+  }
+
   onChangeEmail() {
-    const auth = this.props.authState.user.auth;
+    //const auth = this.props.authState.user.auth;
+    const auth = getAuth();
 
     const newEmail = document.getElementById('emailTextbox.id').value;
 
     updateEmail(auth.currentUser, newEmail)
       .then(() => {
         alert('Email Changed');
-        this.showEmail();
+        //this.showEmail();
+        this.hideBoth();
         this.setState({ newEmail: newEmail });
         console.log(auth.currentUser.email);
       }).catch(function (error) {
         console.log(error);
+        alert("Failed to Update Email!");
       });
   }
 
@@ -131,6 +146,7 @@ class AccountDetails extends Component {
 
   deleteAcount() {
     const auth = this.props.authState.user.auth;
+    const temp_uid = auth.currentUser.uid;
     deleteUser(auth.currentUser).then(() => {
       alert('Account Deleted');
       this.props.history.push('/');
@@ -149,7 +165,7 @@ class AccountDetails extends Component {
     try {
       setDoc(doc(db, "users", auth.currentUser.uid), { 
         googleToken: null,
-        test: 4321
+
       });
       console.log("Deletion of Google Token Successful")
       alert("Disconnected Email Account")
@@ -175,7 +191,6 @@ class AccountDetails extends Component {
         try {
           setDoc(doc(db, "users", auth.currentUser.uid), { 
             googleToken: token,
-            test: 1234
           });
           console.log("Document written with ID: ", auth.currentUser.uid);
           alert("Email Connected");

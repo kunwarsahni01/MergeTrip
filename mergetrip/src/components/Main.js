@@ -6,9 +6,6 @@ import { useHistory } from 'react-router';
 import withAuthHOC from './withAuthHOC';
 import AccountDetails from './AccountDetails';
 import Groups from './Groups';
-import CreateGroup from './CreateGroup';
-import SwitchGroup from './SwitchGroup';
-import JoinGroup from './JoinGroup';
 
 const Main = () => {
   const DEFAULT_PROFILE_URL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
