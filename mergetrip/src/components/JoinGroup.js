@@ -55,7 +55,7 @@ class JoinGroup extends Component {
     }
 
     onGroup() {
-        this.props.setCurrentPage(<Groups />);
+        this.props.setCurrentPage(<Groups setCurrentPage={this.props.setCurrentPage}/>);
     }
 
     onJoin = async () => {

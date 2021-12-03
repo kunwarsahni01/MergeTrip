@@ -57,13 +57,6 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Trips</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<AccountDetails setCurrentPage={setCurrentPage} />); }}>
-                  <a>
-                    <i class='bx bx-user' />
-                    <span class='links_name'>Profile</span>
-                  </a>
-                  <span class='tooltip'>Profile</span>
-                </li>
                 <li onClick={() => { setCurrentPage(<Groups setCurrentPage={setCurrentPage} />); }}>
                   <a>
                     <i class='bx bx-group' />
@@ -71,26 +64,12 @@ const Main = () => {
                   </a>
                   <span class='tooltip'>Groups</span>
                 </li>
-                <li onClick={() => { setCurrentPage(<CreateGroup setCurrentPage={setCurrentPage} />); }}>
+                <li onClick={() => { setCurrentPage(<AccountDetails setCurrentPage={setCurrentPage} />); }}>
                   <a>
-                    <i class='bx bx-group' />
-                    <span class='links_name'>Create Group</span>
+                    <i class='bx bx-user' />
+                    <span class='links_name'>Profile</span>
                   </a>
-                  <span class='tooltip'>Create Groups</span>
-                </li>
-                <li onClick={() => { setCurrentPage(<SwitchGroup setCurrentPage={setCurrentPage}/>); }}>
-                  <a>
-                    <i class="bx bx-group" />
-                    <span class='links_name'>Switch Group</span>
-                  </a>
-                  <span class='tooltip'>Switch Groups</span>
-                </li>
-                <li onClick={() => { setCurrentPage(<JoinGroup setCurrentPage={setCurrentPage}/>); }}>
-                  <a>
-                    <i class="bx bx-group" />
-                    <span class='links_name'>Join Group</span>
-                  </a>
-                  <span class='tooltip'>Join Group</span>
+                  <span class='tooltip'>Profile</span>
                 </li>
                 <li class='profile'>
                   <div class='profile-details'>

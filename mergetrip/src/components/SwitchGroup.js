@@ -49,7 +49,7 @@ class SwitchGroup extends Component {
     }
 
     onGroup() {
-        this.props.setCurrentPage(<Groups />);
+        this.props.setCurrentPage(<Groups setCurrentPage={this.props.setCurrentPage}/>);
     }
     
     onInputchange(event) {
