@@ -36,7 +36,6 @@ class CreateGroup extends Component {
   }
 
   onGroup () {
-    //this.props.history.push('/groups');
     this.props.setCurrentPage(<Groups setCurrentPage={this.props.setCurrentPage}/>);
   }
 
@@ -47,19 +46,23 @@ class CreateGroup extends Component {
   }
 
   createGroup () {
-    const auth = this.props.authState.user.auth;
-    const userId = auth.currentUser.uid;
-    const db = getFirestore();
-    setDoc(doc(db, 'groups', `${this.state.groupName}`), {
-      groupName: this.state.groupName
-    });
-    setDoc(doc(db, `groups/${this.state.groupName}/members`, userId), {
-      uid: userId
-    });
-    const userRef = doc(db, 'users', userId);
-    // Update group field of current user in firestore
-    updateDoc(userRef, 'group', `${this.state.groupName}`);
-    this.onGroup();
+    if (this.state.groupName == null || this.state.groupName.length == 0) {
+      alert("Please input a group name");
+    } else {
+      const auth = this.props.authState.user.auth;
+      const userId = auth.currentUser.uid;
+      const db = getFirestore();
+      setDoc(doc(db, 'groups', `${this.state.groupName}`), {
+        groupName: this.state.groupName
+      });
+      setDoc(doc(db, `groups/${this.state.groupName}/members`, userId), {
+        uid: userId
+      });
+      const userRef = doc(db, 'users', userId);
+      // Update group field of current user in firestore
+      updateDoc(userRef, 'group', `${this.state.groupName}`);
+      this.onGroup();
+    }
   }
 
   render () {

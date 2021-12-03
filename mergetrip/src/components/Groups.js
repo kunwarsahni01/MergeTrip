@@ -1,9 +1,7 @@
 import './Groups.css';
 import '../pages/Trip.css';
-import React, { Component, useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { doc, getDoc, getFirestore, deleteDoc, setDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
-
 import CreateGroup from './CreateGroup';
 import { useAuthState } from '../firebase';
 import Reservation from '../pages/Reservation';

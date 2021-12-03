@@ -15,7 +15,6 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
         const res = await getTrips(userId);
         let itin = [];
         itin.push(res);
-        //setTrips(res);
         setItin(itin);
     }
 
@@ -35,14 +34,12 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
             const db = getFirestore();
             const docref = doc(db, `groups/${groupName}/members`, viewId);
             const docSnap = await getDoc(docref);
-            if (docSnap.exists) {
+            if (docSnap.exists()) {
                 //ID passed is valid, display itinerary
-                if (!trips) {
-                    const t = await fetchTrips(viewId);
-                }
+                fetchTrips(viewId);
             } else {
                 //Invalid ID passed, display current user's itinerary
-                if (!trips) fetchTrips(userId);
+                fetchTrips(userId);
             }
         }
     }
@@ -85,7 +82,6 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
         return c;
     }
 
-
     return (
         <>
             <header class="text">
@@ -103,6 +99,5 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
             }
         </>
     );
-
 }
 export default ViewMember;

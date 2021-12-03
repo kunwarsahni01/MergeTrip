@@ -17,7 +17,6 @@ class SwitchGroup extends Component {
         this.onInputchange = this.onInputchange.bind(this);
         this.clickMenu = this.clickMenu.bind(this);
         const auth = getAuth();
-        console.log(auth.currentUser.displayName);
         this.state.name = auth.currentUser.displayName;
         this.state.profileURL = auth.currentUser.photoURL
         this.onLogout = this.onLogout.bind(this);
@@ -69,7 +68,7 @@ class SwitchGroup extends Component {
             //Check if user if on invited list for new group
             const docref = doc(db, `groups/${this.state.groupName}/invited`, userId);
             const docSnap = await getDoc(docref);
-            if (docSnap.exists) {       //User allowed to join new group
+            if (docSnap.exists()) {       //User allowed to join new group
                 //Remove user from old group
                 const ref = doc(db, `groups/${groupName}/members`, auth.currentUser.uid);
                 await deleteDoc(ref);
@@ -91,7 +90,6 @@ class SwitchGroup extends Component {
                     uid: userId
                 });
                 const userRef = doc(db, "users", userId);
-            
                 //Remove user from invited list and add to members
                 const docRefTwo = doc(db, `groups/${this.state.groupName}/invited`, userId);
                 await deleteDoc(docRefTwo);
