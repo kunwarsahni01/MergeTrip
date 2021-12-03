@@ -92,6 +92,21 @@ class SwitchGroup extends Component {
                     alert("You have not been invited to join this group");
                 } else {
                     //Group did not exist, create and add current user to new group
+                    const ref = doc(db, `groups/${groupName}/members`, auth.currentUser.uid);
+                    await deleteDoc(ref);
+                    //Update group field of user
+                    updateDoc(doc(db, "users", auth.currentUser.uid), {
+                        group: ""
+                    });
+                    //Delete group if last member is leaving now
+                    var count = 0;
+                    const querySnap = await getDocs(collection(db, `groups/${groupName}/members`));
+                    querySnap.forEach((doc) => {
+                    count++;
+                    });
+                    if (count === 0) {
+                        await deleteDoc(doc(db, "groups", groupName));
+                    }
                     setDoc(doc(db, 'groups', this.state.groupName), {
                         groupName: this.state.groupName
                     });
