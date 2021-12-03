@@ -6,8 +6,8 @@ import { withRouter } from 'react-router-dom';
 //import { FirebaseError } from '@firebase/util';
 import withoutAuthHOC from './withoutAuthHOC';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
-//import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
-import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
+
 
 export class Login extends Component {
   constructor () {
@@ -75,16 +75,20 @@ export class Login extends Component {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
-        //const user = result.user;
+        const user = result.user;
         const db = getFirestore();
         const userId = auth.currentUser.uid;
-        updateDoc(doc(db, 'users', userId), {
+        setDoc(doc(db, 'users', userId), {
           googleToken: token,
-          userId: userId
+          userId: userId,
+          email: user.email,
+          username: user.email
         }).then(() => {
           console.log('Got google token successfully: ');
           console.log('userId: ', userId);
           console.log('token: ', token);
+        }).catch((error) => {
+          alert("setDoc error");
         });
 
         console.log('Login Succesful');
@@ -99,6 +103,7 @@ export class Login extends Component {
         // The AuthCredential type that was used.
         // const credential = GoogleAuthProvider.credentialFromError(error);
         alert('Incorrect Email or Password');
+        console.log(error);
 
         // ...
       });
@@ -156,6 +161,7 @@ export class Login extends Component {
           alert('You need to input an Email!');
         } else {
           alert('Incorrect Email or Password');
+          console.log(error);
         }
       });
   }
@@ -167,6 +173,20 @@ export class Login extends Component {
         // Signed in
         // const user = userCredential.user;
         console.log('Sign Up Succesful');
+
+        const db = getFirestore();
+        const userId = auth.currentUser.uid;
+        setDoc(doc(db, 'users', userId), {
+          googleToken: "",
+          userId: userId,
+          email: this.state.username,
+          username: this.state.username
+        }).then(() => {
+          console.log('Got google token successfully: ');
+          console.log('userId: ', userId);
+        });
+
+        this.loginToAccount();
         // ...
       })
       .catch((error) => {

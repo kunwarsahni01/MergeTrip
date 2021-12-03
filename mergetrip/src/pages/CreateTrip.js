@@ -28,15 +28,13 @@ const CreateTrip = (props) => {
   });
 
   const onSubmit = async (data) => {
-
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     await createTrip(userId, data.tripName, data.startDate, data.endDate);
     props.fetchTrips(userId);
-
   };
   const onError = (errors) => {
-    alert("Error");
+    alert('Error');
     console.log(errors);
   };
 
@@ -50,6 +48,7 @@ const CreateTrip = (props) => {
         <Input
           name='tripName'
           type='text'
+          label='Trip Name'
           placeholder='Trip Name'
           required
           errors={errors}
@@ -57,17 +56,19 @@ const CreateTrip = (props) => {
         />
         <Input
           name='startDate'
-          label=''
+          label='Start Date'
           placeholder='Start Date'
           type='date'
+          required
           errors={errors}
           register={register}
         />
         <Input
           name='endDate'
-          label=''
+          label='End Date'
           placeholder='End Date'
           type='date'
+          required
           errors={errors}
           register={register}
         />
