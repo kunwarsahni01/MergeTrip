@@ -146,6 +146,7 @@ class AccountDetails extends Component {
 
   deleteAcount() {
     const auth = this.props.authState.user.auth;
+    const temp_uid = auth.currentUser.uid;
     deleteUser(auth.currentUser).then(() => {
       alert('Account Deleted');
       this.props.history.push('/');
@@ -164,7 +165,7 @@ class AccountDetails extends Component {
     try {
       setDoc(doc(db, "users", auth.currentUser.uid), { 
         googleToken: null,
-        test: 4321
+
       });
       console.log("Deletion of Google Token Successful")
       alert("Disconnected Email Account")
@@ -190,7 +191,6 @@ class AccountDetails extends Component {
         try {
           setDoc(doc(db, "users", auth.currentUser.uid), { 
             googleToken: token,
-            test: 1234
           });
           console.log("Document written with ID: ", auth.currentUser.uid);
           alert("Email Connected");
