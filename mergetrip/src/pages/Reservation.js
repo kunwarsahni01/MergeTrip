@@ -6,7 +6,7 @@ import EditReservations from './EditReservations';
 import FlightReservation from './FlightReservation';
 import NonFlightReservations from './NonFlightReservation';
 
-const Reservation = ({ res, userId, tripId, fetchTrips }) => {
+const Reservation = ({ res, userId, tripId, fetchTrips, hideEdit }) => {
   const [showOptions, setShowOptions] = useState(false);
 
   return (
@@ -15,8 +15,9 @@ const Reservation = ({ res, userId, tripId, fetchTrips }) => {
         return <p key={index}>{resKey}: {res[resKey]}</p>;
       })} */}
       {res.res_type === 'Flight' ? <FlightReservation {...res} /> : <NonFlightReservations {...res} />}
-      <BsFillCaretDownFill onClick={() => { setShowOptions(prevShowState => !prevShowState); }} />
-      {showOptions
+
+      {!hideEdit ? <BsFillCaretDownFill onClick={() => { setShowOptions(prevShowState => !prevShowState); }} /> : null}
+      {!hideEdit && showOptions
         ? (
           <>
             <EditReservations res={res} userId={userId} tripId={tripId} fetchTrips={fetchTrips} setShowOptions={setShowOptions} />

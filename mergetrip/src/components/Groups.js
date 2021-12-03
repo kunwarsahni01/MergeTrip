@@ -199,7 +199,7 @@ const Groups = ({ setCurrentPage }) => {
                 <button className='Trip-button' type='button' onClick={() => { setShowTrips(prevShow => !prevShow); }}>Toggle Reservations</button>
                 {
                   showTrips && trip.reservations.length !== 0
-                    ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
+                    ? trip.reservations.map((res, index) => <Reservation hideEdit fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
                     : <p>Click the button to hide/show your reservations</p>
                 }
               </div>
