@@ -27,23 +27,23 @@ const NON_FLIGHT_SCHEMA = Yup.object({
 
 const EditReservations = (props) => {
   const FLIGHT_TYPES = {
-    res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Delta', defaultValue: props.res.res_org },
-    res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234', defaultValue: props.res.res_confirmation_num },
-    res_date: { type: 'time', label: 'Date', placeholder: '', defaultValue: props.res.res_date },
-    res_from_location: { type: 'text', label: 'Departure location', placeholder: 'Ex: IND', defaultValue: props.res.res_from_location },
-    res_to_location: { type: 'text', label: 'Arrival location', placeholder: 'Ex: ORD', defaultValue: props.res.res_to_location },
+    res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Delta', required: true, defaultValue: props.res.res_org },
+    res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234', required: true, defaultValue: props.res.res_confirmation_num },
+    res_date: { type: 'time', label: 'Date', placeholder: '', required: true, defaultValue: props.res.res_date },
+    res_from_location: { type: 'text', label: 'Departure location', placeholder: 'Ex: IND', required: true, defaultValue: props.res.res_from_location },
+    res_to_location: { type: 'text', label: 'Arrival location', placeholder: 'Ex: ORD', required: true, defaultValue: props.res.res_to_location },
     res_notes: { type: 'textarea', label: 'Additional Notes', placeholder: 'Notes (optional)', defaultValue: props.res.res_notes }
   };
 
   const NON_FLIGHT_TYPES = {
-    res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Airbnb', defaultValue: props.res.res_org },
-    res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234', defaultValue: props.res.res_confirmation_num },
-    res_checkin: { type: 'text', label: 'Checkin Date/Time', placeholder: 'Ex: Thursday 2nd at Noon', defaultValue: props.res.res_checkin },
-    res_checkout: { type: 'text', label: 'Checkout Date/Time', placeholder: 'Ex: Thursday 4nd at Noon', defaultValue: props.res.res_checkout },
-    res_address: { type: 'text', label: 'Address', placeholder: 'Ex: 1234 Forest Hill Dr', defaultValue: props.res.res_address },
+    res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Airbnb', required: true, defaultValue: props.res.res_org },
+    res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234', required: true, defaultValue: props.res.res_confirmation_num },
+    res_checkin: { type: 'text', label: 'Checkin Date/Time', placeholder: 'Ex: Thursday 2nd at Noon', required: true, defaultValue: props.res.res_checkin },
+    res_checkout: { type: 'text', label: 'Checkout Date/Time', placeholder: 'Ex: Thursday 4nd at Noon', required: true, defaultValue: props.res.res_checkout },
+    res_address: { type: 'text', label: 'Address', placeholder: 'Ex: 1234 Forest Hill Dr', required: true, defaultValue: props.res.res_address },
     res_notes: { type: 'textarea', label: 'Additional Notes', placeholder: 'Notes (optional)', defaultValue: props.res.res_notes }
   };
-  const isFlight = props.res.type === 'Flight';
+  const isFlight = props.res.res_type === 'Flight';
 
   useEffect(() => {
     reset();
@@ -67,7 +67,7 @@ const EditReservations = (props) => {
       }, {});
 
     newRes.user_id = props.userId;
-    newRes.type = isFlight ? 'Flight' : 'NonFlight';
+    newRes.res_type = isFlight ? 'Flight' : 'NonFlight';
 
     console.log(newRes);
     await editReservation(props.userId, props.tripId, props.res.res_id, newRes);
@@ -92,6 +92,7 @@ const EditReservations = (props) => {
               placeholder={FLIGHT_TYPES[field].placeholder}
               type={FLIGHT_TYPES[field].type}
               defaultValue={FLIGHT_TYPES[field].defaultValue}
+              required={FLIGHT_TYPES[field].required}
               errors={errors}
               register={register}
             />
@@ -104,6 +105,7 @@ const EditReservations = (props) => {
               placeholder={NON_FLIGHT_TYPES[field].placeholder}
               type={NON_FLIGHT_TYPES[field].type}
               defaultValue={NON_FLIGHT_TYPES[field].defaultValue}
+              required={NON_FLIGHT_TYPES[field].required}
               errors={errors}
               register={register}
             />
