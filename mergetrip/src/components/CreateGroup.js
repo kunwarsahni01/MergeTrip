@@ -46,7 +46,7 @@ class CreateGroup extends Component {
   }
 
   createGroup () {
-    if (this.state.groupName == null || this.state.groupName.length == 0) {
+    if (this.state.groupName == null || this.state.groupName.length === 0) {
       alert("Please input a group name");
     } else {
       const auth = this.props.authState.user.auth;

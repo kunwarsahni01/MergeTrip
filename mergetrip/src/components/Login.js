@@ -3,10 +3,11 @@ import apple from './apple.svg';
 import google from './google.svg';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { FirebaseError } from '@firebase/util';
+//import { FirebaseError } from '@firebase/util';
 import withoutAuthHOC from './withoutAuthHOC';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
-import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
+//import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
+import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 
 export class Login extends Component {
   constructor () {
@@ -74,7 +75,7 @@ export class Login extends Component {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
-        const user = result.user;
+        //const user = result.user;
         const db = getFirestore();
         const userId = auth.currentUser.uid;
         updateDoc(doc(db, 'users', userId), {

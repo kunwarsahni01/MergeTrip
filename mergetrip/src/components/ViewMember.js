@@ -8,7 +8,6 @@ import { useAuthState } from '../firebase';
 
 const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
     const auth = useAuthState();
-    const [trips, setTrips] = useState(false);
     const [itineraries, setItin] = useState(false);
 
     const fetchTrips = async (userId) => {
@@ -25,12 +24,10 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
 
     //fetch member trips if viewId is passed, if not, fetches current user trips
     const checkMember = async (userId) => {
-        if (viewId.length == 0) {
+        if (viewId.length === 0) {
             //No id passed, display entire group itinerary
-            if (!trips) {
-                alert("Displaying entire group's itineraries");
-                fetchAll();
-            }
+            alert("Displaying entire group's itineraries");
+            fetchAll();
         } else {
             const db = getFirestore();
             const docref = doc(db, `groups/${groupName}/members`, viewId);

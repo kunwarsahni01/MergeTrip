@@ -32,7 +32,7 @@ const Groups = ({setCurrentPage}) => {
       querySnap.forEach((doc) => {
         count++;
       });
-      if (count == 0) {
+      if (count === 0) {
         await deleteDoc(doc(db, "groups", groupName));
       }
       await getGroupName(auth.user.uid);
@@ -57,7 +57,7 @@ const Groups = ({setCurrentPage}) => {
         });
         alert("Successfully invited user");
       } else {
-        alert("No user with the userId: " + `${inviteUid}`);
+        alert("No user with the userId: " + inviteUid);
       }            
     }
   }
@@ -85,7 +85,7 @@ const Groups = ({setCurrentPage}) => {
     if (docSnap.exists()) {
       //get groupName field from docsnap
       const group = docSnap.get("group");
-      if (group != null && group.length != 0) {
+      if (group != null && group.length !== 0) {
         setGroupName(group);
         getGroupMembers(group);
       }  else {
