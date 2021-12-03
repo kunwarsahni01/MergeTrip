@@ -345,7 +345,6 @@ def check_valid_username(username):
 
 def reservation_code_airbnb_regex(text):
     pattern = r'[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z]'
-    check = re.search(pattern, text)
     code = re.findall(pattern, text)
 
     return "".join(code)
@@ -362,7 +361,6 @@ def reservation_code_airbnb_regex(text):
 
 def confirmation_code_regex(text):
     pattern = r'[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
-    check = re.search(pattern, text)
     code = re.findall(pattern, text)
 
     return "".join(code)
