@@ -84,28 +84,23 @@ class JoinGroup extends Component {
     render() {
         return (
             <div>
-                <section class="home-section">
+                <header class="header-text">
+                    Join an Existing Group
+                </header>
+                <div class="input-section">
+                    <input class="group-input"
+                        name="groupName"
+                        type="text"
+                        value={this.state.groupName}
+                        placeholder="Enter the Group Name"
+                        onChange={this.onInputchange}
+                        />
+                    </div>  
                     <div>
-                        <div class="text">
-                            Join an Existing Group
-                        </div>
-                        <div>
-                            <input class="group-input"
-                                name="groupName"
-                                type="text"
-                                value={this.state.groupName}
-                                placeholder="Enter the Group Name"
-                                onChange={this.onInputchange}
-                            />
-                        </div>  
-                        <div>
-                            <button class="join-button" onClick={this.onJoin}>
-                                Join Group
-                            </button>
-                        </div>
-                        
-                    </div>
-                </section>
+                        <button class="join-button" onClick={this.onJoin}>
+                           Join Group
+                        </button>
+                </div>
             </div>
         )
     }
