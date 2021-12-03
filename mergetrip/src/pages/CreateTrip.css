@@ -1,40 +1,40 @@
 .Form-header {
-    font-size: calc(30px);
-    font-family: Termina;
-    color: white;
+  font-size: calc(30px);
+  font-family: Termina;
+  color: white;
 }
 
-.Form-containter{ 
-    margin: auto;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 40%;
-    height: 50%;
-    background-color:#37363A;
-    border-radius: 10px;
-    padding: 20px;
+.Form-containter {
+  margin: auto;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 50%;
+  background-color: #37363A;
+  border-radius: 10px;
+  padding: 20px;
 }
 
-  .Account-button {
-    background-color: #E13234;
-    color: white;
-    border: none;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    font-family: Termina;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 16px;
-  }
+.Account-button {
+  background-color: #E13234;
+  color: white;
+  border: none;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}
 
-  input[type=text], input[type=date] {
+/* input[type=text], input[type=date] {
     margin: 0 auto 1em auto;
     width: 90%;
     padding: 5px;
-}
+} */

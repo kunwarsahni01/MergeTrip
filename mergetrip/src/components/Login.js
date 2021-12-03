@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import withoutAuthHOC from './withoutAuthHOC';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
 import { collection, addDoc, getFirestore, setDoc, doc, updateDoc } from 'firebase/firestore';
-//import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+
 
 export class Login extends Component {
   constructor () {
