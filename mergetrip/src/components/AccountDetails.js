@@ -36,6 +36,7 @@ class AccountDetails extends Component {
     this.deleteAccountCheck = this.deleteAccountCheck.bind(this);
     this.disconnectAccount = this.disconnectAccount.bind(this);
     this.connectAccount = this.connectAccount.bind(this);
+    this.hideBoth = this.hideBoth.bind(this);
   }
 
   componentDidMount() {
@@ -89,7 +90,8 @@ class AccountDetails extends Component {
       .then(() => {
         alert('Username Changed Successfully');
         this.setState({ newUsername: newUsername });
-        this.showUsername();
+        //this.showUsername();
+        this.hideBoth();
         console.log(auth.currentUser.displayName);
       }).catch((error) => {
         alert("Error: Couldn't change Username");
@@ -97,19 +99,32 @@ class AccountDetails extends Component {
       });
   }
 
+  hideBoth() {
+    this.setState({
+      showUsernameText: false
+    });
+
+    this.setState({
+      showEmailText: false
+    });
+  }
+
   onChangeEmail() {
-    const auth = this.props.authState.user.auth;
+    //const auth = this.props.authState.user.auth;
+    const auth = getAuth();
 
     const newEmail = document.getElementById('emailTextbox.id').value;
 
     updateEmail(auth.currentUser, newEmail)
       .then(() => {
         alert('Email Changed');
-        this.showEmail();
+        //this.showEmail();
+        this.hideBoth();
         this.setState({ newEmail: newEmail });
         console.log(auth.currentUser.email);
       }).catch(function (error) {
         console.log(error);
+        alert("Failed to Update Email!");
       });
   }
 
