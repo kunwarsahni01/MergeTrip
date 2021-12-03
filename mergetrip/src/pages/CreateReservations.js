@@ -19,11 +19,11 @@ const FLIGHT_SCHEMA = Yup.object({
   res_notes: Yup.string()
 });
 const FLIGHT_TYPES = {
-  res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Delta' },
-  res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234' },
-  res_date: { type: 'time', label: 'Date', placeholder: '' },
-  res_from_location: { type: 'text', label: 'Departure location', placeholder: 'Ex: IND' },
-  res_to_location: { type: 'text', label: 'Arrival location', placeholder: 'Ex: ORD' },
+  res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Delta', required: true },
+  res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234', required: true },
+  res_date: { type: 'time', label: 'Date', placeholder: '', required: true },
+  res_from_location: { type: 'text', label: 'Departure location', placeholder: 'Ex: IND', required: true },
+  res_to_location: { type: 'text', label: 'Arrival location', placeholder: 'Ex: ORD', required: true },
   res_notes: { type: 'textarea', label: 'Additional Notes', placeholder: 'Notes (optional)' }
 };
 
@@ -36,11 +36,11 @@ const NON_FLIGHT_SCHEMA = Yup.object({
   res_notes: Yup.string()
 });
 const NON_FLIGHT_TYPES = {
-  res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Airbnb' },
-  res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234' },
-  res_checkin: { type: 'text', label: 'Checkin Date/Time', placeholder: 'Ex: Thursday 2nd at Noon' },
-  res_checkout: { type: 'text', label: 'Checkout Date/Time', placeholder: 'Ex: Thursday 4nd at Noon' },
-  res_address: { type: 'text', label: 'Address', placeholder: 'Ex: 1234 Forest Hill Dr' },
+  res_org: { type: 'text', label: 'Organization Name', placeholder: 'Ex: Airbnb', required: true },
+  res_confirmation_num: { type: 'text', label: 'Confirmation Number', placeholder: 'Ex: #AN1234', required: true },
+  res_checkin: { type: 'text', label: 'Checkin Date/Time', placeholder: 'Ex: Thursday 2nd at Noon', required: true },
+  res_checkout: { type: 'text', label: 'Checkout Date/Time', placeholder: 'Ex: Thursday 4nd at Noon', required: true },
+  res_address: { type: 'text', label: 'Address', placeholder: 'Ex: 1234 Forest Hill Dr', required: true },
   res_notes: { type: 'textarea', label: 'Additional Notes', placeholder: 'Notes (optional)' }
 };
 
@@ -79,7 +79,7 @@ const CreateReservation = (props) => {
       }, {});
 
     newRes.user_id = userId;
-    newRes.type = isFlight ? 'Flight' : 'NonFlight';
+    newRes.res_type = isFlight ? 'Flight' : 'NonFlight';
 
     // console.log(newRes);
     await createReservation(userId, props.tripId, newRes);
@@ -97,10 +97,11 @@ const CreateReservation = (props) => {
           ? (
             <form className='Trip-form' onSubmit={handleSubmit(onSubmit, onError)}>
               <p>Create a {isFlight ? 'Flight' : 'Non-Flight'}Reservation:</p>
-              <select value={isFlight} onChange={() => { setIsFlight(prevIsFlight => !prevIsFlight); }}>
+              <select className='form-input' value={isFlight} onChange={() => { setIsFlight(prevIsFlight => !prevIsFlight); }}>
                 <option value>Flight</option>
                 <option value={false}>Non-Flight</option>
               </select>
+
               {isFlight
                 ? Object.keys(FLIGHT_TYPES).map((field, index) => (
                   <Input
@@ -109,6 +110,7 @@ const CreateReservation = (props) => {
                     label={FLIGHT_TYPES[field].label}
                     placeholder={FLIGHT_TYPES[field].placeholder}
                     type={FLIGHT_TYPES[field].type}
+                    required={FLIGHT_TYPES[field].required}
                     errors={errors}
                     register={register}
                   />
@@ -120,6 +122,7 @@ const CreateReservation = (props) => {
                     label={NON_FLIGHT_TYPES[field].label}
                     placeholder={NON_FLIGHT_TYPES[field].placeholder}
                     type={NON_FLIGHT_TYPES[field].type}
+                    required={NON_FLIGHT_TYPES[field].required}
                     errors={errors}
                     register={register}
                   />
