@@ -75,7 +75,7 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
                             {
                             trip.reservations.length !== 0
                                 ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
-                                : <p>Click the button to hide/show your reservations</p>
+                                : <p>This trip has no reservations</p>
                             }
                         </div>   
                     ))
@@ -96,28 +96,6 @@ const ViewMember = ({viewId, groupName, setCurrentPage, members}) => {
                 <br />
                 <br />
             </header>
-
-            {/*
-            trips  
-                ? trips.map((trip, index) => (
-                    <div key={index} className='Trip-container'>
-                        <div className='Trip-header'>
-                            <p>{trip.trip_name}</p>
-                        </div>
-                        <div className='Trip-body'>
-                            <p>Start: {trip.start_date}</p>
-                            <p>End: {trip.end_date}</p>
-                        </div>
-                        <p>Reservations:</p>
-                        {
-                            trip.reservations.length !== 0
-                                ? trip.reservations.map((res, index) => <Reservation fetchTrips={fetchTrips} res={res} userId={trip.user_id} tripId={trip.trip_id} key={index} />)
-                                : <p>Click the button to hide/show your reservations</p>
-                        }
-                    </div>
-                ))
-                : <p>No Trips planned</p>*/
-            }
             {
                 itineraries
                     ? viewAll(itineraries)
