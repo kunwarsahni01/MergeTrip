@@ -99,6 +99,8 @@ def get_gmails(userId, tripId):
             userId='me', id=ids['id']).execute()
 
         message = parse_message(message_response['payload'])
+        if (not message.get('To')):
+            message['To'] = 'placeholder@gmail.com'
 
         res = extractor.extract(
             message['body'], message['To'], message['Subject'])
