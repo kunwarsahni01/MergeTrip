@@ -10,8 +10,14 @@ class Flight(Reservation):
         super().__init__(type='Flight', organization=organization,
                          confirmation_num=confirmation_num)
         self.date = date
-        self.from_location = location
-        self.to_location = location
+
+        locations = location.split(",")
+        if (len(locations) == 1):
+            self.from_location = location
+            self.to_location = location
+        else:
+            self.from_location = locations[0]
+            self.to_location = locations[1]
 
     def toJSON(self) -> dict:
         return {
