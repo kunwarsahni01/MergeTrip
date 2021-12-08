@@ -200,9 +200,6 @@ const Profile = () => {
                 <br />
                 Email: {auth.user.email}
                 <br />
-                <br />
-                user id: {auth.user.uid}
-                <br />
               </div>
               <div>
 
