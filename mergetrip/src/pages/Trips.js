@@ -6,12 +6,14 @@ import CreateReservation from './CreateReservations';
 import './Trip.css';
 import { useAuthState } from '../firebase';
 import Reservation from './Reservation';
+import ReactLoading from 'react-loading';
 
 const Trips = (props) => {
   const auth = useAuthState();
 
   const [trips, setTrips] = useState(false);
   const [showTrips, setShowTrips] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleDeleteTrip = async (tripId) => {
     const userId = auth.user.uid;
@@ -20,6 +22,7 @@ const Trips = (props) => {
   };
 
   const generateRes = async (userId, tripId) => {
+    setLoading(true);
     await generateReservations(userId, tripId);
     fetchTrips(userId);
   };
@@ -34,10 +37,16 @@ const Trips = (props) => {
 
     const res = await getTrips(userId);
     setTrips(res);
+    setLoading(false);
   };
 
   return (
     <div className='Trips'>
+      {loading
+        ? <div className='loading-container'>
+          <ReactLoading className='loading' type='spin' height={70} width={70} />
+        </div>
+        : null}
       <style>
         @import url("https://use.typekit.net/osw3soi.css");
       </style>
@@ -73,10 +82,14 @@ const Trips = (props) => {
                   : null
               }
 
-              <button className='Trip-button' type='button' onClick={() => { generateRes(auth.user.uid, trip.trip_id); }}>Auto Populate Reservations</button>
+              <button className='Trip-button' type='button' onClick={() => {
+                generateRes(auth.user.uid, trip.trip_id);
+              }}>Auto Populate Reservations</button>
             </div>
-            ))
-          : <p>Loading Trips...</p>
+          ))
+          : <div className='loading-container'>
+            <ReactLoading className='loading' type='spin' height={70} width={70} />
+          </div>
       }
     </div>
 

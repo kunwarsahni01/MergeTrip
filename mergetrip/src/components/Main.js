@@ -6,6 +6,8 @@ import { useHistory } from 'react-router';
 import withAuthHOC from './withAuthHOC';
 import AccountDetails from './AccountDetails';
 import Groups from './Groups';
+import ReactLoading from 'react-loading';
+
 
 const Main = () => {
   const DEFAULT_PROFILE_URL = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp';
@@ -84,8 +86,11 @@ const Main = () => {
               {currentPage}
             </section>
           </>
-          )
-        : <p>Loading...</p>}
+        )
+        : <div className='loading-container'>
+          <ReactLoading className='loading' type='spin' height={70} width={70} />
+        </div>
+      }
     </div>
   );
 };

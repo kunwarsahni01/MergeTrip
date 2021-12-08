@@ -293,3 +293,14 @@
     display: none;
   }
 }
+
+.loading{
+  margin: 10px;
+}
+.loading-container{
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  background-color: #E13234;
+  border-radius: 10%;
+}
