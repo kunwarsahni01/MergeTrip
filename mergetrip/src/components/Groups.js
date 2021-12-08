@@ -18,6 +18,7 @@ const Groups = ({ setCurrentPage }) => {
   const [trips, setTrips] = useState(false);
   const [showTrips, setShowTrips] = useState(false);
   const [members, setMembers] = useState(false);
+  const [membersNames, setMembersNames] = useState(false);
 
   const onLeave = async () => {
     const db = getFirestore();
@@ -53,7 +54,8 @@ const Groups = ({ setCurrentPage }) => {
       if (docSnap.exists()) {
         // Add user to invited list
         setDoc(doc(db, `groups/${groupName}/invited`, inviteUid), {
-          uid: inviteUid
+          uid: inviteUid,
+          username: docSnap.get('username'),
         });
         alert('Successfully invited user');
       } else {
@@ -101,16 +103,19 @@ const Groups = ({ setCurrentPage }) => {
     const ref = collection(db, `groups/${group}/members`);
     const querySnap = await getDocs(ref);
     const mems = [];
+    const memsNames = [];
     querySnap.forEach((doc) => {
       mems.push(doc.get('uid'));
+      memsNames.push(doc.get('username'));
     });
     setMembers(mems);
+    setMembersNames(memsNames);
   };
 
-  const showMembers = members => {
+  const showMembers = membersNames => {
     const content = [];
-    for (let i = 0; i < members.length; i++) {
-      const t = members[i];
+    for (let i = 0; i < membersNames.length; i++) {
+      const t = membersNames[i];
       content.push(<li key={t.id}>{t}</li>);
     }
     return content;
@@ -132,7 +137,7 @@ const Groups = ({ setCurrentPage }) => {
             ? <>
               <p>Current Members:</p>
               <div>
-                {showMembers(members)}
+                {showMembers(membersNames)}
               </div>
               </>
             : <p />
@@ -162,25 +167,26 @@ const Groups = ({ setCurrentPage }) => {
       {
         groupName
           ? <div class='input-section'>
-            <p>Invite a user to your group with their user ID</p>
+            {/* <p>Invite a user to your group with their user ID</p> */}
             <input
               class='invite-input'
               name='inviteUid'
               type='text'
               value={inviteUid}
-              placeholder='Enter the User Id to invite'
+              placeholder='Enter the User ID to Invite User'
               onChange={e => setInviteUid(e.target.value)}
             />
             <button class='invite-button' onClick={onInvite}>
               Invite users
             </button>
-            <p>Enter the User ID of a group member to view their itinerary</p>
-            <p>Or simply click 'View' to view you're entire group's itinerary</p>
+            {/* <p>Enter the User ID of a group member to view their itinerary</p>
+            <p>Or simply click 'View' to view you're entire group's itinerary</p> */}
             <input
               class='group-input'
               name='viewUid'
               type='text'
               value={memberUid}
+              placeholder='Enter the User ID to view a itinerary'
               onChange={e => setMemUid(e.target.value)}
             />
             <button class='view-button' onClick={() => { setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName} members={members} />); }}>

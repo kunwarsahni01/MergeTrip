@@ -121,7 +121,7 @@
 
 .group-input {
   background-color: #37363A;
-  width: 100% !important;
+  width: 50% !important;
   height: 50px;
   border: 1px solid #E13234;
   border-radius: 16px;
@@ -130,13 +130,13 @@
   font-family: Termina;
   font-weight: 900;
   color: #FFFFFF;
-  margin-top: 10%;
+  margin-top: 10px;
   margin-bottom: .5rem;
 }
 
 .invite-input {
   background-color: #37363A;
-  width: 100% !important;
+  width: 50% !important;
   height: 50px;
   border: 1px solid #E13234;
   border-radius: 16px;
@@ -145,9 +145,14 @@
   font-family: Termina;
   font-weight: 900;
   color: #FFFFFF;
+  margin-top: 10px;
   margin-bottom: .5rem;
 }
 
 .centered-text {
   text-align: center;
+}
+
+.input-section {
+  margin-left: 10px;
 }
