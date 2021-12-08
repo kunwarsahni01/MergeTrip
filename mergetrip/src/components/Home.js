@@ -16,7 +16,7 @@ const Home = () => {
         Sign Up
       </button>
       <header className='HomePage-header'>
-        MERGETRIP
+        CS 307 11:05 AM
         <span className='HomePage-subtitle'>No More Stress</span>
       </header>
     </div>
