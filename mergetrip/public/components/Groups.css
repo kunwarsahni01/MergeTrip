@@ -1,0 +1,153 @@
+.header-text {
+  display: inline-block;
+  color: #000000;
+  font-weight: 500;
+  font-size: 23px;
+  width: 100%;
+  margin: 20px 15px;
+}
+
+.member-list {
+  display: inline-block;
+  color: #000000;
+  font-size: 20px;
+  padding: 20px;
+  width: 100%;
+}
+
+.button-section {
+  width: 100%;
+  display: inline-block;
+  height: 100px;
+}
+
+.inputs-section {
+  width: 100%;
+  display: inline-block;
+}
+
+.create-button {
+  background-color: #E13234;
+  color: white;
+  border: none;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 0px 5px 0px 5px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.join-button {
+  background-color: #E13234;
+  color: white;
+  border: none;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 0px 5px 0px 5px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.switch-button {
+  background-color: #E13234;
+  color: white;
+  border: none;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 0px 5px 0px 5px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.leave-group-button {
+  background-color: #E13234;
+  color: white;
+  border: none;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 0px 5px 0px 5px;
+  cursor: pointer;
+  border-radius: 16px;
+  position: static;
+}
+
+.invite-button {
+  background-color: #E13234;
+  color: white;
+  border: none;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 0px 5px 0px 5px;
+  cursor: pointer;
+  border-radius: 16px;
+
+}
+
+.view-button {
+  background-color: #E13234;
+  color: white;
+  border: 10px black;
+  border-radius: 50px;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  font-family: Termina;
+  margin: 0px 5px 0px 5px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.group-input {
+  background-color: #37363A;
+  width: 100% !important;
+  height: 50px;
+  border: 1px solid #E13234;
+  border-radius: 16px;
+  padding: 0px 5px 0px 5px;
+  font-size: 20px;
+  font-family: Termina;
+  font-weight: 900;
+  color: #FFFFFF;
+  margin-top: 10%;
+  margin-bottom: .5rem;
+}
+
+.invite-input {
+  background-color: #37363A;
+  width: 100% !important;
+  height: 50px;
+  border: 1px solid #E13234;
+  border-radius: 16px;
+  padding: 0px 5px 0px 5px;
+  font-size: 20px;
+  font-family: Termina;
+  font-weight: 900;
+  color: #FFFFFF;
+  margin-bottom: .5rem;
+}
+
+.centered-text {
+  text-align: center;
+}
