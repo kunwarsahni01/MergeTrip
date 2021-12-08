@@ -162,25 +162,26 @@ const Groups = ({ setCurrentPage }) => {
       {
         groupName
           ? <div class='input-section'>
-            <p>Invite a user to your group with their user ID</p>
+            {/* <p>Invite a user to your group with their user ID</p> */}
             <input
               class='invite-input'
               name='inviteUid'
               type='text'
               value={inviteUid}
-              placeholder='Enter the User Id to invite'
+              placeholder='Enter the User ID to invite'
               onChange={e => setInviteUid(e.target.value)}
             />
             <button class='invite-button' onClick={onInvite}>
               Invite users
             </button>
-            <p>Enter the User ID of a group member to view their itinerary</p>
-            <p>Or simply click 'View' to view you're entire group's itinerary</p>
+            {/* <p>Enter the User ID of a group member to view their itinerary</p>
+            <p>Or simply click 'View' to view you're entire group's itinerary</p> */}
             <input
               class='group-input'
               name='viewUid'
               type='text'
               value={memberUid}
+              placeholder='Enter the User ID to view trip'
               onChange={e => setMemUid(e.target.value)}
             />
             <button class='view-button' onClick={() => { setCurrentPage(<ViewMember viewId={memberUid} setCurrentPage={setCurrentPage} groupName={groupName} members={members} />); }}>
