@@ -55,7 +55,7 @@ const Groups = ({ setCurrentPage }) => {
         // Add user to invited list
         setDoc(doc(db, `groups/${groupName}/invited`, inviteUid), {
           uid: inviteUid,
-          username: docSnap.get('username'),
+          username: docSnap.get('username')
         });
         alert('Successfully invited user');
       } else {
